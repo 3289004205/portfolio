@@ -1,0 +1,134 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg: 0 0% 4%;
+    --surface: 0 0% 8%;
+    --text: 0 0% 96%;
+    --muted: 0 0% 53%;
+    --stroke: 0 0% 12%;
+    --accent: 0 0% 96%;
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-bg text-text-primary font-body antialiased;
+    margin: 0;
+    overflow-x: hidden;
+  }
+
+  /* Forced dark theme — no light mode toggle. */
+  * {
+    border-color: hsl(var(--stroke));
+  }
+
+  ::selection {
+    background: hsl(213 39% 55% / 0.35);
+    color: hsl(var(--text));
+  }
+}
+
+@layer components {
+  /* Accent gradient utility (logo ring, hover borders, progress bars). */
+  .accent-gradient {
+    background: linear-gradient(90deg, #89aacc 0%, #4e85bf 100%);
+  }
+
+  /* Animated gradient border — used on hover rings. */
+  .accent-gradient-animated {
+    background: linear-gradient(90deg, #89aacc, #4e85bf, #89aacc);
+    background-size: 200% 200%;
+    @apply animate-gradient-shift;
+  }
+
+  /* Halftone overlay used on work cards. */
+  .halftone-overlay {
+    background-image: radial-gradient(circle, #000 1px, transparent 1px);
+    background-size: 4px 4px;
+  }
+
+  /* Gradient hover border ring — reveals a 2px accent border on hover,
+     without being hidden behind the element's own background. */
+  .gradient-ring {
+    position: relative;
+  }
+  .gradient-ring::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(90deg, #89aacc 0%, #4e85bf 100%);
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+  .gradient-ring:hover::before {
+    opacity: 1;
+  }
+}
+
+@layer utilities {
+  /* Smooth scrolling applied to the html element; utility for components. */
+  .scroll-smooth {
+    scroll-behavior: smooth;
+  }
+}
+
+/* ---- Custom keyframes (also mirrored in tailwind.config for utilities) ---- */
+@keyframes scroll-down {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(200%);
+  }
+}
+
+@keyframes role-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Hide native scrollbar inside marquee containers */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
