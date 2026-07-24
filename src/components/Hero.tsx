@@ -73,14 +73,20 @@ export default function Hero() {
         </p>
 
         <div className="blur-in inline-flex gap-4">
-          <button className="group relative rounded-full p-[2px] text-sm transition-transform hover:scale-105">
+          <button
+            onClick={() => document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' })}
+            className="group relative rounded-full p-[2px] text-sm transition-transform hover:scale-105"
+          >
             <span className="absolute inset-[-2px] rounded-full accent-gradient opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
             <span className="relative inline-flex items-center rounded-full bg-text-primary px-7 py-3.5 text-bg transition-colors group-hover:bg-bg group-hover:text-text-primary">
               参见作品
             </span>
           </button>
 
-          <button className="group relative rounded-full p-[2px] text-sm transition-transform hover:scale-105">
+          <button
+            onClick={() => document.getElementById('resume')?.scrollIntoView({ behavior: 'smooth' })}
+            className="group relative rounded-full p-[2px] text-sm transition-transform hover:scale-105"
+          >
             <span className="absolute inset-[-2px] rounded-full accent-gradient opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
             <span className="relative inline-flex items-center rounded-full border-2 border-transparent bg-bg px-7 py-3.5 text-text-primary">
               关于我
