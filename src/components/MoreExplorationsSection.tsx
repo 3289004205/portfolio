@@ -5,7 +5,7 @@ const container = {
   show: { transition: { staggerChildren: 0.12 } },
 }
 
-const item = {
+const card = {
   hidden: { opacity: 0, y: 40 },
   show: {
     opacity: 1,
@@ -76,7 +76,7 @@ export default function MoreExplorationsSection() {
         >
           {ITEMS.map((item) => (
             <motion.div
-              variants={item}
+              variants={card}
               key={item.title}
               className="group flex flex-col overflow-hidden rounded-3xl border border-stroke bg-surface transition-colors hover:bg-surface/70"
             >
