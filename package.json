@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:sync": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/dev-sync.ps1",
+    "sync": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/git-auto-sync.ps1",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview"
   },

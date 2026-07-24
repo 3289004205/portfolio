@@ -1,22 +1,22 @@
 #!/usr/bin/env bash
-# 用法: ./git-sync.sh "你的提交说明"
-# 把本地改动同步到 GitHub (origin/main)
-set -e
+# Usage: ./git-sync.sh "commit message"
+# Sync all local changes to origin/main.
+set -euo pipefail
 
 cd "$(dirname "$0")"
 
-if [ -z "$1" ]; then
-  echo "用法: ./git-sync.sh \"提交说明\""
+if [ -z "${1:-}" ]; then
+  echo 'Usage: ./git-sync.sh "commit message"'
   exit 1
 fi
 
 git add -A
-# 没有改动就直接退出
 if git diff --cached --quiet; then
-  echo "没有需要同步的改动。"
+  echo "No changes to sync."
   exit 0
 fi
 
 git commit -m "$1"
+git pull --rebase origin main
 git push origin main
-echo "已同步到 GitHub: $(git log -1 --pretty=%h) $1"
+echo "Synced to GitHub: $(git log -1 --pretty=%h) $1"
