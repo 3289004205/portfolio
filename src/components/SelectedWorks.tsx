@@ -1,19 +1,5 @@
-import { motion } from 'framer-motion'
+import AnimatedContent from './AnimatedContent/AnimatedContent'
 import SectionHeader from './SectionHeader'
-
-const container = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.12 } },
-}
-
-const item = {
-  hidden: { opacity: 0, y: 40 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] },
-  },
-}
 
 interface Project {
   title: string
@@ -55,7 +41,7 @@ const PROJECTS: Project[] = [
 
 export default function SelectedWorks() {
   return (
-    <section id="work" className="bg-bg py-12 md:py-16">
+    <section id="work" className="bg-bg overflow-hidden py-12 md:py-16">
       <div className="mx-auto max-w-[1200px] px-6 md:px-10 lg:px-16">
         <SectionHeader
           eyebrow="Selected Work"
@@ -65,38 +51,45 @@ export default function SelectedWorks() {
           cta="View all work"
         />
 
-        <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: '-100px' }}
-          className="grid grid-cols-1 gap-5 md:grid-cols-12 md:gap-6"
-        >
-          {PROJECTS.map((p) => (
-            <motion.a
-              variants={item}
-              href="#"
-              className={`group relative overflow-hidden rounded-3xl border border-stroke bg-surface ${p.span}`}
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-12 md:gap-6">
+          {PROJECTS.map((p, i) => (
+            <AnimatedContent
+              key={p.title}
+              className={`${p.span} block`}
+              distance={150}
+              direction="horizontal"
+              duration={1.2}
+              ease="bounce.out"
+              initialOpacity={0.2}
+              animateOpacity
+              scale={1.1}
+              threshold={0.2}
+              delay={i * 0.15}
             >
-              <div className={`relative w-full ${p.aspect} overflow-hidden`}>
-                <img
-                  src={p.image}
-                  alt={p.title}
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                {/* Halftone overlay */}
-                <div className="halftone-overlay pointer-events-none absolute inset-0 opacity-20 mix-blend-multiply" />
-                {/* Hover veil */}
-                <div className="absolute inset-0 flex items-center justify-center bg-bg/70 opacity-0 backdrop-blur-lg transition-opacity duration-300 group-hover:opacity-100">
-                  <span className="gradient-ring inline-flex items-center rounded-full bg-white px-5 py-2.5 text-sm font-medium text-bg">
-                    View — <span className="ml-1 font-display italic">{p.title}</span>
-                  </span>
+              <a
+                href="#"
+                className="group relative block w-full overflow-hidden rounded-3xl border border-stroke bg-surface"
+              >
+                <div className={`relative w-full ${p.aspect} overflow-hidden`}>
+                  <img
+                    src={p.image}
+                    alt={p.title}
+                    loading="lazy"
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  {/* Halftone overlay */}
+                  <div className="halftone-overlay pointer-events-none absolute inset-0 opacity-20 mix-blend-multiply" />
+                  {/* Hover veil */}
+                  <div className="absolute inset-0 flex items-center justify-center bg-bg/70 opacity-0 backdrop-blur-lg transition-opacity duration-300 group-hover:opacity-100">
+                    <span className="gradient-ring inline-flex items-center rounded-full bg-white px-5 py-2.5 text-sm font-medium text-bg">
+                      View — <span className="ml-1 font-display italic">{p.title}</span>
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </motion.a>
+              </a>
+            </AnimatedContent>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   )
