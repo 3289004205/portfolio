@@ -38,9 +38,16 @@ export default function Navbar() {
         width="auto"
         height="auto"
         borderRadius={9999}
-        backgroundOpacity={0.12}
-        saturation={1.2}
-        displace={0.5}
+        borderWidth={0.18}
+        backgroundOpacity={0.16}
+        saturation={1.4}
+        displace={2}
+        distortionScale={-200}
+        redOffset={6}
+        greenOffset={14}
+        blueOffset={22}
+        xChannel="R"
+        yChannel="B"
         className={`max-w-full overflow-x-auto no-scrollbar transition-shadow duration-300 ${
           scrolled ? 'shadow-md shadow-black/10' : ''
         }`}
