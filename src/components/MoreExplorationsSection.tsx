@@ -1,18 +1,4 @@
-import { motion } from 'framer-motion'
-
-const container = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.12 } },
-}
-
-const card = {
-  hidden: { opacity: 0, y: 40 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] },
-  },
-}
+import FadeContent from './FadeContent/FadeContent'
 
 const ITEMS = [
   {
@@ -67,35 +53,35 @@ export default function MoreExplorationsSection() {
           图像与视频之外，围绕数字人、模型训练与 3D 渲染的持续实验。
         </p>
 
-        <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: '-100px' }}
-          className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4"
-        >
-          {ITEMS.map((item) => (
-            <motion.div
-              variants={card}
+        <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {ITEMS.map((item, i) => (
+            <FadeContent
               key={item.title}
-              className="group flex flex-col overflow-hidden rounded-3xl border border-stroke bg-surface transition-colors hover:bg-surface/70"
+              blur
+              duration={1000}
+              ease="power2.out"
+              threshold={0.2}
+              initialOpacity={0}
+              delay={i * 0.12}
             >
-              <div className="aspect-[4/3] w-full overflow-hidden">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
+              <div className="group flex flex-col overflow-hidden rounded-3xl border border-stroke bg-surface transition-colors hover:bg-surface/70">
+                <div className="aspect-[4/3] w-full overflow-hidden">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    loading="lazy"
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                </div>
+                <div className="flex flex-1 flex-col p-6">
+                  <span className="text-xs uppercase tracking-[0.2em] text-muted">{item.tag}</span>
+                  <h3 className="mt-2 text-xl text-text-primary">{item.title}</h3>
+                  <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">{item.desc}</p>
+                </div>
               </div>
-              <div className="flex flex-1 flex-col p-6">
-                <span className="text-xs uppercase tracking-[0.2em] text-muted">{item.tag}</span>
-                <h3 className="mt-2 text-xl text-text-primary">{item.title}</h3>
-                <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">{item.desc}</p>
-              </div>
-            </motion.div>
+            </FadeContent>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   )
