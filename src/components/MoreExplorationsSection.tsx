@@ -93,7 +93,7 @@ export default function MoreExplorationsSection() {
                 <h3 className="mt-2 text-xl text-text-primary">{item.title}</h3>
                 <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">{item.desc}</p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </motion.div>
       </div>
