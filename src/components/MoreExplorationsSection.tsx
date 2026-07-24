@@ -20,6 +20,13 @@ const ITEMS = [
     image:
       'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop',
   },
+  {
+    title: '原型设计',
+    tag: 'Prototype',
+    desc: '基于 Figma 的产品原型与交互设计，把模糊需求转化为可点击、可验证的界面与流程。',
+    image:
+      'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?q=80&w=800&auto=format&fit=crop',
+  },
 ]
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
@@ -44,7 +51,7 @@ export default function MoreExplorationsSection() {
           图像与视频之外，围绕数字人、模型训练与 3D 渲染的持续实验。
         </p>
 
-        <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
           {ITEMS.map((item) => (
             <div
               key={item.title}
