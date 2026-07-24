@@ -52,10 +52,10 @@ export default function ContactFooter() {
           Let&rsquo;s build something
         </h2>
         <a
-          href="mailto:hello@michaelsmith.com"
+          href="mailto:3289004205@qq.com"
           className="gradient-ring mt-8 inline-flex rounded-full bg-surface px-7 py-3.5 text-sm text-text-primary transition-transform hover:scale-105"
         >
-          hello@michaelsmith.com <span className="ml-2">↗</span>
+          3289004205@qq.com <span className="ml-2">↗</span>
         </a>
 
         {/* Footer bar */}
@@ -84,7 +84,7 @@ export default function ContactFooter() {
         </div>
 
         <p className="mt-8 text-xs text-muted">
-          © {new Date().getFullYear()} Michael Smith. All rights reserved.
+          © {new Date().getFullYear()} Xiulong Yang. All rights reserved.
         </p>
       </div>
     </footer>
