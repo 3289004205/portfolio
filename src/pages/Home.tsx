@@ -9,6 +9,7 @@ import ImageMarqueeSection from '../components/ImageMarqueeSection'
 import Explorations from '../components/Explorations'
 import Stats from '../components/Stats'
 import ContactFooter from '../components/ContactFooter'
+import ResumeSection from '../components/ResumeSection'
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true)
@@ -40,6 +41,7 @@ export default function Home() {
       <Explorations />
       <Stats />
       <ContactFooter />
+      <ResumeSection />
     </motion.main>
   )
 }
