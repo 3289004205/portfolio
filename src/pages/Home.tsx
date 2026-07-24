@@ -7,10 +7,9 @@ import SelectedWorks from '../components/SelectedWorks'
 import SectionHeader from '../components/SectionHeader'
 import ImageMarqueeSection from '../components/ImageMarqueeSection'
 import Explorations from '../components/Explorations'
-import Stats from '../components/Stats'
-import ContactFooter from '../components/ContactFooter'
-import ResumeSection from '../components/ResumeSection'
 import MoreExplorationsSection from '../components/MoreExplorationsSection'
+import ResumeSection from '../components/ResumeSection'
+import ContactFooter from '../components/ContactFooter'
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true)
@@ -40,7 +39,6 @@ export default function Home() {
       </section>
       <ImageMarqueeSection />
       <Explorations />
-      <Stats />
       <MoreExplorationsSection />
       <ResumeSection />
       <ContactFooter />

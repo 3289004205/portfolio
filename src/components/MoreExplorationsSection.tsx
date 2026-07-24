@@ -40,7 +40,7 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
 
 export default function MoreExplorationsSection() {
   return (
-    <section id="more-explorations" className="w-full bg-bg py-20 md:py-28">
+    <section id="more-explorations" className="w-full bg-bg pt-16 pb-20 md:pt-24 md:pb-28">
       <div className="mx-auto max-w-[1200px] px-6 md:px-10 lg:px-16">
         <Eyebrow>More Explorations · 其他探索</Eyebrow>
 
