@@ -1,4 +1,19 @@
+import { motion } from 'framer-motion'
 import SectionHeader from './SectionHeader'
+
+const container = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.12 } },
+}
+
+const item = {
+  hidden: { opacity: 0, y: 40 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] },
+  },
+}
 
 interface Project {
   title: string
@@ -50,10 +65,16 @@ export default function SelectedWorks() {
           cta="View all work"
         />
 
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-12 md:gap-6">
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-100px' }}
+          className="grid grid-cols-1 gap-5 md:grid-cols-12 md:gap-6"
+        >
           {PROJECTS.map((p) => (
-            <a
-              key={p.title}
+            <motion.a
+              variants={item}
               href="#"
               className={`group relative overflow-hidden rounded-3xl border border-stroke bg-surface ${p.span}`}
             >
@@ -73,9 +94,9 @@ export default function SelectedWorks() {
                   </span>
                 </div>
               </div>
-            </a>
+            </motion.a>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )

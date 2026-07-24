@@ -1,3 +1,19 @@
+import { motion } from 'framer-motion'
+
+const container = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.12 } },
+}
+
+const item = {
+  hidden: { opacity: 0, y: 40 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] },
+  },
+}
+
 const ITEMS = [
   {
     title: '数字人应用',
@@ -51,9 +67,16 @@ export default function MoreExplorationsSection() {
           图像与视频之外，围绕数字人、模型训练与 3D 渲染的持续实验。
         </p>
 
-        <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-100px' }}
+          className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4"
+        >
           {ITEMS.map((item) => (
-            <div
+            <motion.div
+              variants={item}
               key={item.title}
               className="group flex flex-col overflow-hidden rounded-3xl border border-stroke bg-surface transition-colors hover:bg-surface/70"
             >
@@ -72,7 +95,7 @@ export default function MoreExplorationsSection() {
               </div>
             </div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )
