@@ -5,50 +5,39 @@ import Navbar from '../components/Navbar'
 import SpotlightCard from '../components/SpotlightCard/SpotlightCard'
 import StackingCards, { type StackingProject } from '../components/StackingCards/StackingCards'
 
-/** 项目产出概览：四类视频交付成果，套用 sticky 堆叠卡片样式 */
+/** 项目产出概览：套用 sticky 堆叠卡片样式（数据来自设计提示词） */
 const PROJECTS: StackingProject[] = [
   {
     number: '01',
-    category: 'Brand Film',
-    name: '官网品牌视频',
+    category: 'Client',
+    name: 'Nextlevel Studio',
     href: '#',
     images: {
-      top: 'https://picsum.photos/seed/v-office-top/600/400',
-      bottom: 'https://picsum.photos/seed/v-office-bot/600/400',
-      right: 'https://picsum.photos/seed/v-office-right/600/800',
+      top: 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055344_5eff02e0-87a5-41ce-b64f-eb08da8f33db.png&w=1280&q=85',
+      bottom: 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055431_11d841fd-8b41-46a5-82e4-b04f2407a7d8.png&w=1280&q=85',
+      right: 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055451_e317bf2d-28d4-48cc-86b0-6f72f25b6327.png&w=1280&q=85',
     },
   },
   {
     number: '02',
-    category: 'Institutional',
-    name: '体育训练局合作视频',
+    category: 'Personal',
+    name: 'Aura Brand Identity',
     href: '#',
     images: {
-      top: 'https://picsum.photos/seed/v-sport-top/600/400',
-      bottom: 'https://picsum.photos/seed/v-sport-bot/600/400',
-      right: 'https://picsum.photos/seed/v-sport-right/600/800',
+      top: 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055654_911201c5-36d9-4bc6-bac7-331adfce159f.png&w=1280&q=85',
+      bottom: 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055723_5ceda0b8-d9c2-4665-b2e3-83ba19ba76d1.png&w=1280&q=85',
+      right: 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055753_adc5dcbd-a8e6-49c0-b43a-9b030d835cea.png&w=1280&q=85',
     },
   },
   {
     number: '03',
-    category: 'E-commerce',
-    name: '淘宝首页开屏动画',
+    category: 'Client',
+    name: 'Solaris Digital',
     href: '#',
     images: {
-      top: 'https://picsum.photos/seed/v-taobao-top/600/400',
-      bottom: 'https://picsum.photos/seed/v-taobao-bot/600/400',
-      right: 'https://picsum.photos/seed/v-taobao-right/600/800',
-    },
-  },
-  {
-    number: '04',
-    category: 'Feed Ads',
-    name: '抖音信息流素材',
-    href: '#',
-    images: {
-      top: 'https://picsum.photos/seed/v-douyin-top/600/400',
-      bottom: 'https://picsum.photos/seed/v-douyin-bot/600/400',
-      right: 'https://picsum.photos/seed/v-douyin-right/600/800',
+      top: 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055759_963cfb0b-4bd1-4b0f-9d0a-09bd6cf95b2f.png&w=1280&q=85',
+      bottom: 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_060108_438f781a-9846-4dcc-89ab-c4e6cb830f5b.png&w=1280&q=85',
+      right: 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055818_9d062121-ad7e-46b9-999a-1a6a692ef1ee.png&w=1280&q=85',
     },
   },
 ]
@@ -81,9 +70,9 @@ const MODULES: Module[] = [
   {
     id: 'overview',
     title: '项目产出概览',
-    tagline: '四类视频交付成果',
-    desc: '汇总各渠道的 AI 视频产出，覆盖品牌官网、机构合作、电商大促与信息流投放四类典型场景，呈现从长视频到短素材的完整交付能力。',
-    tags: ['官网', '机构合作', '电商大促', '信息流'],
+    tagline: '精选视频项目合集',
+    desc: '精选的 AI 视频项目合集，覆盖品牌官网、个人作品与数字体验三类场景。向下滚动，项目卡片会逐张堆叠展开。',
+    tags: ['Client', 'Personal', 'Showcase'],
     sections: [],
   },
   {
@@ -224,7 +213,7 @@ export default function AiVideos() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.3 }}
-            className="mt-8 rounded-3xl border border-stroke bg-surface p-8"
+            className="mt-8 rounded-3xl border border-stroke bg-surface p-8 pb-20"
           >
             <h2 className="text-2xl font-medium text-text-primary">
               {current.title}

@@ -82,6 +82,20 @@
   .gradient-ring:hover::before {
     opacity: 1;
   }
+
+  /* Projects section "Project" hero heading gradient (per design prompt). */
+  .hero-heading {
+    background: linear-gradient(180deg, #646973 0%, #BBCCD7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Scope Kanit to the Projects stacking-card section without affecting
+     the rest of the site's typography. */
+  .font-kanit {
+    font-family: 'Kanit', sans-serif;
+  }
 }
 
 @layer utilities {
