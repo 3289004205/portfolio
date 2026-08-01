@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
+import RaysBackground from '../components/SideRays/RaysBackground'
 
 const IMAGES = [
   'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop',
@@ -68,13 +69,15 @@ export default function AiImages() {
   const navigate = useNavigate()
 
   return (
-    <motion.main
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.4 }}
-      className="mx-auto min-h-screen max-w-[1100px] bg-bg px-6 py-24 md:px-10"
-    >
+    <>
+      <RaysBackground />
+      <motion.main
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.4 }}
+        className="mx-auto min-h-screen max-w-[1100px] bg-transparent px-6 py-24 md:px-10"
+      >
       <button
         onClick={() => navigate('/')}
         className="mb-12 text-sm text-muted transition-colors hover:text-text-primary"
@@ -192,6 +195,7 @@ export default function AiImages() {
           </div>
         </motion.section>
       </AnimatePresence>
-    </motion.main>
+      </motion.main>
+    </>
   )
 }

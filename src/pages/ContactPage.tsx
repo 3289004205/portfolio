@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import ResumeSection from '../components/ResumeSection'
+import RaysBackground from '../components/SideRays/RaysBackground'
 
 const CONTACTS = [
   { label: '微信', value: '19163309757', copy: true },
@@ -17,13 +18,15 @@ export default function ContactPage() {
   }
 
   return (
-    <motion.main
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.4 }}
-      className="mx-auto w-full bg-bg"
-    >
+    <>
+      <RaysBackground />
+      <motion.main
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.4 }}
+        className="mx-auto w-full bg-transparent"
+      >
       <div className="mx-auto max-w-[1200px] px-6 pb-8 pt-12 md:px-10 lg:px-16">
         <button
           onClick={() => navigate('/')}
@@ -79,6 +82,7 @@ export default function ContactPage() {
       </section>
 
       <ResumeSection />
-    </motion.main>
+      </motion.main>
+    </>
   )
 }
