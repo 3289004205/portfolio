@@ -1,8 +1,24 @@
-import { useState } from 'react'
+import { useState, Fragment } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 
-const APPS = [
+type GalleryImage = { src?: string; caption: string }
+type FlowStep = { title: string; desc: string }
+type Section =
+  | { key: string; label: string; type: 'gallery'; images: GalleryImage[] }
+  | { key: string; label: string; type: 'flow'; steps: FlowStep[] }
+
+type App = {
+  id: string
+  title: string
+  tagline: string
+  desc: string
+  features: string[]
+  tags: string[]
+  sections?: Section[]
+}
+
+const APPS: App[] = [
   {
     id: 'visual',
     title: '视觉 AI 整合网站',
@@ -17,6 +33,43 @@ const APPS = [
       '学习资源：汇集教程与案例，推动团队 AI 普及',
     ],
     tags: ['ComfyUI', '知识库', '资产管理', '工作流'],
+    sections: [
+      {
+        key: 'showcase',
+        label: '页面展示',
+        type: 'gallery',
+        images: [
+          { caption: '首页 · 模块导航总览' },
+          { caption: '无限画布 · 工作流编排' },
+          { caption: '图像 / 视频资产库' },
+          { caption: '提示词库 · 模板管理' },
+          { caption: '知识库 · 沉淀与检索' },
+          { caption: '学习资源 · 教程中心' },
+        ],
+      },
+      {
+        key: 'flow',
+        label: '产品流程图详解',
+        type: 'flow',
+        steps: [
+          { title: '统一入口登录', desc: '成员通过整合网站单点进入，按角色与权限分发可用模块。' },
+          { title: '模块选择', desc: '导航 / 画布 / 知识库 / 资产库 / 提示词库 / 学习资源。' },
+          { title: 'AI 能力调用', desc: '对接 ComfyUI 生图、问答机器人、检索等底层 AI 能力。' },
+          { title: '结果沉淀', desc: '生成物自动归档至资产库，知识回流至知识库持续积累。' },
+          { title: '复用与协作', desc: '团队共享模板与资产，持续迭代优化生产流。' },
+        ],
+      },
+      {
+        key: 'prototype',
+        label: '原型图展示',
+        type: 'gallery',
+        images: [
+          { caption: '原型 · 信息架构' },
+          { caption: '原型 · 首页布局' },
+          { caption: '原型 · 画布交互' },
+        ],
+      },
+    ],
   },
   {
     id: 'preset',
@@ -122,19 +175,7 @@ export default function AiApps() {
             {current.desc}
           </p>
 
-          <ul className="mt-6 grid gap-3 md:grid-cols-2">
-            {current.features.map((f) => (
-              <li
-                key={f}
-                className="flex items-start gap-2 text-sm text-muted"
-              >
-                <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-text-primary/60" />
-                <span>{f}</span>
-              </li>
-            ))}
-          </ul>
-
-          <div className="mt-6 flex flex-wrap gap-2">
+          <div className="mt-5 flex flex-wrap gap-2">
             {current.tags.map((t) => (
               <span
                 key={t}
@@ -144,6 +185,79 @@ export default function AiApps() {
               </span>
             ))}
           </div>
+
+          {current.sections ? (
+            <div className="mt-10 flex flex-col gap-10">
+              {current.sections.map((sec) => (
+                <div key={sec.key}>
+                  <h3 className="mb-4 text-lg font-medium text-text-primary">
+                    {sec.label}
+                  </h3>
+
+                  {sec.type === 'gallery' && (
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                      {sec.images.map((img) => (
+                        <figure
+                          key={img.caption}
+                          className="relative overflow-hidden rounded-2xl border border-stroke bg-bg"
+                        >
+                          {img.src ? (
+                            <img
+                              src={img.src}
+                              alt={img.caption}
+                              className="aspect-video w-full object-cover"
+                            />
+                          ) : (
+                            <div className="flex aspect-video w-full items-center justify-center bg-surface text-xs text-muted">
+                              待上传{sec.label}截图
+                            </div>
+                          )}
+                          <figcaption className="absolute inset-x-0 bottom-0 bg-black/50 px-3 py-2 text-xs text-text-primary">
+                            {img.caption}
+                          </figcaption>
+                        </figure>
+                      ))}
+                    </div>
+                  )}
+
+                  {sec.type === 'flow' && (
+                    <div className="flex flex-col gap-4 md:flex-row md:items-stretch">
+                      {sec.steps.map((step, i) => (
+                        <Fragment key={step.title}>
+                          <div className="flex-1 rounded-2xl border border-stroke bg-bg p-4">
+                            <div className="text-xs text-muted">步骤 {i + 1}</div>
+                            <div className="mt-1 text-sm font-medium text-text-primary">
+                              {step.title}
+                            </div>
+                            <p className="mt-1 text-xs leading-relaxed text-muted">
+                              {step.desc}
+                            </p>
+                          </div>
+                          {i < sec.steps.length - 1 && (
+                            <div className="hidden items-center justify-center text-muted md:flex">
+                              →
+                            </div>
+                          )}
+                        </Fragment>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <ul className="mt-6 grid gap-3 md:grid-cols-2">
+              {current.features.map((f) => (
+                <li
+                  key={f}
+                  className="flex items-start gap-2 text-sm text-muted"
+                >
+                  <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-text-primary/60" />
+                  <span>{f}</span>
+                </li>
+              ))}
+            </ul>
+          )}
         </motion.section>
       </AnimatePresence>
     </motion.main>
