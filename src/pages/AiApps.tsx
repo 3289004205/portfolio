@@ -5,12 +5,10 @@ import { useNavigate } from 'react-router-dom'
 type GalleryImage = { src?: string; caption: string }
 type FlowStep = { title: string; desc: string }
 type BadcaseItem = { problem: string; fix: string }
-type ContentItem = { title: string; desc: string }
 type Section =
   | { key: string; label: string; type: 'gallery'; images: GalleryImage[] }
   | { key: string; label: string; type: 'flow'; steps: FlowStep[] }
   | { key: string; label: string; type: 'badcase'; items: BadcaseItem[] }
-  | { key: string; label: string; type: 'content'; items: ContentItem[] }
 
 type App = {
   id: string
@@ -206,46 +204,19 @@ const APPS: App[] = [
       {
         key: 'build',
         label: '飞书各部门知识库搭建',
-        type: 'content',
-        items: [
-          {
-            title: '多部门专属空间',
-            desc: '牵头为亚马逊运营、设计、研发等不同业务线在飞书搭建专属知识空间，统一沉淀业务流程、规范文档与最佳实践。',
-          },
-          {
-            title: '持续更新与版本管理',
-            desc: '支持文档增量入库与版本管理，保证知识随业务迭代持续更新，避免信息过时与分散。',
-          },
+        type: 'gallery',
+        images: [
+          { caption: '飞书知识库 · 部门空间总览' },
+          { caption: '知识库 · 文档管理与版本' },
         ],
       },
       {
         key: 'bot',
         label: '各部门知识库问答机器人',
-        type: 'content',
-        items: [
-          {
-            title: '对话式自然语言检索',
-            desc: '基于各部门知识库搭建对应的问答机器人，员工以自然语言提问即可快速获取准确信息。',
-          },
-          {
-            title: '降低重复咨询',
-            desc: '覆盖高频问题与跨部门的检索诉求，减少重复沟通，显著提升团队协作效率。',
-          },
-        ],
-      },
-      {
-        key: 'governance',
-        label: '知识库权限与治理',
-        type: 'content',
-        items: [
-          {
-            title: '权限分级',
-            desc: '按部门与角色配置知识空间的访问与编辑权限，兼顾开放共享与信息保密。',
-          },
-          {
-            title: '内容审核与规范',
-            desc: '建立内容审核与更新机制，规范知识入库标准，保障知识资产的安全性与一致性。',
-          },
+        type: 'gallery',
+        images: [
+          { caption: '问答机器人 · 对话界面' },
+          { caption: '问答机器人 · 知识检索结果' },
         ],
       },
       {
@@ -427,24 +398,6 @@ export default function AiApps() {
                               </div>
                             </div>
                           </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {sec.type === 'content' && (
-                    <div className="flex flex-col gap-4">
-                      {sec.items.map((item, i) => (
-                        <div
-                          key={i}
-                          className="rounded-2xl border border-stroke bg-bg p-6"
-                        >
-                          <div className="text-base font-medium text-text-primary">
-                            {item.title}
-                          </div>
-                          <p className="mt-2 text-sm leading-relaxed text-muted">
-                            {item.desc}
-                          </p>
                         </div>
                       ))}
                     </div>
