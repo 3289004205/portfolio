@@ -2,6 +2,7 @@ import { useState, Fragment } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import RaysBackground from '../components/SideRays/RaysBackground'
 import Navbar from '../components/Navbar'
+import SpotlightCard from '../components/SpotlightCard/SpotlightCard'
 
 type GalleryImage = { src?: string; caption: string }
 type FlowStep = { title: string; desc: string }
@@ -303,10 +304,14 @@ export default function AiApps() {
         {APPS.map((app) => {
           const active = app.id === selected
           return (
-            <button
+            <SpotlightCard
               key={app.id}
+              as="button"
               type="button"
               onClick={() => setSelected(app.id)}
+              spotlightColor={
+                active ? 'rgba(137, 170, 204, 0.45)' : 'rgba(255, 255, 255, 0.18)'
+              }
               className={`flex flex-col rounded-2xl border p-5 text-left transition-all ${
                 active
                   ? 'border-text-primary bg-surface shadow-sm shadow-black/10'
@@ -321,7 +326,7 @@ export default function AiApps() {
                 {app.title}
               </span>
               <span className="mt-1 text-xs text-muted">{app.tagline}</span>
-            </button>
+            </SpotlightCard>
           )
         })}
       </div>

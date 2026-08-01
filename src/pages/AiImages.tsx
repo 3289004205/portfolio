@@ -2,6 +2,7 @@ import { useState, Fragment } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import RaysBackground from '../components/SideRays/RaysBackground'
 import Navbar from '../components/Navbar'
+import SpotlightCard from '../components/SpotlightCard/SpotlightCard'
 import Masonry, { type MasonryItem } from '../components/Masonry/Masonry'
 
 // 占位图：换成真实截图时把 img / url 换掉即可。
@@ -170,10 +171,14 @@ export default function AiImages() {
         {MODULES.map((mod) => {
           const active = mod.id === selected
           return (
-            <button
+            <SpotlightCard
               key={mod.id}
+              as="button"
               type="button"
               onClick={() => setSelected(mod.id)}
+              spotlightColor={
+                active ? 'rgba(137, 170, 204, 0.45)' : 'rgba(255, 255, 255, 0.18)'
+              }
               className={`flex flex-col rounded-2xl border p-5 text-left transition-all ${
                 active
                   ? 'border-text-primary bg-surface shadow-sm shadow-black/10'
@@ -188,7 +193,7 @@ export default function AiImages() {
                 {mod.title}
               </span>
               <span className="mt-1 text-xs text-muted">{mod.tagline}</span>
-            </button>
+            </SpotlightCard>
           )
         })}
       </div>
