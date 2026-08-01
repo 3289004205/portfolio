@@ -117,7 +117,7 @@ export default function Explorations() {
           onClick={() => navigate('/ai-videos')}
           className="gradient-ring mt-8 inline-flex rounded-full bg-surface px-5 py-3 text-sm text-text-primary transition-transform hover:scale-105"
         >
-          Visit Dribbble <span className="ml-2">↗</span>
+          View all work <span className="ml-2">↗</span>
         </button>
       </div>
 
