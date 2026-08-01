@@ -2,6 +2,7 @@ import { Fragment } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import RaysBackground from '../components/SideRays/RaysBackground'
+import Masonry, { type MasonryItem } from '../components/Masonry/Masonry'
 
 const IMAGES = [
   'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop',
@@ -12,11 +13,19 @@ const IMAGES = [
   'https://images.unsplash.com/photo-1518998053901-5348d3961a04?q=80&w=600&auto=format&fit=crop',
 ]
 
+const MASONRY_ITEMS: MasonryItem[] = IMAGES.map((src, i) => ({
+  id: String(i + 1),
+  img: src,
+  url: src,
+  height: [600, 820, 480, 700, 560, 780][i] ?? 600,
+}))
+
 type GalleryImage = { src?: string; caption: string }
 type FlowStep = { title: string; desc: string }
 type ContentItem = { title: string; desc: string; link?: string }
 type Section =
   | { key: string; label: string; type: 'gallery'; images: GalleryImage[] }
+  | { key: string; label: string; type: 'masonry'; items: MasonryItem[] }
   | { key: string; label: string; type: 'flow'; steps: FlowStep[] }
   | { key: string; label: string; type: 'content'; items: ContentItem[] }
 
@@ -24,8 +33,8 @@ const SECTIONS: Section[] = [
   {
     key: 'overview',
     label: '项目产出概览',
-    type: 'gallery',
-    images: IMAGES.map((src, i) => ({ src, caption: `项目产出 ${i + 1}` })),
+    type: 'masonry',
+    items: MASONRY_ITEMS,
   },
   {
     key: 'flow',
@@ -136,6 +145,12 @@ export default function AiImages() {
                         </figcaption>
                       </figure>
                     ))}
+                  </div>
+                )}
+
+                {sec.type === 'masonry' && (
+                  <div className="relative w-full">
+                    <Masonry items={sec.items} />
                   </div>
                 )}
 
