@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { useNavigate } from 'react-router-dom'
 import LoadingScreen from '../components/LoadingScreen'
 import Navbar from '../components/Navbar'
 import Hero from '../components/Hero'
@@ -12,6 +13,7 @@ import ContactFooter from '../components/ContactFooter'
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true)
+  const navigate = useNavigate()
 
   return (
     <motion.main
@@ -32,6 +34,7 @@ export default function Home() {
             titleEm="Image"
             subtext="A selection of projects I've worked on, from concept to launch."
             cta="View all work"
+            onCta={() => navigate('/ai-images')}
             className="!mb-0"
           />
         </div>

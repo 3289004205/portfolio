@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { useNavigate } from 'react-router-dom'
 import SectionHeader from './SectionHeader'
 
 interface Project {
@@ -54,6 +55,8 @@ const item = {
 }
 
 export default function SelectedWorks() {
+  const navigate = useNavigate()
+
   return (
     <section id="work" className="bg-bg py-12 md:py-16">
       <div className="mx-auto max-w-[1200px] px-6 md:px-10 lg:px-16">
@@ -63,6 +66,7 @@ export default function SelectedWorks() {
           titleEm="Application"
           subtext="A selection of projects I've worked on, from concept to launch."
           cta="View all work"
+          onCta={() => navigate('/ai-apps')}
         />
 
         <motion.div

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -46,6 +47,7 @@ const ITEMS_COL_2: Exploration[] = [
 ]
 
 export default function Explorations() {
+  const navigate = useNavigate()
   const sectionRef = useRef<HTMLElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
   const col1Ref = useRef<HTMLDivElement>(null)
@@ -111,14 +113,13 @@ export default function Explorations() {
           A space to experiment — motion studies, color systems, and fragments from the
           everyday.
         </p>
-        <a
-          href="https://dribbble.com"
-          target="_blank"
-          rel="noreferrer"
+        <button
+          type="button"
+          onClick={() => navigate('/ai-videos')}
           className="gradient-ring mt-8 inline-flex rounded-full bg-surface px-5 py-3 text-sm text-text-primary transition-transform hover:scale-105"
         >
           Visit Dribbble <span className="ml-2">↗</span>
-        </a>
+        </button>
       </div>
 
       {/* Layer 2: Parallax Columns */}
