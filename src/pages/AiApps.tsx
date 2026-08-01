@@ -5,12 +5,10 @@ import { useNavigate } from 'react-router-dom'
 type GalleryImage = { src?: string; caption: string }
 type FlowStep = { title: string; desc: string }
 type BadcaseItem = { problem: string; fix: string }
-type ContentItem = { title: string; desc: string }
 type Section =
   | { key: string; label: string; type: 'gallery'; images: GalleryImage[] }
   | { key: string; label: string; type: 'flow'; steps: FlowStep[] }
   | { key: string; label: string; type: 'badcase'; items: BadcaseItem[] }
-  | { key: string; label: string; type: 'content'; items: ContentItem[] }
 
 type App = {
   id: string
@@ -254,22 +252,30 @@ const APPS: App[] = [
     tags: ['插件', 'Figma', 'ComfyUI', '效率工具'],
     sections: [
       {
-        key: 'plugins',
-        label: '插件一览',
-        type: 'content',
-        items: [
-          {
-            title: '提示词反推与素材库插件',
-            desc: '输入参考图即可反推对应提示词，并一键归档至素材库，方便复用与二次创作，降低生图门槛。',
-          },
-          {
-            title: 'Figma 批量主图修改插件',
-            desc: '在 Figma 中批量替换 / 修改主图与文案，支持多尺寸导出，大幅提升电商投放物料的产出效率。',
-          },
-          {
-            title: 'ComfyUI 缓存清理插件',
-            desc: '一键清理 ComfyUI 生成的临时文件与模型缓存，释放磁盘空间，避免缓存膨胀影响出图稳定性。',
-          },
+        key: 'prompt-reverse',
+        label: '提示词反推与素材库插件',
+        type: 'gallery',
+        images: [
+          { caption: '提示词反推 · 结果界面' },
+          { caption: '素材库 · 归档管理' },
+        ],
+      },
+      {
+        key: 'figma-batch',
+        label: 'Figma 批量主图修改插件',
+        type: 'gallery',
+        images: [
+          { caption: 'Figma 插件 · 批量替换面板' },
+          { caption: 'Figma 插件 · 多尺寸导出' },
+        ],
+      },
+      {
+        key: 'comfy-cache',
+        label: 'ComfyUI 缓存清理插件',
+        type: 'gallery',
+        images: [
+          { caption: '缓存清理 · 扫描结果' },
+          { caption: '缓存清理 · 清理完成' },
         ],
       },
     ],
@@ -433,23 +439,6 @@ export default function AiApps() {
                     </div>
                   )}
 
-                  {sec.type === 'content' && (
-                    <div className="flex flex-col gap-4">
-                      {sec.items.map((item, i) => (
-                        <div
-                          key={i}
-                          className="rounded-2xl border border-stroke bg-bg p-6"
-                        >
-                          <div className="text-base font-medium text-text-primary">
-                            {item.title}
-                          </div>
-                          <p className="mt-2 text-sm leading-relaxed text-muted">
-                            {item.desc}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  )}
                 </div>
               ))}
             </div>
