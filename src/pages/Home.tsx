@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import LoadingScreen from '../components/LoadingScreen'
@@ -11,20 +11,24 @@ import Explorations from '../components/Explorations'
 import MoreExplorationsSection from '../components/MoreExplorationsSection'
 import ContactFooter from '../components/ContactFooter'
 
-const HOME_LOADED_KEY = 'portfolio_home_loaded'
+// 本次页面加载的落地路由（HashRouter：#/ai-apps -> /ai-apps）
+const ENTRY_PATH =
+  typeof window === 'undefined'
+    ? '/'
+    : window.location.hash.replace(/^#/, '').split('?')[0] || '/'
+
+// 仅当「本次页面加载的落地页就是首页」时播放开场动画。
+// 站内切回首页不再播放；浏览器刷新 / 重新打开网站会重新播放。
+let introPending = ENTRY_PATH === '/'
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(() => {
-    if (typeof window === 'undefined') return true
-    return sessionStorage.getItem(HOME_LOADED_KEY) !== '1'
-  })
+  const [isLoading, setIsLoading] = useState(() => introPending)
   const navigate = useNavigate()
 
-  useEffect(() => {
-    if (!isLoading) {
-      sessionStorage.setItem(HOME_LOADED_KEY, '1')
-    }
-  }, [isLoading])
+  const handleIntroComplete = () => {
+    introPending = false
+    setIsLoading(false)
+  }
 
   return (
     <motion.main
@@ -33,7 +37,7 @@ export default function Home() {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.4 }}
     >
-      {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}
+      {isLoading && <LoadingScreen onComplete={handleIntroComplete} />}
       <Navbar />
       <Hero />
       <SelectedWorks />
