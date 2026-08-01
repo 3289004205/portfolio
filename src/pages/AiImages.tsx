@@ -4,21 +4,22 @@ import RaysBackground from '../components/SideRays/RaysBackground'
 import Navbar from '../components/Navbar'
 import Masonry, { type MasonryItem } from '../components/Masonry/Masonry'
 
-const IMAGES = [
-  'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1541701494587-cb58502866ab?q=80&w=600&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1550859492-d5da9d8e45f3?q=80&w=600&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1557672172-298e090bd0f1?q=80&w=600&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1502691876148-a84978e59af8?q=80&w=600&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1518998053901-5348d3961a04?q=80&w=600&auto=format&fit=crop',
-]
+// 占位图：换成真实截图时把 img / url 换掉即可。
+// 注意 Masonry 内部用全局 [data-key] 选择器，多组瀑布流的 id 必须唯一。
+const makeMasonryItems = (prefix: string, heights: number[]): MasonryItem[] =>
+  heights.map((h, i) => {
+    const src = `https://picsum.photos/seed/${prefix}${i + 1}/600/${h}`
+    return {
+      id: `${prefix}-${i + 1}`,
+      img: src,
+      url: `https://picsum.photos/seed/${prefix}${i + 1}/1200/${h * 2}`,
+      height: h,
+    }
+  })
 
-const MASONRY_ITEMS: MasonryItem[] = IMAGES.map((src, i) => ({
-  id: String(i + 1),
-  img: src,
-  url: src,
-  height: [600, 820, 480, 700, 560, 780][i] ?? 600,
-}))
+const DETAIL_ITEMS = makeMasonryItems('detail', [600, 820, 480, 700, 560, 780])
+const BRAND_ITEMS = makeMasonryItems('brand', [720, 520, 640, 860, 500, 680])
+const AMAZON_ITEMS = makeMasonryItems('amazon', [540, 760, 620, 500, 800, 660])
 
 type GalleryImage = { src?: string; caption: string }
 type FlowStep = { title: string; desc: string }
@@ -52,14 +53,26 @@ const MODULES: Module[] = [
     id: 'overview',
     title: '项目产出概览',
     tagline: '精选图像作品集',
-    desc: '汇总各业务线的 AI 图像产出成果，涵盖电商主图、广告素材、概念设计与风格探索，直观呈现整体产能与质量水位。',
-    tags: ['电商主图', '广告素材', '概念设计', '风格探索'],
+    desc: '汇总各业务线的 AI 图像产出成果，按详情页素材、品牌物料、亚马逊 A+ 三类场景归档，直观呈现整体产能与质量水位。',
+    tags: ['详情页素材', '品牌物料', '亚马逊 A+'],
     sections: [
       {
-        key: 'gallery',
-        label: '精选产出',
+        key: 'detail',
+        label: '详情页素材',
         type: 'masonry',
-        items: MASONRY_ITEMS,
+        items: DETAIL_ITEMS,
+      },
+      {
+        key: 'brand',
+        label: '品牌物料',
+        type: 'masonry',
+        items: BRAND_ITEMS,
+      },
+      {
+        key: 'amazon',
+        label: '亚马逊 A+',
+        type: 'masonry',
+        items: AMAZON_ITEMS,
       },
     ],
   },
