@@ -2,18 +2,6 @@ import FadeContent from './FadeContent/FadeContent'
 
 const ITEMS = [
   {
-    title: 'RAG',
-    tag: 'RAG / Knowledge Base',
-    desc: '基于检索增强生成搭建企业知识库与问答系统，把分散文档沉淀为可对话、可追溯的智能知识资产。',
-    image: 'https://picsum.photos/seed/rag-knowledge/800/600',
-  },
-  {
-    title: '影刀 RPA',
-    tag: 'Yingdao RPA',
-    desc: '基于影刀 RPA 设计可视化自动化流程，把跨系统的重复操作编排为稳定、可监控的自动任务，释放人力。',
-    image: 'https://picsum.photos/seed/yingdao-rpa/800/600',
-  },
-  {
     title: '数字人应用',
     tag: 'Digital Human',
     desc: '跨部门落地的数字人方案，从形象生成到口型驱动与场景化应用，探索 AI 数字身份的完整链路。',
@@ -74,10 +62,10 @@ export default function MoreExplorationsSection() {
           AI <span className="font-display italic">Beyond</span>
         </h2>
         <p className="mt-4 max-w-lg text-sm text-muted md:text-base">
-          图像与视频之外，围绕数字人、模型训练、3D 渲染、RAG、RPA 与低代码平台的持续实验。
+          图像与视频之外，围绕数字人、模型训练、3D 渲染、RPA 与低代码平台的持续实验。
         </p>
 
-        <div className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+        <div className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
           {ITEMS.map((item, i) => (
             <FadeContent
               key={item.title}
