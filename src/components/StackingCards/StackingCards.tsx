@@ -1,11 +1,10 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import FadeIn from '../FadeIn/FadeIn'
 
 export type StackingProject = {
   /** 序号，如 "01" */
   number: string
-  /** 分类标签，如 "Client" / "Personal" */
+  /** 分类标签，如 "Brand Film" */
   category: string
   /** 项目名称 */
   name: string
@@ -17,54 +16,54 @@ export type StackingProject = {
 
 function CardInner({ project }: { project: StackingProject }) {
   return (
-    <div className="flex flex-col gap-6 rounded-[40px] border-2 border-[#D7E2EA] bg-[#0C0C0C] p-4 font-kanit sm:gap-8 sm:rounded-[50px] sm:p-6 md:gap-10 md:rounded-[60px] md:p-8">
-      {/* 顶部行：序号 + 分类/名称 + Live Project 胶囊 */}
-      <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-        <div className="flex items-center gap-6 sm:gap-8 md:gap-10">
-          <span className="font-black uppercase leading-none text-[#D7E2EA] text-[clamp(3rem,10vw,140px)]">
+    <div className="overflow-hidden rounded-[40px] border border-stroke bg-surface p-6 shadow-xl shadow-black/30 md:p-10">
+      {/* 头部：大序号 + 分类/名称 + Live Project 胶囊 */}
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div className="flex items-end gap-4">
+          <span className="select-none font-semibold leading-none text-text-primary/10 text-[clamp(3rem,10vw,140px)]">
             {project.number}
           </span>
-          <div className="flex flex-col gap-2 sm:gap-4 md:gap-6">
-            <p className="font-medium uppercase text-[#D7E2EA] text-[clamp(1rem,2.2vw,2.1rem)]">
+          <div>
+            <p className="text-xs uppercase tracking-[0.25em] text-muted">
               {project.category}
             </p>
-            <h3 className="font-light tracking-wide text-[#D7E2EA] text-[clamp(0.9rem,2vw,2rem)]">
+            <h3 className="mt-1.5 text-xl font-medium text-text-primary md:text-3xl">
               {project.name}
             </h3>
           </div>
         </div>
         <a
           href={project.href ?? '#'}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex w-fit items-center rounded-full border-2 border-[#D7E2EA] px-8 py-3 text-sm font-medium uppercase tracking-widest text-[#D7E2EA] transition-colors duration-200 hover:bg-[#D7E2EA]/10 active:bg-[#D7E2EA]/20 sm:px-10 sm:py-3.5 sm:text-base"
+          className="rounded-full border border-stroke px-4 py-2 text-xs text-text-primary transition-colors hover:bg-text-primary hover:text-bg"
         >
-          Live Project
+          Live Project ↗
         </a>
       </div>
 
-      {/* 图片网格：左列两张、右侧一张通栏 */}
-      <div className="flex w-full flex-col gap-4 md:flex-row md:gap-5">
-        <div className="flex w-full flex-col gap-4 md:w-[40%] md:gap-5">
+      {/* 图片网格：左列两张堆叠，右侧一张通栏拉伸 */}
+      <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-[1fr_1.2fr]">
+        <div className="flex flex-col gap-4">
           <img
             src={project.images.top}
             alt=""
             loading="lazy"
-            className="h-[clamp(130px,16vw,230px)] w-full rounded-[40px] object-cover sm:rounded-[50px] md:rounded-[60px]"
+            className="aspect-video w-full rounded-2xl border border-stroke object-cover"
           />
           <img
             src={project.images.bottom}
             alt=""
             loading="lazy"
-            className="h-[clamp(160px,22vw,340px)] w-full rounded-[30px] object-cover sm:rounded-[40px] md:rounded-[60px]"
+            className="aspect-video w-full rounded-2xl border border-stroke object-cover"
           />
         </div>
-        <img
-          src={project.images.right}
-          alt=""
-          loading="lazy"
-          className="w-full self-stretch rounded-[30px] object-cover sm:rounded-[40px] md:w-[60%] md:rounded-[60px]"
-        />
+        <div className="flex">
+          <img
+            src={project.images.right}
+            alt=""
+            loading="lazy"
+            className="aspect-[3/4] min-h-[420px] w-full rounded-2xl border border-stroke object-cover md:aspect-auto md:h-full"
+          />
+        </div>
       </div>
     </div>
   )
@@ -84,18 +83,7 @@ export default function StackingCards({
   })
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative z-10 -mt-10 rounded-t-[40px] bg-[#0C0C0C] px-5 font-kanit sm:-mt-12 sm:rounded-t-[50px] sm:px-8 md:-mt-14 md:rounded-t-[60px] md:px-10"
-    >
-      {/* 区块大标题 */}
-      <FadeIn y={40} className="flex flex-col items-center py-20 sm:py-24 md:py-32">
-        <h2 className="hero-heading w-full text-center font-black uppercase leading-none tracking-tight text-[clamp(3rem,12vw,160px)]">
-          Project
-        </h2>
-      </FadeIn>
-
-      {/* 堆叠卡片 */}
+    <div ref={sectionRef} className="relative">
       {projects.map((project, index) => {
         const scale = useTransform(
           scrollYProgress,
@@ -113,13 +101,13 @@ export default function StackingCards({
                 top: `${index * 28}px`,
                 transformOrigin: 'top',
               }}
-              className="absolute left-1/2 w-full max-w-[1760px] -translate-x-1/2"
+              className="absolute left-1/2 w-[94%] max-w-[1100px] -translate-x-1/2"
             >
               <CardInner project={project} />
             </motion.div>
           </div>
         )
       })}
-    </section>
+    </div>
   )
 }
