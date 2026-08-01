@@ -8,7 +8,7 @@ const NAV_LINKS = [
   { label: 'AI图像', target: 'ai-images', href: '/ai-images' },
   { label: 'AI视频', target: 'ai-videos', href: '/ai-videos' },
   { label: '其他探索', target: 'more', href: '/more' },
-  { label: '联系我', target: 'contact', href: '/contact' },
+  { label: '我的简历', target: 'contact', href: '/contact' },
 ]
 
 export default function Navbar() {
