@@ -94,18 +94,6 @@ export default function AiImages() {
         ← 返回首页
       </button>
 
-      <div className="mb-5 flex items-center gap-3">
-        <span className="h-px w-8 bg-stroke" />
-        <span className="text-xs uppercase tracking-[0.3em] text-muted">AI Images</span>
-      </div>
-
-      <h1 className="text-5xl font-medium tracking-tight text-text-primary md:text-7xl">
-        AI 图像
-      </h1>
-      <p className="mt-4 max-w-lg text-sm text-muted md:text-base">
-        文生图、图生图、风格迁移与视觉合成——从概念到成品的图像生成工作流。
-      </p>
-
       <AnimatePresence mode="wait">
         <motion.section
           key="ai-images"
