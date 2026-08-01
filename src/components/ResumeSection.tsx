@@ -91,7 +91,7 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
 
 export default function ResumeSection() {
   return (
-    <section id="resume" className="w-full bg-bg py-20 md:py-28">
+    <section id="resume" className="w-full bg-bg pb-20 pt-12 md:pb-28 md:pt-16">
       <div className="mx-auto max-w-[1200px] px-6 md:px-10 lg:px-16">
         {/* Header */}
         <Eyebrow>Resume · 简历</Eyebrow>

@@ -34,7 +34,7 @@ export default function ContactPage() {
       </div>
 
       {/* 联系方式 */}
-      <section className="mx-auto max-w-[1200px] px-6 pb-16 pt-2 md:px-10 lg:px-16">
+      <section className="mx-auto max-w-[1200px] px-6 pb-4 pt-2 md:px-10 lg:px-16">
         <div className="mb-5 flex items-center gap-3">
           <span className="h-px w-8 bg-stroke" />
           <span className="text-xs uppercase tracking-[0.3em] text-muted">Contact · 联系方式</span>
