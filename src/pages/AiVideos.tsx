@@ -195,26 +195,8 @@ export default function AiVideos() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.3 }}
+            className="mt-8"
           >
-            <div className="rounded-3xl border border-stroke bg-surface p-8">
-              <h2 className="text-2xl font-medium text-text-primary">
-                {current.title}
-              </h2>
-              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">
-                {current.desc}
-              </p>
-              <div className="mt-5 flex flex-wrap gap-2">
-                {current.tags.map((t) => (
-                  <span
-                    key={t}
-                    className="rounded-full border border-stroke bg-bg px-3 py-1.5 text-xs text-text-primary"
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
-            </div>
-
             <StackingCards projects={PROJECTS} />
           </motion.div>
         ) : (
