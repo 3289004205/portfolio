@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import RaysBackground from '../components/SideRays/RaysBackground'
+import Navbar from '../components/Navbar'
 
 const ITEMS = [
   {
@@ -19,6 +20,7 @@ const ITEMS = [
 export default function More() {
   return (
     <>
+      <Navbar />
       <RaysBackground />
       <motion.main
         initial={{ opacity: 0 }}

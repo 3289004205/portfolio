@@ -1,6 +1,7 @@
 import { useState, Fragment } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import RaysBackground from '../components/SideRays/RaysBackground'
+import Navbar from '../components/Navbar'
 
 type GalleryImage = { src?: string; caption: string }
 type FlowStep = { title: string; desc: string }
@@ -288,6 +289,7 @@ export default function AiApps() {
 
   return (
     <>
+      <Navbar />
       <RaysBackground />
       <motion.main
         initial={{ opacity: 0 }}

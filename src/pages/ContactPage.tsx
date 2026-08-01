@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import ResumeSection from '../components/ResumeSection'
 import RaysBackground from '../components/SideRays/RaysBackground'
+import Navbar from '../components/Navbar'
 
 const CONTACTS = [
   { label: '微信', value: '19163309757', copy: true },
@@ -16,6 +17,7 @@ export default function ContactPage() {
 
   return (
     <>
+      <Navbar />
       <RaysBackground />
       <motion.main
         initial={{ opacity: 0 }}
@@ -24,7 +26,7 @@ export default function ContactPage() {
         transition={{ duration: 0.4 }}
         className="mx-auto w-full bg-transparent"
       >
-      <div className="mx-auto max-w-[1200px] px-6 pb-8 pt-12 md:px-10 lg:px-16" />
+      <div className="mx-auto max-w-[1200px] px-6 pb-8 pt-24 md:px-10 lg:px-16" />
 
       {/* 联系方式 */}
       <section className="mx-auto max-w-[1200px] px-6 pb-4 pt-2 md:px-10 lg:px-16">

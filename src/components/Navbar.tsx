@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useState, useMemo } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import GlassSurface from './GlassSurface/GlassSurface'
 
 const NAV_LINKS = [
@@ -13,8 +13,12 @@ const NAV_LINKS = [
 
 export default function Navbar() {
   const navigate = useNavigate()
+  const location = useLocation()
   const [scrolled, setScrolled] = useState(false)
-  const [active, setActive] = useState('首页')
+  const active = useMemo(() => {
+    const match = NAV_LINKS.find((link) => link.href === location.pathname)
+    return match?.label ?? '首页'
+  }, [location.pathname])
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 100)
@@ -23,13 +27,11 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const handleNav = (label: string, href: string) => {
+  const handleNav = (href: string) => {
     if (href === '/') {
       window.scrollTo({ top: 0, behavior: 'smooth' })
-    } else {
-      navigate(href)
     }
-    setActive(label)
+    navigate(href)
   }
 
   return (
@@ -59,7 +61,7 @@ export default function Navbar() {
           {/* Logo */}
           <button
             aria-label="首页"
-            onClick={() => handleNav('首页', '/')}
+            onClick={() => handleNav('/')}
             className="group relative mr-1 grid h-9 w-9 flex-none place-items-center rounded-full p-[1.5px] accent-gradient transition-transform duration-300 hover:scale-110 hover:[background:linear-gradient(90deg,#4e85bf,#89aacc)]"
           >
             <span className="grid h-[33px] w-[33px] place-items-center rounded-full bg-bg">
@@ -73,7 +75,7 @@ export default function Navbar() {
           {NAV_LINKS.map(({ label, href }) => (
             <button
               key={label}
-              onClick={() => handleNav(label, href)}
+              onClick={() => handleNav(href)}
               className={`flex-none rounded-full px-2.5 py-1.5 text-xs transition-colors duration-200 sm:px-4 sm:py-2 sm:text-sm ${
                 active === label
                   ? 'text-text-primary bg-stroke/50'

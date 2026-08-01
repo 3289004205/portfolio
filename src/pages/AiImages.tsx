@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import RaysBackground from '../components/SideRays/RaysBackground'
+import Navbar from '../components/Navbar'
 import Masonry, { type MasonryItem } from '../components/Masonry/Masonry'
 
 const IMAGES = [
@@ -76,6 +77,7 @@ const SECTIONS: Section[] = [
 export default function AiImages() {
   return (
     <>
+      <Navbar />
       <RaysBackground />
       <motion.main
         initial={{ opacity: 0 }}
