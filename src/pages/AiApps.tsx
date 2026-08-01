@@ -4,16 +4,18 @@ import { useNavigate } from 'react-router-dom'
 
 type GalleryImage = { src?: string; caption: string }
 type FlowStep = { title: string; desc: string }
+type BadcaseItem = { problem: string; fix: string }
 type Section =
   | { key: string; label: string; type: 'gallery'; images: GalleryImage[] }
   | { key: string; label: string; type: 'flow'; steps: FlowStep[] }
+  | { key: string; label: string; type: 'badcase'; items: BadcaseItem[] }
 
 type App = {
   id: string
   title: string
   tagline: string
   desc: string
-  features: string[]
+  features?: string[]
   tags: string[]
   sections?: Section[]
 }
@@ -24,14 +26,6 @@ const APPS: App[] = [
     title: '视觉 AI 整合网站',
     tagline: '视觉部 AI 集合化系统',
     desc: '从 0 到 1 主导搭建的视觉部 AI 集合化系统，整合六大模块，将分散的 AI 能力统一为可协同的团队生产力平台。',
-    features: [
-      '网站导航：聚合团队常用 AI 工具与内部系统入口',
-      '无限画布：支持自由编排与可视化创作工作流',
-      '知识库：沉淀视觉规范、品牌资产与最佳实践',
-      '图像 / 视频资产库：统一管理生成与采购素材',
-      '提示词库：沉淀可复用的高质量提示词模板',
-      '学习资源：汇集教程与案例，推动团队 AI 普及',
-    ],
     tags: ['ComfyUI', '知识库', '资产管理', '工作流'],
     sections: [
       {
@@ -76,26 +70,130 @@ const APPS: App[] = [
     title: '预设生成网站',
     tagline: '提示词预设生图平台',
     desc: '系统提示词预设生图网站，对接 ComfyUI 后端实现一键生图，大幅降低 AI 生图的使用门槛。',
-    features: [
-      '预设提示词：封装常用生图场景为开箱即用模板',
-      '一键生图：对接 ComfyUI 后端，无需本地环境',
-      '参数托管：统一管理采样、模型与尺寸配置',
-      '结果归档：自动保存生成记录与可复用参数',
-    ],
     tags: ['ComfyUI', 'Prompt', '一键生图'],
+    sections: [
+      {
+        key: 'showcase',
+        label: '页面展示',
+        type: 'gallery',
+        images: [
+          { caption: '首页 · 预设模板选择' },
+          { caption: '生图页 · 参数配置' },
+          { caption: '结果页 · 成片预览' },
+          { caption: '历史记录 · 参数复用' },
+        ],
+      },
+      {
+        key: 'flow',
+        label: '产品流程图详解',
+        type: 'flow',
+        steps: [
+          { title: '选择预设模板', desc: '按场景选取开箱即用的提示词与参数模板。' },
+          { title: '配置参数', desc: '统一管理采样、模型、尺寸等生图配置。' },
+          { title: '调用 ComfyUI', desc: '后端异步生图，无需本地部署环境。' },
+          { title: '结果校验', desc: '预览成片，支持重生成与微调对比。' },
+          { title: '归档复用', desc: '保存记录与可复用参数，沉淀团队资产。' },
+        ],
+      },
+      {
+        key: 'prototype',
+        label: '原型图展示',
+        type: 'gallery',
+        images: [
+          { caption: '原型 · 信息架构' },
+          { caption: '原型 · 生图交互' },
+          { caption: '原型 · 历史管理' },
+        ],
+      },
+      {
+        key: 'badcase',
+        label: 'Badcase 优化',
+        type: 'badcase',
+        items: [
+          {
+            problem: '生成图像与提示词预期不符',
+            fix: '优化预设模板的提示词结构，增加负向提示词与示例对照，提升可控性。',
+          },
+          {
+            problem: '生图偶发失败 / 超时',
+            fix: '引入任务队列与重试机制，超时自动回退并给出明确提示。',
+          },
+          {
+            problem: '不同模型输出风格不一致',
+            fix: '统一采样参数与 LoRA 权重，建立风格校准基线，保证成片一致性。',
+          },
+          {
+            problem: '参数配置门槛偏高',
+            fix: '暴露常用参数、收起高级项，提供「一键最佳」预设降低上手成本。',
+          },
+        ],
+      },
+    ],
   },
   {
     id: 'service',
     title: '客服问答系统',
     tagline: 'AI 智能客服',
     desc: 'AI 智能客服系统，实现意图识别、多轮对话与自动化服务，提升售前售后响应效率。',
-    features: [
-      '意图识别：精准理解用户诉求并自动分流',
-      '多轮对话：支持上下文连贯的复杂问题应答',
-      '知识库检索：实时检索企业知识给出可靠答案',
-      '自动化服务：覆盖高频咨询，降低人工成本',
-    ],
     tags: ['LLM', '意图识别', 'RAG'],
+    sections: [
+      {
+        key: 'showcase',
+        label: '页面展示',
+        type: 'gallery',
+        images: [
+          { caption: '对话入口 · 问答界面' },
+          { caption: '多轮对话 · 上下文连贯' },
+          { caption: '知识库检索结果' },
+          { caption: '后台管理 · 数据看板' },
+        ],
+      },
+      {
+        key: 'flow',
+        label: '产品流程图详解',
+        type: 'flow',
+        steps: [
+          { title: '用户提问', desc: '在对话入口输入自然语言问题。' },
+          { title: '意图识别', desc: '精准理解诉求并自动分流到对应业务。' },
+          { title: '知识库检索', desc: '实时检索企业知识，召回相关片段。' },
+          { title: '答案生成', desc: '结合检索内容生成可靠、可溯源的回复。' },
+          { title: '人工兜底', desc: '低置信度问题转人工，保障服务质量。' },
+        ],
+      },
+      {
+        key: 'prototype',
+        label: '原型图展示',
+        type: 'gallery',
+        images: [
+          { caption: '原型 · 对话流程' },
+          { caption: '原型 · 后台管理' },
+          { caption: '原型 · 数据看板' },
+        ],
+      },
+      {
+        key: 'badcase',
+        label: 'Badcase 优化',
+        type: 'badcase',
+        items: [
+          {
+            problem: '意图识别错误导致答非所问',
+            fix: '扩充意图样本，增加澄清反问与置信度阈值，异常时主动确认。',
+          },
+          {
+            problem: '多轮对话丢失上下文',
+            fix: '引入会话记忆与摘要，持续跟踪关键实体，保持上下文连贯。',
+          },
+          {
+            problem: '知识库检索不准 / 漏检',
+            fix: '优化文档切分与向量召回，增加同义词与重排策略提升命中率。',
+          },
+          {
+            problem: '敏感 / 不实回复风险',
+            fix: '增加安全审核与拒答规则，高风险问题直接转人工处理。',
+          },
+        ],
+      },
+    ],
   },
   {
     id: 'kb',
@@ -242,12 +340,38 @@ export default function AiApps() {
                       ))}
                     </div>
                   )}
+
+                  {sec.type === 'badcase' && (
+                    <div className="flex flex-col gap-4">
+                      {sec.items.map((item, i) => (
+                        <div
+                          key={i}
+                          className="rounded-2xl border border-stroke bg-bg p-5"
+                        >
+                          <div className="flex items-start gap-3">
+                            <span className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-surface text-xs text-text-primary">
+                              !
+                            </span>
+                            <div>
+                              <div className="text-sm font-medium text-text-primary">
+                                {item.problem}
+                              </div>
+                              <div className="mt-1 text-xs leading-relaxed text-muted">
+                                <span className="text-text-primary/80">优化：</span>
+                                {item.fix}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
           ) : (
             <ul className="mt-6 grid gap-3 md:grid-cols-2">
-              {current.features.map((f) => (
+              {current.features?.map((f) => (
                 <li
                   key={f}
                   className="flex items-start gap-2 text-sm text-muted"
