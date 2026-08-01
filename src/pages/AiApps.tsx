@@ -79,20 +79,8 @@ export default function AiApps() {
         ← 返回首页
       </button>
 
-      <div className="mb-5 flex items-center gap-3">
-        <span className="h-px w-8 bg-stroke" />
-        <span className="text-xs uppercase tracking-[0.3em] text-muted">AI Applications</span>
-      </div>
-
-      <h1 className="text-5xl font-medium tracking-tight text-text-primary md:text-7xl">
-        AI 应用
-      </h1>
-      <p className="mt-4 max-w-lg text-sm text-muted md:text-base">
-        将生成式 AI 落地为可复用、可规模化的产品能力，覆盖视觉创作、内容生成、智能客服与知识管理。
-      </p>
-
       {/* 顶部选择卡片 */}
-      <div className="mt-12 grid grid-cols-2 gap-4 lg:grid-cols-4">
+      <div className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
         {APPS.map((app) => {
           const active = app.id === selected
           return (
