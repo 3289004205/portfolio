@@ -29,6 +29,18 @@ const ITEMS = [
     image:
       'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?q=80&w=800&auto=format&fit=crop',
   },
+  {
+    title: 'RPA 应用',
+    tag: 'RPA Automation',
+    desc: '面向重复性业务的流程自动化方案，用 RPA 打通多系统数据，把人工操作沉淀为可编排、可监控的自动任务。',
+    image: 'https://picsum.photos/seed/rpa-automation/800/600',
+  },
+  {
+    title: '低代码平台应用',
+    tag: 'Low-code Platform',
+    desc: '基于低代码平台快速搭建内部工具与业务系统，缩短交付周期，让非技术同学也能参与流程数字化。',
+    image: 'https://picsum.photos/seed/lowcode-platform/800/600',
+  },
 ]
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
@@ -50,10 +62,10 @@ export default function MoreExplorationsSection() {
           AI <span className="font-display italic">Beyond</span>
         </h2>
         <p className="mt-4 max-w-lg text-sm text-muted md:text-base">
-          图像与视频之外，围绕数字人、模型训练与 3D 渲染的持续实验。
+          图像与视频之外，围绕数字人、模型训练、3D 渲染、RPA 与低代码平台的持续实验。
         </p>
 
-        <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
           {ITEMS.map((item, i) => (
             <FadeContent
               key={item.title}
@@ -62,9 +74,9 @@ export default function MoreExplorationsSection() {
               ease="power2.out"
               threshold={0.2}
               initialOpacity={0}
-              delay={i * 0.12}
+              delay={i * 0.1}
             >
-              <div className="group flex flex-col overflow-hidden rounded-3xl border border-stroke bg-surface transition-colors hover:bg-surface/70">
+              <div className="group flex h-full flex-col overflow-hidden rounded-2xl border border-stroke bg-surface transition-colors hover:bg-surface/70">
                 <div className="aspect-[4/3] w-full overflow-hidden">
                   <img
                     src={item.image}
@@ -73,10 +85,12 @@ export default function MoreExplorationsSection() {
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
-                <div className="flex flex-1 flex-col p-6">
-                  <span className="text-xs uppercase tracking-[0.2em] text-muted">{item.tag}</span>
-                  <h3 className="mt-2 text-xl text-text-primary">{item.title}</h3>
-                  <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">{item.desc}</p>
+                <div className="flex flex-1 flex-col p-4">
+                  <span className="text-[11px] uppercase tracking-[0.2em] text-muted">
+                    {item.tag}
+                  </span>
+                  <h3 className="mt-1.5 text-base text-text-primary">{item.title}</h3>
+                  <p className="mt-2 flex-1 text-xs leading-relaxed text-muted">{item.desc}</p>
                 </div>
               </div>
             </FadeContent>
