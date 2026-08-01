@@ -41,16 +41,6 @@ const ROWS: FeatureRow[] = [
 export default function FeaturesChess() {
   return (
     <section className="bg-[hsl(var(--bg))] py-24 px-6 md:px-16 lg:px-24">
-      {/* 区块标题 */}
-      <div className="text-center mb-20">
-        <span className="liquid-glass rounded-full px-3.5 py-1 text-xs font-medium text-text-primary font-body inline-block mb-4">
-          核心能力
-        </span>
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-display italic text-text-primary tracking-tight leading-[0.9]">
-          专业能力，化繁为简
-        </h2>
-      </div>
-
       {ROWS.map((row, i) => (
         <div
           key={row.title}
