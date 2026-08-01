@@ -27,6 +27,15 @@ type Section =
   | { key: string; label: string; type: 'gallery'; images: GalleryImage[] }
   | { key: string; label: string; type: 'masonry'; items: MasonryItem[] }
   | { key: string; label: string; type: 'flow'; steps: FlowStep[] }
+  | {
+      key: string
+      label: string
+      type: 'flowchart'
+      nodes: string[]
+      highlights?: string[]
+      image?: string
+      caption: string
+    }
   | { key: string; label: string; type: 'content'; items: ContentItem[] }
 
 type Module = {
@@ -58,20 +67,38 @@ const MODULES: Module[] = [
     id: 'flow',
     title: 'AI 图像流程制定与动态优化',
     tagline: '从需求到交付的标准流程',
-    desc: '将零散的出图经验固化为可执行、可复用、可迭代的标准流程，并在生成过程中依据反馈持续动态调优。',
-    tags: ['需求拆解', '提示词工程', 'ComfyUI', '动态调参'],
+    desc: '将零散的出图经验固化为可执行、可复用、可迭代的标准流程：先完成设计工具底座迁移，再针对不同业务场景拆分专项工作流，并在生成过程中依据反馈持续动态调优。',
+    tags: ['Figma', 'Midjourney', 'Nano Banana', 'ComfyUI', 'Photoshop'],
     sections: [
       {
-        key: 'steps',
-        label: '流程节点',
-        type: 'flow',
-        steps: [
-          { title: '需求拆解与风格定位', desc: '明确业务场景、目标风格与交付标准，对齐预期。' },
-          { title: '提示词与参数制定', desc: '编写结构化提示词，确定模型、采样与尺寸等参数。' },
-          { title: 'ComfyUI 工作流搭建', desc: '封装可复用工作流，沉淀为团队模板。' },
-          { title: '生成与动态优化', desc: '批量生成并据反馈动态调参，迭代风格与质量。' },
-          { title: '质量评估与交付', desc: '评估准确性与商业性，输出成品并归档复用。' },
+        key: 'tooling',
+        label: '设计工具从 PS 转向 Figma',
+        type: 'flowchart',
+        nodes: ['Photoshop', 'Figma'],
+        highlights: ['团队协同', '画布不受限', 'AI 功能', '插件生态丰富'],
+        caption: '设计工具迁移示意',
+      },
+      {
+        key: 'detail-scene',
+        label: '详情页场景图 AI 生产工作流',
+        type: 'flowchart',
+        nodes: [
+          '参考图',
+          '结构化反推提示词智能体',
+          'Midjourney 生图',
+          'Nano Banana 洗图',
+          'ComfyUI 洗图',
+          'ComfyUI 放大',
+          'PS 处理',
         ],
+        caption: '详情页场景图工作流',
+      },
+      {
+        key: 'brand',
+        label: '品牌物料专项工作流',
+        type: 'flowchart',
+        nodes: ['参考图', 'ComfyUI 洗图', 'ComfyUI 无损放大', 'PS 处理'],
+        caption: '品牌物料工作流',
       },
     ],
   },
@@ -238,6 +265,63 @@ export default function AiImages() {
                         )}
                       </Fragment>
                     ))}
+                  </div>
+                )}
+
+                {sec.type === 'flowchart' && (
+                  <div className="flex flex-col gap-6">
+                    {/* 流程节点 */}
+                    <div className="flex flex-wrap items-stretch gap-3">
+                      {sec.nodes.map((node, i) => (
+                        <Fragment key={node}>
+                          <div className="flex min-w-[130px] flex-1 flex-col justify-center rounded-2xl border border-stroke bg-bg px-4 py-4">
+                            <span className="text-[10px] tracking-[0.2em] text-muted">
+                              {String(i + 1).padStart(2, '0')}
+                            </span>
+                            <span className="mt-1.5 text-sm font-medium leading-snug text-text-primary">
+                              {node}
+                            </span>
+                          </div>
+                          {i < sec.nodes.length - 1 && (
+                            <div className="flex items-center justify-center text-muted">
+                              →
+                            </div>
+                          )}
+                        </Fragment>
+                      ))}
+                    </div>
+
+                    {/* 关键收益 */}
+                    {sec.highlights && (
+                      <div className="flex flex-wrap gap-2">
+                        {sec.highlights.map((h) => (
+                          <span
+                            key={h}
+                            className="rounded-full border border-stroke bg-bg px-3 py-1.5 text-xs text-muted"
+                          >
+                            {h}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* 流程图片卡片 */}
+                    <figure className="relative overflow-hidden rounded-2xl border border-stroke bg-bg">
+                      {sec.image ? (
+                        <img
+                          src={sec.image}
+                          alt={sec.caption}
+                          className="aspect-[16/9] w-full object-cover"
+                        />
+                      ) : (
+                        <div className="flex aspect-[16/9] w-full items-center justify-center bg-surface text-xs text-muted">
+                          待上传{sec.label}流程图
+                        </div>
+                      )}
+                      <figcaption className="absolute inset-x-0 bottom-0 bg-black/50 px-3 py-2 text-xs text-text-primary">
+                        {sec.caption}
+                      </figcaption>
+                    </figure>
                   </div>
                 )}
 
