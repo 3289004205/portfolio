@@ -104,14 +104,13 @@ export default function Explorations() {
       >
         <div className="mb-5 flex items-center gap-3">
           <span className="h-px w-8 bg-stroke" />
-          <span className="text-xs uppercase tracking-[0.3em] text-muted">Explorations</span>
+          <span className="text-xs uppercase tracking-[0.3em] text-muted">Selected Work</span>
         </div>
         <h2 className="text-5xl font-medium tracking-tight text-text-primary md:text-7xl lg:text-8xl">
           AI <span className="font-display italic">Animation</span>
         </h2>
         <p className="mt-5 max-w-md text-sm text-muted md:text-base">
-          A space to experiment — motion studies, color systems, and fragments from the
-          everyday.
+          A selection of projects I've worked on, from concept to launch.
         </p>
         <button
           type="button"
