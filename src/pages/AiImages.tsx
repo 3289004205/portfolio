@@ -1,6 +1,5 @@
 import { Fragment } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useNavigate } from 'react-router-dom'
 import RaysBackground from '../components/SideRays/RaysBackground'
 import Masonry, { type MasonryItem } from '../components/Masonry/Masonry'
 
@@ -75,8 +74,6 @@ const SECTIONS: Section[] = [
 ]
 
 export default function AiImages() {
-  const navigate = useNavigate()
-
   return (
     <>
       <RaysBackground />
@@ -87,13 +84,6 @@ export default function AiImages() {
         transition={{ duration: 0.4 }}
         className="mx-auto min-h-screen max-w-[1100px] bg-transparent px-6 py-24 md:px-10"
       >
-      <button
-        onClick={() => navigate('/')}
-        className="mb-12 text-sm text-muted transition-colors hover:text-text-primary"
-      >
-        ← 返回首页
-      </button>
-
       <AnimatePresence mode="wait">
         <motion.section
           key="ai-images"

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import LoadingScreen from '../components/LoadingScreen'
@@ -11,9 +11,20 @@ import Explorations from '../components/Explorations'
 import MoreExplorationsSection from '../components/MoreExplorationsSection'
 import ContactFooter from '../components/ContactFooter'
 
+const HOME_LOADED_KEY = 'portfolio_home_loaded'
+
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(() => {
+    if (typeof window === 'undefined') return true
+    return sessionStorage.getItem(HOME_LOADED_KEY) !== '1'
+  })
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!isLoading) {
+      sessionStorage.setItem(HOME_LOADED_KEY, '1')
+    }
+  }, [isLoading])
 
   return (
     <motion.main

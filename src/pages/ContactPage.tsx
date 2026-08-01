@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion'
-import { useNavigate } from 'react-router-dom'
 import ResumeSection from '../components/ResumeSection'
 import RaysBackground from '../components/SideRays/RaysBackground'
 
@@ -11,8 +10,6 @@ const CONTACTS = [
 ]
 
 export default function ContactPage() {
-  const navigate = useNavigate()
-
   const handleCopy = (text: string) => {
     navigator.clipboard?.writeText(text)
   }
@@ -27,14 +24,7 @@ export default function ContactPage() {
         transition={{ duration: 0.4 }}
         className="mx-auto w-full bg-transparent"
       >
-      <div className="mx-auto max-w-[1200px] px-6 pb-8 pt-12 md:px-10 lg:px-16">
-        <button
-          onClick={() => navigate('/')}
-          className="text-sm text-muted transition-colors hover:text-text-primary"
-        >
-          ← 返回首页
-        </button>
-      </div>
+      <div className="mx-auto max-w-[1200px] px-6 pb-8 pt-12 md:px-10 lg:px-16" />
 
       {/* 联系方式 */}
       <section className="mx-auto max-w-[1200px] px-6 pb-4 pt-2 md:px-10 lg:px-16">

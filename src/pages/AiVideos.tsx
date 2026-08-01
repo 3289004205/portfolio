@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion'
-import { useNavigate } from 'react-router-dom'
 import RaysBackground from '../components/SideRays/RaysBackground'
 
 const VIDEOS = [
@@ -18,8 +17,6 @@ const VIDEOS = [
 ]
 
 export default function AiVideos() {
-  const navigate = useNavigate()
-
   return (
     <>
       <RaysBackground />
@@ -30,13 +27,6 @@ export default function AiVideos() {
         transition={{ duration: 0.4 }}
         className="mx-auto min-h-screen max-w-[1100px] bg-transparent px-6 py-24 md:px-10"
       >
-      <button
-        onClick={() => navigate('/')}
-        className="mb-12 text-sm text-muted transition-colors hover:text-text-primary"
-      >
-        ← 返回首页
-      </button>
-
       <div className="mb-5 flex items-center gap-3">
         <span className="h-px w-8 bg-stroke" />
         <span className="text-xs uppercase tracking-[0.3em] text-muted">AI Videos</span>
