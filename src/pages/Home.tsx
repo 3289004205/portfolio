@@ -8,7 +8,6 @@ import SectionHeader from '../components/SectionHeader'
 import ImageMarqueeSection from '../components/ImageMarqueeSection'
 import Explorations from '../components/Explorations'
 import MoreExplorationsSection from '../components/MoreExplorationsSection'
-import ResumeSection from '../components/ResumeSection'
 import ContactFooter from '../components/ContactFooter'
 
 export default function Home() {
@@ -40,7 +39,6 @@ export default function Home() {
       <ImageMarqueeSection />
       <Explorations />
       <MoreExplorationsSection />
-      <ResumeSection />
       <ContactFooter />
     </motion.main>
   )

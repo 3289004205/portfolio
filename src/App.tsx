@@ -1,7 +1,6 @@
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import Home from './pages/Home'
-import Resume from './pages/Resume'
 import AiApps from './pages/AiApps'
 import AiImages from './pages/AiImages'
 import AiVideos from './pages/AiVideos'
@@ -15,7 +14,7 @@ export default function App() {
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Home />} />
-        <Route path="/resume" element={<Resume />} />
+        <Route path="/resume" element={<Navigate to="/contact" replace />} />
         <Route path="/ai-apps" element={<AiApps />} />
         <Route path="/ai-images" element={<AiImages />} />
         <Route path="/ai-videos" element={<AiVideos />} />

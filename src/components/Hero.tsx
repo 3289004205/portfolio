@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { gsap } from 'gsap'
 import HlsVideo from './HlsVideo'
 
@@ -8,6 +9,7 @@ const ROLES = ['Creative', 'Founder', 'AIGCer', 'Designer']
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null)
   const [roleIndex, setRoleIndex] = useState(0)
+  const navigate = useNavigate()
 
   // GSAP entrance timeline
   useEffect(() => {
@@ -84,7 +86,7 @@ export default function Hero() {
           </button>
 
           <button
-            onClick={() => document.getElementById('resume')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => navigate('/contact')}
             className="group relative rounded-full p-[2px] text-sm transition-transform hover:scale-105"
           >
             <span className="absolute inset-[-2px] rounded-full accent-gradient opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
