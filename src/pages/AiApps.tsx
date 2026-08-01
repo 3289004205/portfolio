@@ -3,6 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion'
 import RaysBackground from '../components/SideRays/RaysBackground'
 import Navbar from '../components/Navbar'
 import SpotlightCard from '../components/SpotlightCard/SpotlightCard'
+import PlatformAccordion, {
+  type AccordionData,
+} from '../components/PlatformAccordion/PlatformAccordion'
 
 type GalleryImage = { src?: string; caption: string }
 type FlowStep = { title: string; desc: string }
@@ -284,6 +287,44 @@ const APPS: App[] = [
   },
 ]
 
+/** 视觉 AI 整合网站：用 Nimbus 手风琴样式展示的三块内容 */
+const VISUAL_ACCORDION_CARDS: AccordionData[] = [
+  {
+    key: 'showcase',
+    label: '页面展示',
+    description:
+      '视觉部 AI 集合化系统的核心页面，覆盖模块导航、无限画布、资产与提示词库、知识库与学习资源。',
+    code: `模块总览
+首页          模块导航总览
+无限画布       工作流编排
+资产库         图像 / 视频
+提示词库        模板管理
+知识库         沉淀与检索
+学习资源        教程中心`,
+  },
+  {
+    key: 'flow',
+    label: '产品流程图详解',
+    description:
+      '从统一入口登录到结果沉淀与复用，串起 AI 能力调用与团队协作的完整链路。',
+    code: `核心链路
+01  统一入口登录    角色 / 权限分发
+02  模块选择        导航 · 画布 · 库
+03  AI 能力调用      ComfyUI · 问答
+04  结果沉淀        自动归档资产库
+05  复用与协作       共享模板迭代`,
+  },
+  {
+    key: 'prototype',
+    label: '原型图展示',
+    description: '早期原型覆盖信息架构、首页布局与画布交互，用于快速验证与对齐。',
+    code: `原型验证
+信息架构         IA 梳理
+首页布局         模块入口
+画布交互         编排验证`,
+  },
+]
+
 export default function AiApps() {
   const [selected, setSelected] = useState(APPS[0].id)
   const current = APPS.find((a) => a.id === selected) ?? APPS[0]
@@ -333,29 +374,63 @@ export default function AiApps() {
 
       {/* 选中模块详情 */}
       <AnimatePresence mode="wait">
-        <motion.section
-          key={current.id}
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -8 }}
-          transition={{ duration: 0.3 }}
-          className="mt-8 rounded-3xl border border-stroke bg-surface p-8"
-        >
-          <h2 className="text-2xl font-medium text-text-primary">{current.title}</h2>
-          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">
-            {current.desc}
-          </p>
+        {current.id === 'visual' ? (
+          <motion.div
+            key="visual"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.3 }}
+            className="mt-8"
+          >
+            <div className="rounded-3xl border border-stroke bg-surface p-8">
+              <h2 className="text-2xl font-medium text-text-primary">
+                {current.title}
+              </h2>
+              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">
+                {current.desc}
+              </p>
 
-          <div className="mt-5 flex flex-wrap gap-2">
-            {current.tags.map((t) => (
-              <span
-                key={t}
-                className="rounded-full border border-stroke bg-bg px-3 py-1.5 text-xs text-text-primary"
-              >
-                {t}
-              </span>
-            ))}
-          </div>
+              <div className="mt-5 flex flex-wrap gap-2">
+                {current.tags.map((t) => (
+                  <span
+                    key={t}
+                    className="rounded-full border border-stroke bg-bg px-3 py-1.5 text-xs text-text-primary"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <PlatformAccordion cards={VISUAL_ACCORDION_CARDS} />
+          </motion.div>
+        ) : (
+          <motion.section
+            key={current.id}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.3 }}
+            className="mt-8 rounded-3xl border border-stroke bg-surface p-8"
+          >
+            <h2 className="text-2xl font-medium text-text-primary">
+              {current.title}
+            </h2>
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">
+              {current.desc}
+            </p>
+
+            <div className="mt-5 flex flex-wrap gap-2">
+              {current.tags.map((t) => (
+                <span
+                  key={t}
+                  className="rounded-full border border-stroke bg-bg px-3 py-1.5 text-xs text-text-primary"
+                >
+                  {t}
+                </span>
+              ))}
+            </div>
 
           {current.sections && (
             <div className="mt-10 flex flex-col gap-10">
@@ -444,8 +519,9 @@ export default function AiApps() {
               ))}
             </div>
           )}
-        </motion.section>
-      </AnimatePresence>
+            </motion.section>
+          )}
+        </AnimatePresence>
       </motion.main>
     </>
   )
