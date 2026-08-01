@@ -1,23 +1,68 @@
-import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 
 const APPS = [
   {
-    title: '智能客服助手',
-    desc: '基于大语言模型的企业级客服系统，支持多轮对话与知识库检索。',
+    id: 'visual',
+    title: '视觉 AI 整合网站',
+    tagline: '视觉部 AI 集合化系统',
+    desc: '从 0 到 1 主导搭建的视觉部 AI 集合化系统，整合六大模块，将分散的 AI 能力统一为可协同的团队生产力平台。',
+    features: [
+      '网站导航：聚合团队常用 AI 工具与内部系统入口',
+      '无限画布：支持自由编排与可视化创作工作流',
+      '知识库：沉淀视觉规范、品牌资产与最佳实践',
+      '图像 / 视频资产库：统一管理生成与采购素材',
+      '提示词库：沉淀可复用的高质量提示词模板',
+      '学习资源：汇集教程与案例，推动团队 AI 普及',
+    ],
+    tags: ['ComfyUI', '知识库', '资产管理', '工作流'],
   },
   {
-    title: '内容生成工作台',
-    desc: '一站式 AI 文案、脚本与营销素材生成平台，提升团队创作效率。',
+    id: 'preset',
+    title: '预设生成网站',
+    tagline: '提示词预设生图平台',
+    desc: '系统提示词预设生图网站，对接 ComfyUI 后端实现一键生图，大幅降低 AI 生图的使用门槛。',
+    features: [
+      '预设提示词：封装常用生图场景为开箱即用模板',
+      '一键生图：对接 ComfyUI 后端，无需本地环境',
+      '参数托管：统一管理采样、模型与尺寸配置',
+      '结果归档：自动保存生成记录与可复用参数',
+    ],
+    tags: ['ComfyUI', 'Prompt', '一键生图'],
   },
   {
-    title: '数据洞察 Agent',
-    desc: '连接业务数据，自动生成分析报告与可视化图表。',
+    id: 'service',
+    title: '客服问答系统',
+    tagline: 'AI 智能客服',
+    desc: 'AI 智能客服系统，实现意图识别、多轮对话与自动化服务，提升售前售后响应效率。',
+    features: [
+      '意图识别：精准理解用户诉求并自动分流',
+      '多轮对话：支持上下文连贯的复杂问题应答',
+      '知识库检索：实时检索企业知识给出可靠答案',
+      '自动化服务：覆盖高频咨询，降低人工成本',
+    ],
+    tags: ['LLM', '意图识别', 'RAG'],
+  },
+  {
+    id: 'kb',
+    title: '知识库',
+    tagline: '知识库问答机器人',
+    desc: '牵头搭建各部门知识库及对应问答机器人，构建数据 — 知识 — 问答的运营闭环。',
+    features: [
+      '多部门覆盖：为不同业务线搭建专属知识空间',
+      '问答机器人：基于知识库提供自然语言检索',
+      '持续更新：支持文档增量入库与版本管理',
+      '闭环运营：打通数据沉淀、知识构建与问答反馈',
+    ],
+    tags: ['知识管理', '问答机器人', 'RAG'],
   },
 ]
 
 export default function AiApps() {
   const navigate = useNavigate()
+  const [selected, setSelected] = useState(APPS[0].id)
+  const current = APPS.find((a) => a.id === selected) ?? APPS[0]
 
   return (
     <motion.main
@@ -43,20 +88,76 @@ export default function AiApps() {
         AI 应用
       </h1>
       <p className="mt-4 max-w-lg text-sm text-muted md:text-base">
-        将生成式 AI 落地为可复用、可规模化的产品能力，覆盖文本、数据与自动化场景。
+        将生成式 AI 落地为可复用、可规模化的产品能力，覆盖视觉创作、内容生成、智能客服与知识管理。
       </p>
 
-      <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {APPS.map((item) => (
-          <div
-            key={item.title}
-            className="rounded-3xl border border-stroke bg-surface p-6 transition-colors hover:bg-surface/70"
-          >
-            <h3 className="text-lg text-text-primary">{item.title}</h3>
-            <p className="mt-2 text-sm text-muted">{item.desc}</p>
-          </div>
-        ))}
+      {/* 顶部选择卡片 */}
+      <div className="mt-12 grid grid-cols-2 gap-4 lg:grid-cols-4">
+        {APPS.map((app) => {
+          const active = app.id === selected
+          return (
+            <button
+              key={app.id}
+              type="button"
+              onClick={() => setSelected(app.id)}
+              className={`flex flex-col rounded-2xl border p-5 text-left transition-all ${
+                active
+                  ? 'border-text-primary bg-surface shadow-sm shadow-black/10'
+                  : 'border-stroke bg-surface/40 hover:bg-surface/70'
+              }`}
+            >
+              <span
+                className={`text-base font-medium ${
+                  active ? 'text-text-primary' : 'text-text-primary/80'
+                }`}
+              >
+                {app.title}
+              </span>
+              <span className="mt-1 text-xs text-muted">{app.tagline}</span>
+            </button>
+          )
+        })}
       </div>
+
+      {/* 选中模块详情 */}
+      <AnimatePresence mode="wait">
+        <motion.section
+          key={current.id}
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.3 }}
+          className="mt-8 rounded-3xl border border-stroke bg-surface p-8"
+        >
+          <h2 className="text-2xl font-medium text-text-primary">{current.title}</h2>
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">
+            {current.desc}
+          </p>
+
+          <ul className="mt-6 grid gap-3 md:grid-cols-2">
+            {current.features.map((f) => (
+              <li
+                key={f}
+                className="flex items-start gap-2 text-sm text-muted"
+              >
+                <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-text-primary/60" />
+                <span>{f}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-6 flex flex-wrap gap-2">
+            {current.tags.map((t) => (
+              <span
+                key={t}
+                className="rounded-full border border-stroke bg-bg px-3 py-1.5 text-xs text-text-primary"
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+        </motion.section>
+      </AnimatePresence>
     </motion.main>
   )
 }
