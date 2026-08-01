@@ -65,7 +65,7 @@ export default function MoreExplorationsSection() {
           图像与视频之外，围绕数字人、模型训练、3D 渲染、RPA 与低代码平台的持续实验。
         </p>
 
-        <div className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
+        <div className="mt-12 grid grid-cols-2 gap-4">
           {ITEMS.map((item, i) => (
             <FadeContent
               key={item.title}
