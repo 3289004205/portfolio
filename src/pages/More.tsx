@@ -110,20 +110,6 @@ export default function More() {
         transition={{ duration: 0.4 }}
         className="mx-auto min-h-screen max-w-[1100px] bg-transparent px-6 py-24 md:px-10"
       >
-        <div className="mb-5 flex items-center gap-3">
-          <span className="h-px w-8 bg-stroke" />
-          <span className="text-xs uppercase tracking-[0.3em] text-muted">
-            More Explorations
-          </span>
-        </div>
-
-        <h1 className="text-5xl font-medium tracking-tight text-text-primary md:text-7xl">
-          其他探索
-        </h1>
-        <p className="mt-4 max-w-lg text-sm text-muted md:text-base">
-          除了核心方向之外，我还在尝试更多生成式 AI 的交叉领域与实验性项目。
-        </p>
-
         {/* 分类选项（与 AI 应用页一致的卡片样式） */}
         <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
           {CATEGORIES.map((cat) => {
