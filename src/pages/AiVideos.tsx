@@ -3,6 +3,55 @@ import { motion, AnimatePresence } from 'framer-motion'
 import RaysBackground from '../components/SideRays/RaysBackground'
 import Navbar from '../components/Navbar'
 import SpotlightCard from '../components/SpotlightCard/SpotlightCard'
+import StackingCards, { type StackingProject } from '../components/StackingCards/StackingCards'
+
+/** 项目产出概览：四类视频交付成果，套用 sticky 堆叠卡片样式 */
+const PROJECTS: StackingProject[] = [
+  {
+    number: '01',
+    category: 'Brand Film',
+    name: '官网品牌视频',
+    href: '#',
+    images: {
+      top: 'https://picsum.photos/seed/v-office-top/600/400',
+      bottom: 'https://picsum.photos/seed/v-office-bot/600/400',
+      right: 'https://picsum.photos/seed/v-office-right/600/800',
+    },
+  },
+  {
+    number: '02',
+    category: 'Institutional',
+    name: '体育训练局合作视频',
+    href: '#',
+    images: {
+      top: 'https://picsum.photos/seed/v-sport-top/600/400',
+      bottom: 'https://picsum.photos/seed/v-sport-bot/600/400',
+      right: 'https://picsum.photos/seed/v-sport-right/600/800',
+    },
+  },
+  {
+    number: '03',
+    category: 'E-commerce',
+    name: '淘宝首页开屏动画',
+    href: '#',
+    images: {
+      top: 'https://picsum.photos/seed/v-taobao-top/600/400',
+      bottom: 'https://picsum.photos/seed/v-taobao-bot/600/400',
+      right: 'https://picsum.photos/seed/v-taobao-right/600/800',
+    },
+  },
+  {
+    number: '04',
+    category: 'Feed Ads',
+    name: '抖音信息流素材',
+    href: '#',
+    images: {
+      top: 'https://picsum.photos/seed/v-douyin-top/600/400',
+      bottom: 'https://picsum.photos/seed/v-douyin-bot/600/400',
+      right: 'https://picsum.photos/seed/v-douyin-right/600/800',
+    },
+  },
+]
 
 type GalleryImage = { src?: string; caption: string }
 type ToolItem = { name: string; desc: string }
@@ -35,32 +84,7 @@ const MODULES: Module[] = [
     tagline: '四类视频交付成果',
     desc: '汇总各渠道的 AI 视频产出，覆盖品牌官网、机构合作、电商大促与信息流投放四类典型场景，呈现从长视频到短素材的完整交付能力。',
     tags: ['官网', '机构合作', '电商大促', '信息流'],
-    sections: [
-      {
-        key: 'official',
-        label: '官网',
-        type: 'gallery',
-        images: [{ caption: '官网视频 01' }, { caption: '官网视频 02' }],
-      },
-      {
-        key: 'sports',
-        label: '体育训练局合作视频',
-        type: 'gallery',
-        images: [{ caption: '合作视频 01' }, { caption: '合作视频 02' }],
-      },
-      {
-        key: 'taobao',
-        label: '淘宝首页开屏动画',
-        type: 'gallery',
-        images: [{ caption: '开屏动画 01' }, { caption: '开屏动画 02' }],
-      },
-      {
-        key: 'douyin',
-        label: '抖音信息流',
-        type: 'gallery',
-        images: [{ caption: '信息流素材 01' }, { caption: '信息流素材 02' }],
-      },
-    ],
+    sections: [],
   },
   {
     id: 'workflow',
@@ -164,155 +188,188 @@ export default function AiVideos() {
 
       {/* 选中模块详情 */}
       <AnimatePresence mode="wait">
-        <motion.section
-          key={current.id}
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -8 }}
-          transition={{ duration: 0.3 }}
-          className="mt-8 rounded-3xl border border-stroke bg-surface p-8"
-        >
-          <h2 className="text-2xl font-medium text-text-primary">{current.title}</h2>
-          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">
-            {current.desc}
-          </p>
+        {current.id === 'overview' ? (
+          <motion.div
+            key="overview"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="rounded-3xl border border-stroke bg-surface p-8">
+              <h2 className="text-2xl font-medium text-text-primary">
+                {current.title}
+              </h2>
+              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">
+                {current.desc}
+              </p>
+              <div className="mt-5 flex flex-wrap gap-2">
+                {current.tags.map((t) => (
+                  <span
+                    key={t}
+                    className="rounded-full border border-stroke bg-bg px-3 py-1.5 text-xs text-text-primary"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
 
-          <div className="mt-5 flex flex-wrap gap-2">
-            {current.tags.map((t) => (
-              <span
-                key={t}
-                className="rounded-full border border-stroke bg-bg px-3 py-1.5 text-xs text-text-primary"
-              >
-                {t}
-              </span>
-            ))}
-          </div>
+            <StackingCards projects={PROJECTS} />
+          </motion.div>
+        ) : (
+          <motion.section
+            key={current.id}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.3 }}
+            className="mt-8 rounded-3xl border border-stroke bg-surface p-8"
+          >
+            <h2 className="text-2xl font-medium text-text-primary">
+              {current.title}
+            </h2>
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">
+              {current.desc}
+            </p>
 
-          <div className="mt-10 flex flex-col gap-10">
-            {current.sections.map((sec) => (
-              <div key={sec.key}>
-                <h3 className="mb-4 text-lg font-medium text-text-primary">
-                  {sec.label}
-                </h3>
+            <div className="mt-5 flex flex-wrap gap-2">
+              {current.tags.map((t) => (
+                <span
+                  key={t}
+                  className="rounded-full border border-stroke bg-bg px-3 py-1.5 text-xs text-text-primary"
+                >
+                  {t}
+                </span>
+              ))}
+            </div>
 
-                {sec.type === 'gallery' && (
-                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                    {sec.images.map((img) => (
-                      <figure
-                        key={img.caption}
-                        className="relative overflow-hidden rounded-2xl border border-stroke bg-bg"
-                      >
-                        {img.src ? (
+            <div className="mt-10 flex flex-col gap-10">
+              {current.sections.map((sec) => (
+                <div key={sec.key}>
+                  <h3 className="mb-4 text-lg font-medium text-text-primary">
+                    {sec.label}
+                  </h3>
+
+                  {sec.type === 'gallery' && (
+                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                      {sec.images.map((img) => (
+                        <figure
+                          key={img.caption}
+                          className="relative overflow-hidden rounded-2xl border border-stroke bg-bg"
+                        >
+                          {img.src ? (
+                            <img
+                              src={img.src}
+                              alt={img.caption}
+                              className="aspect-video w-full object-cover"
+                            />
+                          ) : (
+                            <div className="flex aspect-video w-full items-center justify-center bg-surface text-xs text-muted">
+                              待上传{sec.label}素材
+                            </div>
+                          )}
+                          <figcaption className="absolute inset-x-0 bottom-0 bg-black/50 px-3 py-2 text-xs text-text-primary">
+                            {img.caption}
+                          </figcaption>
+                        </figure>
+                      ))}
+                    </div>
+                  )}
+
+                  {sec.type === 'flowchart' && (
+                    <div className="flex flex-col gap-6">
+                      {/* 流程节点 */}
+                      {sec.nodes.length > 0 ? (
+                        <div className="flex flex-wrap items-stretch gap-3">
+                          {sec.nodes.map((node, i) => (
+                            <Fragment key={node}>
+                              <div className="flex min-w-[130px] flex-1 flex-col justify-center rounded-2xl border border-stroke bg-bg px-4 py-4">
+                                <span className="text-[10px] tracking-[0.2em] text-muted">
+                                  {String(i + 1).padStart(2, '0')}
+                                </span>
+                                <span className="mt-1.5 text-sm font-medium leading-snug text-text-primary">
+                                  {node}
+                                </span>
+                              </div>
+                              {i < sec.nodes.length - 1 && (
+                                <div className="flex items-center justify-center text-muted">
+                                  →
+                                </div>
+                              )}
+                            </Fragment>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="flex items-center justify-center rounded-2xl border border-dashed border-stroke bg-bg/40 px-6 py-10 text-xs text-muted">
+                          {sec.label}流程节点待补充
+                        </div>
+                      )}
+
+                      {/* 关键收益 */}
+                      {sec.highlights && (
+                        <div className="flex flex-wrap gap-2">
+                          {sec.highlights.map((h) => (
+                            <span
+                              key={h}
+                              className="rounded-full border border-stroke bg-bg px-3 py-1.5 text-xs text-muted"
+                            >
+                              {h}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+
+                      {/* 流程图片卡片 */}
+                      <figure className="relative overflow-hidden rounded-2xl border border-stroke bg-bg">
+                        {sec.image ? (
                           <img
-                            src={img.src}
-                            alt={img.caption}
-                            className="aspect-video w-full object-cover"
+                            src={sec.image}
+                            alt={sec.caption}
+                            className="aspect-[16/9] w-full object-cover"
                           />
                         ) : (
-                          <div className="flex aspect-video w-full items-center justify-center bg-surface text-xs text-muted">
-                            待上传{sec.label}素材
+                          <div className="flex aspect-[16/9] w-full items-center justify-center bg-surface text-xs text-muted">
+                            待上传{sec.label}流程图
                           </div>
                         )}
                         <figcaption className="absolute inset-x-0 bottom-0 bg-black/50 px-3 py-2 text-xs text-text-primary">
-                          {img.caption}
+                          {sec.caption}
                         </figcaption>
                       </figure>
-                    ))}
-                  </div>
-                )}
+                    </div>
+                  )}
 
-                {sec.type === 'flowchart' && (
-                  <div className="flex flex-col gap-6">
-                    {/* 流程节点 */}
-                    {sec.nodes.length > 0 ? (
-                      <div className="flex flex-wrap items-stretch gap-3">
-                        {sec.nodes.map((node, i) => (
-                          <Fragment key={node}>
-                            <div className="flex min-w-[130px] flex-1 flex-col justify-center rounded-2xl border border-stroke bg-bg px-4 py-4">
-                              <span className="text-[10px] tracking-[0.2em] text-muted">
-                                {String(i + 1).padStart(2, '0')}
-                              </span>
-                              <span className="mt-1.5 text-sm font-medium leading-snug text-text-primary">
-                                {node}
-                              </span>
-                            </div>
-                            {i < sec.nodes.length - 1 && (
-                              <div className="flex items-center justify-center text-muted">
-                                →
+                  {sec.type === 'tools' && (
+                    <>
+                      {sec.items.length > 0 ? (
+                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                          {sec.items.map((tool) => (
+                            <div
+                              key={tool.name}
+                              className="rounded-2xl border border-stroke bg-bg p-5"
+                            >
+                              <div className="text-sm font-medium text-text-primary">
+                                {tool.name}
                               </div>
-                            )}
-                          </Fragment>
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="flex items-center justify-center rounded-2xl border border-dashed border-stroke bg-bg/40 px-6 py-10 text-xs text-muted">
-                        {sec.label}流程节点待补充
-                      </div>
-                    )}
-
-                    {/* 关键收益 */}
-                    {sec.highlights && (
-                      <div className="flex flex-wrap gap-2">
-                        {sec.highlights.map((h) => (
-                          <span
-                            key={h}
-                            className="rounded-full border border-stroke bg-bg px-3 py-1.5 text-xs text-muted"
-                          >
-                            {h}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-
-                    {/* 流程图片卡片 */}
-                    <figure className="relative overflow-hidden rounded-2xl border border-stroke bg-bg">
-                      {sec.image ? (
-                        <img
-                          src={sec.image}
-                          alt={sec.caption}
-                          className="aspect-[16/9] w-full object-cover"
-                        />
+                              <p className="mt-1.5 text-xs leading-relaxed text-muted">
+                                {tool.desc}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
                       ) : (
-                        <div className="flex aspect-[16/9] w-full items-center justify-center bg-surface text-xs text-muted">
-                          待上传{sec.label}流程图
+                        <div className="flex items-center justify-center rounded-2xl border border-dashed border-stroke bg-bg/40 px-6 py-10 text-xs text-muted">
+                          工具清单待补充
                         </div>
                       )}
-                      <figcaption className="absolute inset-x-0 bottom-0 bg-black/50 px-3 py-2 text-xs text-text-primary">
-                        {sec.caption}
-                      </figcaption>
-                    </figure>
-                  </div>
-                )}
-
-                {sec.type === 'tools' && (
-                  <>
-                    {sec.items.length > 0 ? (
-                      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                        {sec.items.map((tool) => (
-                          <div
-                            key={tool.name}
-                            className="rounded-2xl border border-stroke bg-bg p-5"
-                          >
-                            <div className="text-sm font-medium text-text-primary">
-                              {tool.name}
-                            </div>
-                            <p className="mt-1.5 text-xs leading-relaxed text-muted">
-                              {tool.desc}
-                            </p>
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="flex items-center justify-center rounded-2xl border border-dashed border-stroke bg-bg/40 px-6 py-10 text-xs text-muted">
-                        工具清单待补充
-                      </div>
-                    )}
-                  </>
-                )}
-              </div>
-            ))}
-          </div>
-        </motion.section>
+                    </>
+                  )}
+                </div>
+              ))}
+            </div>
+          </motion.section>
+        )}
       </AnimatePresence>
       </motion.main>
     </>
