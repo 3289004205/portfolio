@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import ResumeSection from '../components/ResumeSection'
 
 const CONTACTS = [
-  { label: '微信', value: '微信：待填写', copy: true },
-  { label: '电话', value: '电话：待填写', copy: true },
+  { label: '微信', value: '19163309757', copy: true },
+  { label: '电话', value: '19163309757', copy: true },
   { label: 'GitHub', value: '3289004205', href: 'https://github.com/3289004205' },
   { label: '邮箱', value: '3289004205@qq.com', href: 'mailto:3289004205@qq.com' },
 ]
