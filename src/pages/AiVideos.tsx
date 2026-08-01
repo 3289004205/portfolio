@@ -64,7 +64,7 @@ const MODULES: Module[] = [
   },
   {
     id: 'workflow',
-    title: '视频制作流程梳理',
+    title: 'AI 视频制作流程梳理',
     tagline: '三类场景的生产链路',
     desc: '按投放场景拆分生产链路：品牌 TVC 追求质感与叙事完整度，抖音信息流强调批量与迭代速度，爆款复刻侧重结构拆解与快速验证。',
     tags: ['品牌 TVC', '抖音信息流', '爆款复刻'],
@@ -94,20 +94,20 @@ const MODULES: Module[] = [
   },
   {
     id: 'tools',
-    title: 'AI 工具总览',
-    tagline: '视频生产工具矩阵',
+    title: 'AI 工具矩阵',
+    tagline: '视频生产工具选型',
     desc: '梳理视频生产各环节所使用的 AI 工具及其分工，形成可复用的工具选型参考，降低团队上手与切换成本。',
     tags: ['工具选型', '能力边界', '协同分工'],
     sections: [
       {
         key: 'matrix',
-        label: '工具矩阵',
+        label: '工具清单',
         type: 'tools',
         items: [],
       },
       {
         key: 'matrix-img',
-        label: '工具总览图',
+        label: '矩阵总览图',
         type: 'gallery',
         images: [{ caption: '工具矩阵图' }, { caption: '工具使用示例' }],
       },
