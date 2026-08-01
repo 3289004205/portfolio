@@ -95,16 +95,20 @@ export default function StackingCards({
             key={project.name}
             className="sticky top-6 flex h-[85vh] w-full items-start justify-center md:top-8"
           >
-            <motion.div
-              style={{
-                scale,
-                top: `${index * 28}px`,
-                transformOrigin: 'top',
-              }}
-              className="absolute left-1/2 w-[94%] max-w-[1100px] -translate-x-1/2"
-            >
-              <CardInner project={project} />
-            </motion.div>
+            {/* 外层 relative 容器负责水平居中，内部 motion.div 只处理缩放/偏移，
+                避免 framer-motion 的 scale 覆盖掉 -translate-x-1/2 导致错位 */}
+            <div className="relative w-[94%] max-w-[1100px]">
+              <motion.div
+                style={{
+                  scale,
+                  top: `${index * 28}px`,
+                  transformOrigin: 'top',
+                }}
+                className="absolute inset-x-0"
+              >
+                <CardInner project={project} />
+              </motion.div>
+            </div>
           </div>
         )
       })}
