@@ -195,7 +195,7 @@ export default function AiApps() {
                   </h3>
 
                   {sec.type === 'gallery' && (
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                       {sec.images.map((img) => (
                         <figure
                           key={img.caption}
@@ -205,10 +205,10 @@ export default function AiApps() {
                             <img
                               src={img.src}
                               alt={img.caption}
-                              className="aspect-video w-full object-cover"
+                              className="aspect-[4/3] w-full object-cover"
                             />
                           ) : (
-                            <div className="flex aspect-video w-full items-center justify-center bg-surface text-xs text-muted">
+                            <div className="flex aspect-[4/3] w-full items-center justify-center bg-surface text-xs text-muted">
                               待上传{sec.label}截图
                             </div>
                           )}
@@ -221,10 +221,10 @@ export default function AiApps() {
                   )}
 
                   {sec.type === 'flow' && (
-                    <div className="flex flex-col gap-4 md:flex-row md:items-stretch">
+                    <div className="flex flex-col gap-5 md:flex-row md:items-stretch md:gap-5">
                       {sec.steps.map((step, i) => (
                         <Fragment key={step.title}>
-                          <div className="flex-1 rounded-2xl border border-stroke bg-bg p-4">
+                          <div className="flex-1 rounded-2xl border border-stroke bg-bg p-6">
                             <div className="text-xs text-muted">步骤 {i + 1}</div>
                             <div className="mt-1 text-sm font-medium text-text-primary">
                               {step.title}
