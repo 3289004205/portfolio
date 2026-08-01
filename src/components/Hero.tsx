@@ -81,7 +81,7 @@ export default function Hero() {
           >
             <span className="absolute inset-[-2px] rounded-full accent-gradient opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
             <span className="relative inline-flex items-center rounded-full bg-text-primary px-7 py-3.5 text-bg transition-colors group-hover:bg-bg group-hover:text-text-primary">
-              参见作品
+              作品总览
             </span>
           </button>
 
