@@ -95,22 +95,29 @@ export default function ResumeSection() {
       <div className="mx-auto max-w-[1200px] px-6 md:px-10 lg:px-16">
         {/* Header */}
         <Eyebrow>Resume · 简历</Eyebrow>
-        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
             <h2 className="text-5xl font-medium tracking-tight text-text-primary md:text-7xl">
               杨秀龙
             </h2>
             <p className="mt-2 text-sm text-muted md:text-base">Xiulong Yang</p>
           </div>
-          <div className="flex flex-col gap-1 text-sm text-muted md:items-end">
-            <span>AIGC 产品经理 / AI 产品化落地</span>
-            <span>男 · 23 岁 · 2 年工作经验</span>
-            <a
-              href="mailto:3289004205@qq.com"
-              className="text-text-primary transition-colors hover:text-muted"
-            >
-              3289004205@qq.com
-            </a>
+          <div className="flex items-end gap-5">
+            <div className="flex flex-col gap-1 text-sm text-muted md:items-end">
+              <span>AIGC 产品经理 / AI 产品化落地</span>
+              <span>男 · 23 岁 · 2 年工作经验</span>
+              <a
+                href="mailto:3289004205@qq.com"
+                className="text-text-primary transition-colors hover:text-muted"
+              >
+                3289004205@qq.com
+              </a>
+            </div>
+            <img
+              src="/photo.jpg"
+              alt="杨秀龙"
+              className="aspect-[3/4] h-32 rounded-2xl border border-stroke bg-surface object-cover md:h-40"
+            />
           </div>
         </div>
 
