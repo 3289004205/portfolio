@@ -122,7 +122,7 @@ export default function ResumeSection() {
         </div>
 
         {/* Summary */}
-        <p className="mt-10 max-w-3xl text-base leading-relaxed text-muted md:text-lg">
+        <p className="mt-10 max-w-5xl text-base leading-relaxed text-muted md:text-lg">
           {SUMMARY}
         </p>
 
