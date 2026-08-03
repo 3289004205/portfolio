@@ -4,6 +4,8 @@ import RaysBackground from '../components/SideRays/RaysBackground'
 import Navbar from '../components/Navbar'
 import SpotlightCard from '../components/SpotlightCard/SpotlightCard'
 import Masonry, { type MasonryItem } from '../components/Masonry/Masonry'
+import BackToTop from '../components/BackToTop'
+import MiroBoard from '../components/MiroBoard/MiroBoard'
 
 /** 与 FeaturesChess 一致的毛玻璃图片占位（视觉 AI 整合网站形式） */
 function FeatureTile({ caption }: { caption: string }) {
@@ -32,7 +34,23 @@ const makeMasonryItems = (prefix: string, heights: number[]): MasonryItem[] =>
 
 const DETAIL_ITEMS = makeMasonryItems('detail', [600, 820, 480, 700, 560, 780])
 const BRAND_ITEMS = makeMasonryItems('brand', [720, 520, 640, 860, 500, 680])
-const AMAZON_ITEMS = makeMasonryItems('amazon', [540, 760, 620, 500, 800, 660])
+const AMAZON_ITEMS: MasonryItem[] = [
+  { id: 'amazon-1', img: '/explorations/amazon/01.png', url: '/explorations/amazon/01.png', height: 640 },
+  { id: 'amazon-2', img: '/explorations/amazon/02.png', url: '/explorations/amazon/02.png', height: 2697 },
+  { id: 'amazon-3', img: '/explorations/amazon/03.png', url: '/explorations/amazon/03.png', height: 2492 },
+  { id: 'amazon-4', img: '/explorations/amazon/04.png', url: '/explorations/amazon/04.png', height: 3004 },
+  { id: 'amazon-5', img: '/explorations/amazon/05.png', url: '/explorations/amazon/05.png', height: 3138 },
+  { id: 'amazon-6', img: '/explorations/amazon/06.png', url: '/explorations/amazon/06.png', height: 2025 },
+  { id: 'amazon-7', img: '/explorations/amazon/07.png', url: '/explorations/amazon/07.png', height: 640 },
+  { id: 'amazon-8', img: '/explorations/amazon/08.png', url: '/explorations/amazon/08.png', height: 640 },
+  { id: 'amazon-9', img: '/explorations/amazon/09.png', url: '/explorations/amazon/09.png', height: 640 },
+  { id: 'amazon-10', img: '/explorations/amazon/10.png', url: '/explorations/amazon/10.png', height: 640 },
+  { id: 'amazon-11', img: '/explorations/amazon/11.png', url: '/explorations/amazon/11.png', height: 640 },
+  { id: 'amazon-12', img: '/explorations/amazon/12.png', url: '/explorations/amazon/12.png', height: 640 },
+  { id: 'amazon-13', img: '/explorations/amazon/13.png', url: '/explorations/amazon/13.png', height: 640 },
+  { id: 'amazon-14', img: '/explorations/amazon/14.png', url: '/explorations/amazon/14.png', height: 640 },
+  { id: 'amazon-15', img: '/explorations/amazon/15.png', url: '/explorations/amazon/15.png', height: 640 },
+]
 
 type GalleryImage = { src?: string; caption: string }
 type FlowStep = { title: string; desc: string }
@@ -51,6 +69,7 @@ type Section =
       caption: string
     }
   | { key: string; label: string; type: 'content'; items: ContentItem[] }
+  | { key: string; label: string; type: 'miro'; src?: string; openUrl?: string }
 
 type Module = {
   id: string
@@ -93,38 +112,22 @@ const MODULES: Module[] = [
     id: 'flow',
     title: 'AI 图像流程制定与动态优化',
     tagline: '从需求到交付的标准流程',
-    desc: '将零散的出图经验固化为可执行、可复用、可迭代的标准流程：先完成设计工具底座迁移，再针对不同业务场景拆分专项工作流，并在生成过程中依据反馈持续动态调优。',
-    tags: ['Figma', 'Midjourney', 'Nano Banana', 'ComfyUI', 'Photoshop'],
+    desc: '将零散的出图经验固化为可执行、可复用、可迭代的标准流程：针对不同业务场景拆分专项工作流，并在生成过程中依据反馈持续动态调优。',
+    tags: ['Midjourney', 'Nano Banana', 'ComfyUI', 'Photoshop'],
     sections: [
-      {
-        key: 'tooling',
-        label: '设计工具从 PS 转向 Figma',
-        type: 'flowchart',
-        nodes: ['Photoshop', 'Figma'],
-        highlights: ['团队协同', '画布不受限', 'AI 功能', '插件生态丰富'],
-        caption: '设计工具迁移示意',
-      },
       {
         key: 'detail-scene',
         label: '详情页场景图 AI 生产工作流',
-        type: 'flowchart',
-        nodes: [
-          '参考图',
-          '结构化反推提示词智能体',
-          'Midjourney 生图',
-          'Nano Banana 洗图',
-          'ComfyUI 洗图',
-          'ComfyUI 放大',
-          'PS 处理',
-        ],
-        caption: '详情页场景图工作流',
+        type: 'miro',
+        src: '',
+        openUrl: '',
       },
       {
         key: 'brand',
         label: '品牌物料专项工作流',
-        type: 'flowchart',
-        nodes: ['参考图', 'ComfyUI 洗图', 'ComfyUI 无损放大', 'PS 处理'],
-        caption: '品牌物料工作流',
+        type: 'miro',
+        src: '',
+        openUrl: '',
       },
     ],
   },
@@ -141,23 +144,23 @@ const MODULES: Module[] = [
         type: 'content',
         items: [
           {
-            title: '工作流模板',
-            desc: '沉淀常用出图流程为标准化 ComfyUI 模板，降低复用与协作门槛。',
-          },
-          {
-            title: '业务应用',
-            desc: '服务于电商主图、广告投放、社媒物料等高频业务场景。',
-          },
-          {
-            title: '生成效果对比',
-            desc: '提供调参前后的成片对比，直观评估优化收益与风格差异。',
-          },
-          {
             title: 'RunningHub 链接',
             desc: '在 RunningHub 上发布与分享工作流，便于外部协作与复用。',
             link: 'https://www.runninghub.cn/',
           },
         ],
+      },
+      {
+        key: 'workflows',
+        label: '常用工作流展示',
+        type: 'gallery',
+        images: [{ caption: '详情页场景图工作流' }, { caption: '品牌物料工作流' }],
+      },
+      {
+        key: 'compare',
+        label: '生成效果对比',
+        type: 'gallery',
+        images: [{ caption: '调参前' }, { caption: '调参后' }, { caption: '风格差异' }],
       },
     ],
   },
@@ -269,6 +272,10 @@ export default function AiImages() {
                   </div>
                 )}
 
+                {sec.type === 'miro' && (
+                  <MiroBoard src={sec.src} title={sec.label} openUrl={sec.openUrl} />
+                )}
+
                 {sec.type === 'flowchart' && (
                   <div className="flex flex-col gap-6">
                     {/* 流程节点 */}
@@ -358,6 +365,7 @@ export default function AiImages() {
               </div>
             ))}
           </div>
+          <BackToTop />
         </motion.section>
       </AnimatePresence>
       </motion.main>

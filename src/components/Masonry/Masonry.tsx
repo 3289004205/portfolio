@@ -56,17 +56,25 @@ const useMeasure = () => {
   return [ref, size] as const;
 };
 
-const preloadImages = async (urls: string[]) => {
+const preloadImages = async (
+  items: { id: string; img: string }[]
+): Promise<Record<string, { w: number; h: number }>> => {
+  const dims: Record<string, { w: number; h: number }> = {};
   await Promise.all(
-    urls.map(
-      src =>
+    items.map(
+      it =>
         new Promise<void>(resolve => {
           const img = new Image();
-          img.src = src;
-          img.onload = img.onerror = () => resolve();
+          img.src = it.img;
+          img.onload = () => {
+            dims[it.id] = { w: img.naturalWidth, h: img.naturalHeight };
+            resolve();
+          };
+          img.onerror = () => resolve();
         })
     )
   );
+  return dims;
 };
 
 const Masonry = ({
@@ -88,6 +96,7 @@ const Masonry = ({
 
   const [containerRef, { width }] = useMeasure();
   const [imagesReady, setImagesReady] = useState(false);
+  const [dims, setDims] = useState<Record<string, { w: number; h: number }>>({});
 
   const getInitialPosition = (item: any) => {
     const containerRect = containerRef.current?.getBoundingClientRect();
@@ -120,7 +129,10 @@ const Masonry = ({
   };
 
   useEffect(() => {
-    preloadImages(items.map(i => i.img)).then(() => setImagesReady(true));
+    preloadImages(items.map(i => ({ id: i.id, img: i.img }))).then(m => {
+      setDims(m);
+      setImagesReady(true);
+    });
   }, [items]);
 
   const grid = useMemo(() => {
@@ -132,7 +144,10 @@ const Masonry = ({
     const gridItems = items.map(child => {
       const col = colHeights.indexOf(Math.min(...colHeights));
       const x = columnWidth * col;
-      const height = child.height / 2;
+      const aspect = dims[child.id]
+        ? dims[child.id].h / dims[child.id].w
+        : child.height / (2 * columnWidth);
+      const height = Math.max(columnWidth * aspect, 1);
       const y = colHeights[col];
 
       colHeights[col] += height;
@@ -141,7 +156,7 @@ const Masonry = ({
     });
 
     return { items: gridItems, totalHeight: Math.max(...colHeights) };
-  }, [columns, items, width]);
+  }, [columns, items, width, dims]);
 
   const hasMounted = useRef(false);
 

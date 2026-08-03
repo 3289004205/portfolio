@@ -4,6 +4,7 @@ import SpotlightCard from '../components/SpotlightCard/SpotlightCard'
 import RaysBackground from '../components/SideRays/RaysBackground'
 import Navbar from '../components/Navbar'
 import { CATEGORIES, SubPart } from '../content/explorations'
+import BackToTop from '../components/BackToTop'
 
 export default function More() {
   const [selected, setSelected] = useState(CATEGORIES[0].id)
@@ -144,7 +145,7 @@ export default function More() {
                 />
               </div>
             ) : activeSub.videos && activeSub.videos.length > 0 ? (
-              <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
+              <div className="mt-8 flex flex-col gap-6">
                 {activeSub.videos.map((src, i) => (
                   <div
                     key={i}
@@ -153,6 +154,8 @@ export default function More() {
                     <video
                       src={src}
                       controls
+                      preload="metadata"
+                      playsInline
                       className="aspect-video w-full"
                     />
                   </div>
@@ -171,16 +174,16 @@ export default function More() {
                 />
               </div>
             ) : activeSub.images && activeSub.images.length > 0 ? (
-              <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
+              <div className="mt-8 columns-1 gap-4 md:columns-2">
                 {activeSub.images.map((src, i) => (
                   <SpotlightCard
                     key={i}
-                    className="liquid-glass overflow-hidden rounded-2xl"
+                    className="liquid-glass mb-4 break-inside-avoid overflow-hidden rounded-2xl"
                   >
                     <img
                       src={src}
                       alt={`${activeSub.title} ${i + 1}`}
-                      className="aspect-[4/3] w-full object-cover"
+                      className="h-auto w-full object-contain"
                       loading="lazy"
                     />
                   </SpotlightCard>
@@ -201,6 +204,19 @@ export default function More() {
                 ))}
               </div>
             )}
+            {current.id === 'lora' && (
+              <div className="mt-12 flex justify-center">
+                <a
+                  href="https://www.modelscope.cn/profile/a927973507A"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-stroke bg-surface px-6 py-3 font-body text-sm text-text-primary transition-colors hover:bg-text-primary hover:text-bg"
+                >
+                  查看我的所有 LoRA 训练 ↗
+                </a>
+              </div>
+            )}
+            <BackToTop />
           </motion.div>
         </AnimatePresence>
       </motion.main>

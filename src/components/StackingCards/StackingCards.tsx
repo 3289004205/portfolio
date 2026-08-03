@@ -14,12 +14,16 @@ export type StackingProject = {
   images: { top: string; bottom: string; right: string }
   /** 视频直链列表（存在时优先渲染为视频网格） */
   videos?: string[]
+  /** 项目简介 */
+  intro?: string
+  /** 在该项目中担任的角色 */
+  roles?: string[]
 }
 
 function CardInner({ project }: { project: StackingProject }) {
   return (
     <div className="overflow-hidden rounded-[40px] border border-stroke bg-surface p-6 shadow-xl shadow-black/30 md:p-10">
-      {/* 头部：大序号 + 分类/名称 + Live Project 胶囊 */}
+      {/* 头部：大序号 + 分类/名称 + 查看全部视频 胶囊 */}
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div className="flex items-end gap-4">
           <span className="select-none font-semibold leading-none text-text-primary/10 text-[clamp(3rem,10vw,140px)]">
@@ -36,11 +40,46 @@ function CardInner({ project }: { project: StackingProject }) {
         </div>
         <a
           href={project.href ?? '#'}
+          target={project.href && project.href !== '#' ? '_blank' : undefined}
+          rel="noopener noreferrer"
           className="rounded-full border border-stroke px-4 py-2 text-xs text-text-primary transition-colors hover:bg-text-primary hover:text-bg"
         >
-          Live Project ↗
+          查看全部视频 ↗
         </a>
       </div>
+
+      {/* 项目简介 + 担任角色 */}
+      {(project.intro || (project.roles && project.roles.length > 0)) && (
+        <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-[1.3fr_1fr] md:gap-12">
+          {project.intro && (
+            <div>
+              <p className="mb-1.5 text-xs uppercase tracking-[0.2em] text-muted">
+                项目简介
+              </p>
+              <p className="font-body text-sm leading-relaxed text-text-primary/80">
+                {project.intro}
+              </p>
+            </div>
+          )}
+          {project.roles && project.roles.length > 0 && (
+            <div className="md:pl-6">
+              <p className="mb-2 text-xs uppercase tracking-[0.2em] text-muted">
+                担任角色
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {project.roles.map((r) => (
+                  <span
+                    key={r}
+                    className="rounded-full border border-stroke bg-bg/60 px-3 py-1.5 text-xs text-text-primary"
+                  >
+                    {r}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* 视频：9:16 竖视频，4列×2行网格铺满媒体区，与图卡网格规律一致；
           不再横向滚动，宽度始终在卡内，保持原比例不裁剪 */}

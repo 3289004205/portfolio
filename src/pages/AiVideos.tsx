@@ -4,6 +4,8 @@ import RaysBackground from '../components/SideRays/RaysBackground'
 import Navbar from '../components/Navbar'
 import SpotlightCard from '../components/SpotlightCard/SpotlightCard'
 import StackingCards, { type StackingProject } from '../components/StackingCards/StackingCards'
+import BackToTop from '../components/BackToTop'
+import MiroBoard from '../components/MiroBoard/MiroBoard'
 
 /** 与 FeaturesChess 一致的毛玻璃图片占位（视觉 AI 整合网站形式） */
 function FeatureTile({ caption }: { caption: string }) {
@@ -29,6 +31,9 @@ const PROJECTS: StackingProject[] = [
       bottom: 'https://picsum.photos/seed/v-office-bot/600/400',
       right: 'https://picsum.photos/seed/v-office-right/600/800',
     },
+    intro:
+      '为品牌官网打造的主形象宣传片，以 AI 生图与视频能力重塑视觉语言，统一官网首屏的叙事调性与质感。',
+    roles: ['设计', '生图', '生视频'],
   },
   {
     number: '02',
@@ -40,6 +45,9 @@ const PROJECTS: StackingProject[] = [
       bottom: 'https://picsum.photos/seed/v-sport-bot/600/400',
       right: 'https://picsum.photos/seed/v-sport-right/600/800',
     },
+    intro:
+      '与体育训练局的机构合作项目，面向训练纪实与成果展示，以 AI 素材补充实拍缺口并完成成片剪辑。',
+    roles: ['剪辑', 'AI素材产出'],
   },
   {
     number: '03',
@@ -51,17 +59,23 @@ const PROJECTS: StackingProject[] = [
       bottom: 'https://picsum.photos/seed/v-taobao-bot/600/400',
       right: 'https://picsum.photos/seed/v-taobao-right/600/800',
     },
+    intro:
+      '淘宝首页开屏级电商动画，服务大促节点曝光，从创意、剧本到成片全流程把控。',
+    roles: ['导演', '编剧', '生图', '生视频', '剪辑'],
   },
   {
     number: '04',
     category: 'Feed Ads',
     name: '抖音信息流素材',
-    href: '#',
+    href: 'https://pan.baidu.com/s/1dtQo97oK000MniTZ5CAAkQ?pwd=xqqj',
     images: {
       top: 'https://picsum.photos/seed/v-douyin-top/600/400',
       bottom: 'https://picsum.photos/seed/v-douyin-bot/600/400',
       right: 'https://picsum.photos/seed/v-douyin-right/600/800',
     },
+    intro:
+      '抖音信息流投放短视频矩阵，以脚本化方式批量产出，适配不同定向的高效短素材。',
+    roles: ['脚本', '生图', '生视频'],
     videos: [
       'https://files.catbox.moe/2ye1we.mp4',
       'https://files.catbox.moe/r4avnl.mp4',
@@ -89,6 +103,7 @@ type Section =
       caption: string
     }
   | { key: string; label: string; type: 'tools'; items: ToolItem[] }
+  | { key: string; label: string; type: 'miro'; src?: string; openUrl?: string }
 
 type Module = {
   id: string
@@ -110,31 +125,24 @@ const MODULES: Module[] = [
   },
   {
     id: 'workflow',
-    title: 'AI 视频制作流程梳理',
-    tagline: '三类场景的生产链路',
-    desc: '按投放场景拆分生产链路：品牌 TVC 追求质感与叙事完整度，抖音信息流强调批量与迭代速度，爆款复刻侧重结构拆解与快速验证。',
-    tags: ['品牌 TVC', '抖音信息流', '爆款复刻'],
+    title: 'AI视频流程制定与优化',
+    tagline: '两类场景的生产链路',
+    desc: '按投放场景拆分生产链路：品牌 TVC 追求质感与叙事完整度，抖音信息流强调批量与迭代速度。',
+    tags: ['品牌 TVC', '抖音信息流'],
     sections: [
       {
         key: 'tvc',
         label: '品牌 TVC',
-        type: 'flowchart',
-        nodes: [],
-        caption: '品牌 TVC 制作流程',
+        type: 'miro',
+        src: '',
+        openUrl: '',
       },
       {
         key: 'douyin-flow',
         label: '抖音信息流',
-        type: 'flowchart',
-        nodes: [],
-        caption: '抖音信息流制作流程',
-      },
-      {
-        key: 'replica',
-        label: '爆款复刻',
-        type: 'flowchart',
-        nodes: [],
-        caption: '爆款复刻制作流程',
+        type: 'miro',
+        src: '',
+        openUrl: '',
       },
     ],
   },
@@ -220,26 +228,7 @@ export default function AiVideos() {
             className="mt-8 py-16"
           >
             <StackingCards projects={PROJECTS} />
-
-            {/* 回到顶部 */}
-            <div className="mt-12 flex justify-center">
-              <button
-                type="button"
-                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                className="inline-flex items-center gap-2 rounded-full border border-stroke bg-surface px-6 py-3 text-sm text-text-primary transition-colors hover:bg-surface/70"
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  className="h-4 w-4"
-                >
-                  <path d="M12 19V5M5 12l7-7 7 7" />
-                </svg>
-                回到顶部
-              </button>
-            </div>
+            <BackToTop />
           </motion.div>
         ) : (
           <motion.section
@@ -262,7 +251,11 @@ export default function AiVideos() {
                     </h3>
                   </div>
 
-                  {sec.type === 'gallery' && (
+                  {sec.type === 'miro' && (
+                  <MiroBoard src={sec.src} title={sec.label} openUrl={sec.openUrl} />
+                )}
+
+                {sec.type === 'gallery' && (
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                       {sec.images.map((img) => (
                         <FeatureTile key={img.caption} caption={img.caption} />
@@ -362,6 +355,7 @@ export default function AiVideos() {
                 </div>
               ))}
             </div>
+            <BackToTop />
           </motion.section>
           )}
       </AnimatePresence>

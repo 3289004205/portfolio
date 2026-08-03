@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar'
 import SpotlightCard from '../components/SpotlightCard/SpotlightCard'
 import FeaturesChess from '../components/FeaturesChess/FeaturesChess'
 import StatsPanel from '../components/StatsPanel/StatsPanel'
+import BackToTop from '../components/BackToTop'
 
 type GalleryImage = { src?: string; caption: string }
 type FlowStep = { title: string; desc: string }
@@ -24,7 +25,7 @@ type App = {
 }
 
 /** 需要在详情区最下方展示数据面板的子页面 */
-const STATS_PAGES = ['visual', 'preset', 'kb']
+const STATS_PAGES = ['visual', 'preset', 'kb', 'others']
 
 const APPS: App[] = [
   {
@@ -106,32 +107,8 @@ const APPS: App[] = [
         label: '原型图展示',
         type: 'gallery',
         images: [
-          { caption: '原型 · 信息架构' },
-          { caption: '原型 · 生图交互' },
-          { caption: '原型 · 历史管理' },
-        ],
-      },
-      {
-        key: 'badcase',
-        label: 'Badcase 优化',
-        type: 'badcase',
-        items: [
-          {
-            problem: '生成图像与提示词预期不符',
-            fix: '优化预设模板的提示词结构，增加负向提示词与示例对照，提升可控性。',
-          },
-          {
-            problem: '生图偶发失败 / 超时',
-            fix: '引入任务队列与重试机制，超时自动回退并给出明确提示。',
-          },
-          {
-            problem: '不同模型输出风格不一致',
-            fix: '统一采样参数与 LoRA 权重，建立风格校准基线，保证成片一致性。',
-          },
-          {
-            problem: '参数配置门槛偏高',
-            fix: '暴露常用参数、收起高级项，提供「一键最佳」预设降低上手成本。',
-          },
+          { caption: '原型 · 信息架构与流程' },
+          { caption: '原型 · 生图交互页面' },
         ],
       },
     ],
@@ -159,29 +136,6 @@ const APPS: App[] = [
         images: [
           { caption: '问答机器人 · 对话界面' },
           { caption: '问答机器人 · 知识检索结果' },
-        ],
-      },
-      {
-        key: 'badcase',
-        label: 'Badcase 分析',
-        type: 'badcase',
-        items: [
-          {
-            problem: '问答机器人答非所问 / 出现幻觉',
-            fix: '强化检索增强（RAG）约束，要求答案必须基于检索片段并标注来源，无依据时主动拒答。',
-          },
-          {
-            problem: '知识库检索不准 / 漏检',
-            fix: '优化文档切分与向量召回，增加同义词与重排策略，提升长尾问题的命中率。',
-          },
-          {
-            problem: '知识更新滞后导致答案过时',
-            fix: '建立增量入库与定期审查机制，过期内容自动标记并提示负责人复核。',
-          },
-          {
-            problem: '权限配置不当引发信息泄露',
-            fix: '细化角色权限，敏感知识单独隔离并加密，关键操作留痕审计。',
-          },
         ],
       },
     ],
@@ -334,7 +288,8 @@ export default function AiApps() {
             transition={{ duration: 0.3 }}
           >
             <FeaturesChess />
-            <StatsPanel />
+            <StatsPanel appTitle={current.title} />
+            <BackToTop />
           </motion.div>
         ) : (
           <motion.section
@@ -420,7 +375,10 @@ export default function AiApps() {
             )}
 
             {/* 数据面板（仅视觉 AI 整合网站 / 预设生成网站 / 知识库） */}
-            {STATS_PAGES.includes(current.id) && <StatsPanel />}
+            {STATS_PAGES.includes(current.id) && (
+              <StatsPanel appTitle={current.title} />
+            )}
+            <BackToTop />
           </motion.section>
           )}
         </AnimatePresence>

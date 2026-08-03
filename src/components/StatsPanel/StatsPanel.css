@@ -1,6 +1,6 @@
 /* ============================================================
    EngineTech Stats Panel
-   暗底 · 两列表头 · 4 标签切换 · 动画水平柱状图
+   暗底 · 两列表头 · 当前模块五维度柱状图
    （区间指示器 / 火花轨迹 / 交错入场）
    ============================================================ */
 
@@ -24,7 +24,7 @@
   width: 100%;
   max-width: var(--stats-max-width);
   margin: 0 auto;
-  padding: 72px 0 8px;
+  padding: 80px 0 48px;
   color: var(--stats-text);
   border-top: 1px solid var(--stats-line);
 }
@@ -118,54 +118,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* ---------- 标签切换 ---------- */
-
-.stats__tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 0 0 26px;
-}
-
-.stats__tab {
-  position: relative;
-  appearance: none;
-  border: 1px solid var(--stats-line);
-  background: transparent;
-  color: var(--stats-muted);
-  font: inherit;
-  font-size: 12.5px;
-  letter-spacing: 0.02em;
-  padding: 9px 18px;
-  border-radius: 999px;
-  cursor: pointer;
-  transition:
-    color 0.28s ease,
-    border-color 0.28s ease,
-    background-color 0.28s ease,
-    transform 0.28s ease;
-}
-
-.stats__tab:hover {
-  color: var(--stats-text);
-  border-color: rgba(244, 244, 242, 0.24);
-  transform: translateY(-1px);
-}
-
-.stats__tab.is-active {
-  color: #0b0b0b;
-  background: var(--stats-blue-soft);
-  border-color: var(--stats-blue-soft);
-}
-
-.stats__tab-count {
-  margin-left: 8px;
-  font-size: 10px;
-  opacity: 0.6;
-  font-variant-numeric: tabular-nums;
-}
-
-/* ---------- 图表 ---------- */
+/* ---------- 当前模块五维度柱状图 ---------- */
 
 .stats__chart {
   position: relative;
@@ -176,16 +129,9 @@
 .stats__chart-head {
   display: flex;
   align-items: baseline;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 16px;
   margin-bottom: 18px;
-}
-
-.stats__unit {
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--stats-faint);
 }
 
 .stats__legend {
@@ -222,12 +168,42 @@
   height: 1px;
 }
 
-/* ---------- 柱条 ---------- */
+/* ---------- 维度块（每个维度一块） ---------- */
 
 .stats__bars {
   display: flex;
   flex-direction: column;
+  gap: 36px;
 }
+
+.stats__dim-block {
+  opacity: 0;
+}
+
+.stats.is-visible .stats__dim-block {
+  animation: stats-row-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: calc(var(--i) * 70ms);
+}
+
+.stats__dim-title {
+  margin: 0;
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.25rem;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: hsl(var(--text));
+}
+
+.stats__dim-cap {
+  margin: 6px 0 14px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--stats-muted);
+}
+
+/* ---------- 柱条行 ---------- */
 
 .stats__bar-row {
   display: grid;
@@ -236,16 +212,10 @@
   gap: 20px;
   height: var(--stats-row-h);
   border-bottom: 1px solid rgba(244, 244, 242, 0.05);
-  opacity: 0;
 }
 
 .stats__bar-row:last-child {
   border-bottom: 0;
-}
-
-.stats.is-visible .stats__bar-row {
-  animation: stats-row-in 0.62s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  animation-delay: calc(var(--i) * 70ms);
 }
 
 .stats__label {
@@ -393,7 +363,6 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* 逆向指标（如缺陷率）下降为正面，配色由 lowerIsBetter 决定 */
 .stats__delta.is-muted {
   color: rgba(244, 244, 242, 0.4);
 }
@@ -404,8 +373,8 @@
   display: grid;
   grid-template-columns: var(--stats-label-w) minmax(0, 1fr) var(--stats-value-w);
   gap: 20px;
-  margin-top: 14px;
-  padding-top: 12px;
+  margin-top: 10px;
+  padding-top: 10px;
   border-top: 1px solid var(--stats-line);
 }
 
@@ -429,45 +398,23 @@
 /* ---------- 动画 ---------- */
 
 @keyframes stats-row-in {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes stats-fill {
-  from {
-    width: 0;
-  }
-  to {
-    width: var(--w);
-  }
+  from { width: 0; }
+  to   { width: var(--w); }
 }
 
 @keyframes stats-range-in {
-  from {
-    opacity: 0;
-    transform: scaleX(0);
-  }
-  to {
-    opacity: 1;
-    transform: scaleX(1);
-  }
+  from { opacity: 0; transform: scaleX(0); }
+  to   { opacity: 1; transform: scaleX(1); }
 }
 
 @keyframes stats-point-in {
-  from {
-    opacity: 0;
-    stroke-dashoffset: 260;
-  }
-  to {
-    opacity: 1;
-    stroke-dashoffset: 0;
-  }
+  from { opacity: 0; stroke-dashoffset: 260; }
+  to   { opacity: 1; stroke-dashoffset: 0; }
 }
 
 /* ---------- 响应式 ---------- */
@@ -497,6 +444,10 @@
     --stats-row-h: 46px;
   }
 
+  .stats__dim-title {
+    font-size: 1.1rem;
+  }
+
   .stats__label {
     font-size: 11.5px;
   }
@@ -517,19 +468,13 @@
     flex-wrap: wrap;
     gap: 16px 24px;
   }
-
-  .stats__tab {
-    padding: 7px 13px;
-    font-size: 11.5px;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .stats.is-visible .stats__bar-row,
+  .stats.is-visible .stats__dim-block,
   .stats.is-visible .stats__bar,
   .stats.is-visible .stats__range,
-  .stats.is-visible .stats__trace polyline,
-  .stats.is-visible .stats__trace circle {
+  .stats.is-visible .stats__trace polyline {
     animation-duration: 1ms;
     animation-delay: 0ms;
   }

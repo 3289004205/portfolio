@@ -35,8 +35,8 @@ export const CATEGORIES: Category[] = [
       {
         id: 'video',
         title: '数字人视频',
-        desc: '基于数字人形象生成口播、讲解类视频，降低真人出镜与拍摄成本。',
-        bilibili: 'BV1kUGg6YELU',
+        desc: '基于数字人形象自动生成口播与讲解视频，核心是降低人工重复性讲解动作，把员工从反复出镜与拍摄中解放出来。',
+        video: 'https://files.catbox.moe/4xxesj.mp4',
       },
       {
         id: 'training',
@@ -51,8 +51,31 @@ export const CATEGORIES: Category[] = [
     tagline: '产品类 / 人物类',
     desc: '针对产品与人物分别训练专属 LoRA 模型，沉淀可复用的风格与特征资产。',
     subs: [
-      { id: 'product', title: '产品类', desc: '训练产品专属 LoRA，保证电商与物料生图风格、细节一致。' },
-      { id: 'character', title: '人物类', desc: '训练人物专属 LoRA，固化形象特征用于多场景复用。' },
+      {
+        id: 'product',
+        title: '产品类',
+        desc: '训练产品专属 LoRA，保证电商与物料生图风格、细节一致。',
+        images: [
+          '/explorations/lora/product/01.png',
+          '/explorations/lora/product/02.png',
+          '/explorations/lora/product/03.png',
+          '/explorations/lora/product/04.png',
+          '/explorations/lora/product/05.png',
+          '/explorations/lora/product/06.png',
+          '/explorations/lora/product/07.png',
+          '/explorations/lora/product/08.png',
+        ],
+      },
+      {
+        id: 'character',
+        title: '人物类',
+        desc: '训练人物专属 LoRA，固化形象特征用于多场景复用。',
+        images: [
+          '/explorations/lora/character/01.png',
+          '/explorations/lora/character/02.png',
+          '/explorations/lora/character/03.png',
+        ],
+      },
     ],
   },
   {
@@ -61,8 +84,49 @@ export const CATEGORIES: Category[] = [
     tagline: '图片 / 视频',
     desc: '结合 AI 与 3D 管线，输出高质量静帧与动态渲染内容。',
     subs: [
-      { id: 'image', title: '图片', desc: '输出高质量 3D 静帧与产品渲染图。' },
-      { id: 'video', title: '视频', desc: '生成 3D 动态渲染视频，用于宣传与演示。' },
+      {
+        id: 'image',
+        title: '图片',
+        desc: '输出高质量 3D 静帧与产品渲染图。',
+        images: [
+          '/explorations/3d/01.png',
+          '/explorations/3d/02.png',
+          '/explorations/3d/03.png',
+          '/explorations/3d/04.png',
+          '/explorations/3d/05.png',
+          '/explorations/3d/06.png',
+          '/explorations/3d/07.png',
+          '/explorations/3d/08.png',
+          '/explorations/3d/09.png',
+          '/explorations/3d/10.png',
+          '/explorations/3d/11.png',
+          '/explorations/3d/12.png',
+          '/explorations/3d/13.png',
+          '/explorations/3d/14.png',
+          '/explorations/3d/15.png',
+          '/explorations/3d/16.png',
+          '/explorations/3d/17.png',
+          '/explorations/3d/18.png',
+          '/explorations/3d/19.png',
+          '/explorations/3d/20.png',
+          '/explorations/3d/21.png',
+          '/explorations/3d/22.png',
+          '/explorations/3d/23.png',
+          '/explorations/3d/24.png',
+          '/explorations/3d/25.png',
+          '/explorations/3d/26.png',
+        ],
+      },
+      {
+        id: 'video',
+        title: '视频',
+        desc: '生成 3D 动态渲染视频，用于宣传与演示。',
+        videos: [
+          'https://files.catbox.moe/fmlg5c.mp4',
+          'https://files.catbox.moe/xa8vmc.mp4',
+          'https://files.catbox.moe/o70ltt.mp4',
+        ],
+      },
     ],
   },
   {
@@ -81,7 +145,10 @@ export const CATEGORIES: Category[] = [
     tagline: '自动素材搜集 / AI 日报信息收集',
     desc: '用自动化流程替代重复人工，覆盖素材搜集与每日信息整理。',
     subs: [
-      { id: 'collect', title: '自动素材搜集', desc: '自动化采集与归档设计、营销素材，减少重复人工。' },
+      { id: 'collect', title: '自动素材搜集', desc: '自动化采集与归档设计、营销素材，减少重复人工。', images: [
+          '/explorations/rpa/collect-01-flow.jpg',
+          '/explorations/rpa/collect-02-result.jpg',
+        ] },
       {
         id: 'digest',
         title: 'AI 日报信息收集',
