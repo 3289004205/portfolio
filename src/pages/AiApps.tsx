@@ -40,12 +40,12 @@ const APPS: App[] = [
         label: '页面展示',
         type: 'gallery',
         images: [
-          { caption: '首页 · 模块导航总览' },
-          { caption: '无限画布 · 工作流编排' },
-          { caption: '图像 / 视频资产库' },
-          { caption: '提示词库 · 模板管理' },
-          { caption: '知识库 · 沉淀与检索' },
-          { caption: '学习资源 · 教程中心' },
+          { src: '/explorations/visual-showcase/01-test-cases.jpg', caption: '测试案例 · 工作流画板' },
+          { src: '/explorations/visual-showcase/02-resource-nav.jpg', caption: '资源导航 · 按需直达' },
+          { src: '/explorations/visual-showcase/03-homepage.jpg', caption: '首页 · Visual Department Platform' },
+          { src: '/explorations/visual-showcase/04-ai-news.jpg', caption: 'AI 新闻 · 设计趋势' },
+          { src: '/explorations/visual-showcase/05-material-library.jpg', caption: '素材库 · Pinterest 图像资源' },
+          { src: '/explorations/visual-showcase/06-smart-workflow.jpg', caption: '智能图像工作流 · 一键出图' },
         ],
       },
       {
@@ -121,21 +121,12 @@ const APPS: App[] = [
     tags: ['知识管理', '问答机器人', 'RAG'],
     sections: [
       {
-        key: 'build',
-        label: '飞书各部门知识库搭建',
+        key: 'showcase',
+        label: '各部门知识库及机器人展示',
         type: 'gallery',
         images: [
-          { caption: '飞书知识库 · 部门空间总览' },
-          { caption: '知识库 · 文档管理与版本' },
-        ],
-      },
-      {
-        key: 'bot',
-        label: '各部门知识库问答机器人',
-        type: 'gallery',
-        images: [
-          { caption: '问答机器人 · 对话界面' },
-          { caption: '问答机器人 · 知识检索结果' },
+          { src: '/explorations/kb-showcase/01-knowledge-base.png', caption: '飞书知识库 · 各部门空间总览' },
+          { src: '/explorations/kb-showcase/02-qa-bot.png', caption: '问答机器人 · 视觉部知识库答疑小助手' },
         ],
       },
     ],
@@ -205,13 +196,22 @@ function ProjectIntro({ app }: { app: App }) {
 }
 
 /** 与 FeaturesChess 一致的毛玻璃图片占位（视觉 AI 整合网站形式） */
-function FeatureTile({ caption }: { caption: string }) {
+function FeatureTile({ caption, src }: { caption: string; src?: string }) {
   return (
     <SpotlightCard className="liquid-glass overflow-hidden rounded-2xl">
-      <div className="flex aspect-[4/3] w-full items-center justify-center bg-white/[0.06] px-3 text-center text-xs text-muted">
-        待上传截图
-        <span className="mt-1 block text-[10px] opacity-70">{caption}</span>
-      </div>
+      {src ? (
+        <img
+          src={src}
+          alt={caption}
+          className="h-auto w-full"
+          loading="lazy"
+        />
+      ) : (
+        <div className="flex aspect-[4/3] w-full items-center justify-center bg-white/[0.06] px-3 text-center text-xs text-muted">
+          待上传截图
+          <span className="mt-1 block text-[10px] opacity-70">{caption}</span>
+        </div>
+      )}
     </SpotlightCard>
   )
 }
@@ -316,7 +316,7 @@ export default function AiApps() {
                     {sec.type === 'gallery' && (
                       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                         {sec.images.map((img) => (
-                          <FeatureTile key={img.caption} caption={img.caption} />
+                          <FeatureTile key={img.caption} caption={img.caption} src={img.src} />
                         ))}
                       </div>
                     )}

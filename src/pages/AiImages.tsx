@@ -8,13 +8,17 @@ import BackToTop from '../components/BackToTop'
 import MiroBoard from '../components/MiroBoard/MiroBoard'
 
 /** 与 FeaturesChess 一致的毛玻璃图片占位（视觉 AI 整合网站形式） */
-function FeatureTile({ caption }: { caption: string }) {
+function FeatureTile({ caption, src }: { caption: string; src?: string }) {
   return (
     <SpotlightCard className="liquid-glass overflow-hidden rounded-2xl">
-      <div className="flex aspect-[4/3] w-full items-center justify-center bg-white/[0.06] px-3 text-center text-xs text-muted">
-        待上传截图
-        <span className="mt-1 block text-[10px] opacity-70">{caption}</span>
-      </div>
+      {src ? (
+        <img src={src} alt={caption} className="h-auto w-full" loading="lazy" />
+      ) : (
+        <div className="flex aspect-[4/3] w-full items-center justify-center bg-white/[0.06] px-3 text-center text-xs text-muted">
+          待上传截图
+          <span className="mt-1 block text-[10px] opacity-70">{caption}</span>
+        </div>
+      )}
     </SpotlightCard>
   )
 }
@@ -238,7 +242,7 @@ export default function AiImages() {
                 {sec.type === 'gallery' && (
                   <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                     {sec.images.map((img) => (
-                      <FeatureTile key={img.caption} caption={img.caption} />
+                      <FeatureTile key={img.caption} caption={img.caption} src={img.src} />
                     ))}
                   </div>
                 )}
