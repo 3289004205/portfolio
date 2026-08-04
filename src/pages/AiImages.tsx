@@ -36,7 +36,37 @@ const makeMasonryItems = (prefix: string, heights: number[]): MasonryItem[] =>
     }
   })
 
-const DETAIL_ITEMS = makeMasonryItems('detail', [600, 820, 480, 700, 560, 780])
+const DETAIL_ITEMS: MasonryItem[] = [
+  { id: 'detail-01', img: '/explorations/detail/01.webp', url: '/explorations/detail/01.webp', height: 1229 },
+  { id: 'detail-02', img: '/explorations/detail/02.webp', url: '/explorations/detail/02.webp', height: 960 },
+  { id: 'detail-03', img: '/explorations/detail/03.webp', url: '/explorations/detail/03.webp', height: 824 },
+  { id: 'detail-04', img: '/explorations/detail/04.webp', url: '/explorations/detail/04.webp', height: 715 },
+  { id: 'detail-05', img: '/explorations/detail/05.webp', url: '/explorations/detail/05.webp', height: 1600 },
+  { id: 'detail-06', img: '/explorations/detail/06.webp', url: '/explorations/detail/06.webp', height: 2115 },
+  { id: 'detail-07', img: '/explorations/detail/07.webp', url: '/explorations/detail/07.webp', height: 1575 },
+  { id: 'detail-08', img: '/explorations/detail/08.webp', url: '/explorations/detail/08.webp', height: 2276 },
+  { id: 'detail-09', img: '/explorations/detail/09.webp', url: '/explorations/detail/09.webp', height: 1916 },
+  { id: 'detail-10', img: '/explorations/detail/10.webp', url: '/explorations/detail/10.webp', height: 1932 },
+  { id: 'detail-11', img: '/explorations/detail/11.webp', url: '/explorations/detail/11.webp', height: 730 },
+  { id: 'detail-12', img: '/explorations/detail/12.webp', url: '/explorations/detail/12.webp', height: 1266 },
+  { id: 'detail-13', img: '/explorations/detail/13.webp', url: '/explorations/detail/13.webp', height: 896 },
+  { id: 'detail-14', img: '/explorations/detail/14.webp', url: '/explorations/detail/14.webp', height: 678 },
+  { id: 'detail-15', img: '/explorations/detail/15.webp', url: '/explorations/detail/15.webp', height: 712 },
+  { id: 'detail-16', img: '/explorations/detail/16.webp', url: '/explorations/detail/16.webp', height: 1545 },
+  { id: 'detail-17', img: '/explorations/detail/17.webp', url: '/explorations/detail/17.webp', height: 538 },
+  { id: 'detail-18', img: '/explorations/detail/18.webp', url: '/explorations/detail/18.webp', height: 2286 },
+  { id: 'detail-19', img: '/explorations/detail/19.webp', url: '/explorations/detail/19.webp', height: 720 },
+  { id: 'detail-20', img: '/explorations/detail/20.webp', url: '/explorations/detail/20.webp', height: 720 },
+  { id: 'detail-21', img: '/explorations/detail/21.webp', url: '/explorations/detail/21.webp', height: 781 },
+  { id: 'detail-22', img: '/explorations/detail/22.webp', url: '/explorations/detail/22.webp', height: 1821 },
+  { id: 'detail-23', img: '/explorations/detail/23.webp', url: '/explorations/detail/23.webp', height: 1408 },
+  { id: 'detail-24', img: '/explorations/detail/24.webp', url: '/explorations/detail/24.webp', height: 717 },
+  { id: 'detail-25', img: '/explorations/detail/25.webp', url: '/explorations/detail/25.webp', height: 1880 },
+  { id: 'detail-26', img: '/explorations/detail/26.webp', url: '/explorations/detail/26.webp', height: 2857 },
+  { id: 'detail-27', img: '/explorations/detail/27.webp', url: '/explorations/detail/27.webp', height: 1037 },
+  { id: 'detail-28', img: '/explorations/detail/28.webp', url: '/explorations/detail/28.webp', height: 2219 },
+  { id: 'detail-29', img: '/explorations/detail/29.webp', url: '/explorations/detail/29.webp', height: 701 },
+]
 const BRAND_ITEMS = makeMasonryItems('brand', [720, 520, 640, 860, 500, 680])
 const AMAZON_ITEMS: MasonryItem[] = [
   { id: 'amazon-1', img: '/explorations/amazon/01.png', url: '/explorations/amazon/01.png', height: 640 },

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import SpotlightCard from '../components/SpotlightCard/SpotlightCard'
 import RaysBackground from '../components/SideRays/RaysBackground'
 import Navbar from '../components/Navbar'
+import VideoTile from '../components/VideoTile/VideoTile'
 import { CATEGORIES, SubPart } from '../content/explorations'
 import BackToTop from '../components/BackToTop'
 
@@ -37,6 +38,7 @@ export default function More() {
     )
   }
 
+  /** 视频卡片：复用共享 VideoTile（preload="none" 规避 catbox 并发限流 + onError 兜底）。 */
   const handleSelect = (id: string) => {
     const cat = CATEGORIES.find((c) => c.id === id)
     if (!cat) return
@@ -151,27 +153,13 @@ export default function More() {
                     key={i}
                     className="overflow-hidden rounded-2xl border border-stroke bg-black"
                   >
-                    <video
-                      src={src}
-                      controls
-                      preload="metadata"
-                      playsInline
-                      className="aspect-video w-full"
-                    />
+                    <VideoTile src={src} />
                   </div>
                 ))}
               </div>
             ) : activeSub.video ? (
               <div className="mt-8 overflow-hidden rounded-2xl border border-stroke bg-black">
-                <video
-                  src={activeSub.video}
-                  controls
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  className="aspect-video w-full"
-                />
+                <VideoTile src={activeSub.video} autoPlayLoop />
               </div>
             ) : activeSub.images && activeSub.images.length > 0 ? (
               <div className="mt-8 columns-1 gap-4 md:columns-2">

@@ -288,6 +288,53 @@ export default function AiApps() {
             transition={{ duration: 0.3 }}
           >
             <FeaturesChess />
+            {current.sections && (
+              <div className="mt-16 flex flex-col">
+                {current.sections.map((sec, si) => (
+                  <div
+                    key={sec.key}
+                    className={si < current.sections!.length - 1 ? 'mb-24' : ''}
+                  >
+                    <div className="mb-10 max-w-2xl space-y-5">
+                      <h3 className="text-3xl font-display italic leading-[0.9] tracking-tight text-text-primary md:text-4xl">
+                        {sec.label}
+                      </h3>
+                    </div>
+
+                    {sec.type === 'gallery' && (
+                      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                        {sec.images.map((img) => (
+                          <FeatureTile key={img.caption} caption={img.caption} src={img.src} />
+                        ))}
+                      </div>
+                    )}
+
+                    {sec.type === 'flow' && (
+                      <div className="flex flex-col gap-5 md:flex-row md:items-stretch md:gap-5">
+                        {sec.steps.map((step, i) => (
+                          <Fragment key={step.title}>
+                            <SpotlightCard className="flex-1 liquid-glass rounded-2xl p-6">
+                              <div className="font-body text-xs text-muted">步骤 {i + 1}</div>
+                              <div className="mt-1 font-body text-sm font-medium text-text-primary">
+                                {step.title}
+                              </div>
+                              <p className="mt-1 font-body text-xs leading-relaxed text-muted">
+                                {step.desc}
+                              </p>
+                            </SpotlightCard>
+                            {i < sec.steps.length - 1 && (
+                              <div className="hidden items-center justify-center text-muted md:flex">
+                                →
+                              </div>
+                            )}
+                          </Fragment>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
             <StatsPanel appTitle={current.title} />
             <BackToTop />
           </motion.div>

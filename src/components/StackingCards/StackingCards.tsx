@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
+import VideoTile from '../VideoTile/VideoTile'
 
 export type StackingProject = {
   /** 序号，如 "01" */
@@ -86,13 +87,9 @@ function CardInner({ project }: { project: StackingProject }) {
       {project.videos && project.videos.length > 0 ? (
         <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-4">
           {project.videos.map((src, i) => (
-            <video
+            <VideoTile
               key={i}
               src={src}
-              controls
-              preload="metadata"
-              muted
-              playsInline
               className="aspect-[9/16] w-full rounded-2xl border border-stroke bg-black object-cover"
             />
           ))}
