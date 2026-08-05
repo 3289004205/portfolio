@@ -29,7 +29,18 @@ const PROJECTS: StackingProject[] = [
     number: '01',
     category: 'Brand Film',
     name: '官网品牌视频',
-    href: '#',
+    href: 'https://www.bilibili.com/video/BV1Uouw65E44',
+    previews: [
+      { bvid: 'BV1Uouw65E44', type: 'mp4', src: '/videos/gifs/brand-01.mp4', orientation: 'landscape' },
+      { bvid: 'BV1mouw65ERv', type: 'mp4', src: '/videos/gifs/brand-02.mp4', orientation: 'landscape' },
+      { bvid: 'BV1Uouw65EAa', type: 'mp4', src: '/videos/gifs/brand-03.mp4', orientation: 'landscape' },
+      { bvid: 'BV1Mouw6LEEH', type: 'mp4', src: '/videos/gifs/brand-04.mp4', orientation: 'landscape' },
+      { bvid: 'BV1Uouw65Etu', type: 'mp4', src: '/videos/gifs/brand-05.mp4', orientation: 'landscape' },
+      { bvid: 'BV1uouw6LEP6', type: 'mp4', src: '/videos/gifs/brand-06.mp4', orientation: 'landscape' },
+      { bvid: 'BV1Uouw65E5w', type: 'mp4', src: '/videos/gifs/brand-07.mp4', orientation: 'landscape' },
+      { bvid: 'BV1Uouw65E5J', type: 'mp4', src: '/videos/gifs/brand-08.mp4', orientation: 'landscape' },
+      { bvid: 'BV1Uouw65EpJ', type: 'mp4', src: '/videos/gifs/brand-09.mp4', orientation: 'landscape' },
+    ],
     images: {
       top: 'https://picsum.photos/seed/v-office-top/600/400',
       bottom: 'https://picsum.photos/seed/v-office-bot/600/400',
@@ -43,7 +54,8 @@ const PROJECTS: StackingProject[] = [
     number: '02',
     category: 'Institutional',
     name: '体育训练局合作视频',
-    href: '#',
+    href: 'https://www.bilibili.com/video/BV1touw6LEQ3',
+    bilibili: 'BV1touw6LEQ3',
     images: {
       top: 'https://picsum.photos/seed/v-sport-top/600/400',
       bottom: 'https://picsum.photos/seed/v-sport-bot/600/400',
@@ -71,7 +83,7 @@ const PROJECTS: StackingProject[] = [
     number: '04',
     category: 'Feed Ads',
     name: '抖音信息流素材',
-    href: 'https://pan.baidu.com/s/1dtQo97oK000MniTZ5CAAkQ?pwd=xqqj',
+    href: 'https://www.bilibili.com/video/BV1TZuw6yEQ2',
     images: {
       top: 'https://picsum.photos/seed/v-douyin-top/600/400',
       bottom: 'https://picsum.photos/seed/v-douyin-bot/600/400',
@@ -80,23 +92,26 @@ const PROJECTS: StackingProject[] = [
     intro:
       '抖音信息流投放短视频矩阵，以脚本化方式批量产出，适配不同定向的高效短素材。',
     roles: ['脚本', '生图', '生视频'],
-    videos: [
-      'https://files.catbox.moe/2ye1we.mp4',
-      'https://files.catbox.moe/r4avnl.mp4',
-      'https://files.catbox.moe/1u5gcs.mp4',
-      'https://files.catbox.moe/6qkjb5.mp4',
-      'https://files.catbox.moe/e1d1ai.mp4',
-      'https://files.catbox.moe/lbod0d.mp4',
-      'https://files.catbox.moe/m7o55h.mp4',
-      'https://files.catbox.moe/l0bb5s.mp4',
+    previews: [
+      { bvid: 'BV1TZuw6yEQ2', type: 'mp4', src: '/videos/previews/douyin-01.mp4' },
+      { bvid: 'BV1mZuw6CERM', type: 'mp4', src: '/videos/previews/douyin-02.mp4' },
+      { bvid: 'BV1TZuw6yEBX', type: 'mp4', src: '/videos/previews/douyin-03.mp4' },
+      { bvid: 'BV1mZuw6CEY3', type: 'mp4', src: '/videos/previews/douyin-04.mp4' },
+      { bvid: 'BV1Q8uA6QEZX', type: 'mp4', src: '/videos/previews/douyin-05.mp4' },
+      { bvid: 'BV1mZuw6CE2e', type: 'mp4', src: '/videos/previews/douyin-06.mp4' },
+      { bvid: 'BV1a8uA6QEmt', type: 'mp4', src: '/videos/previews/douyin-07.mp4' },
+      { bvid: 'BV1X8uA6QEAU', type: 'mp4', src: '/videos/previews/douyin-08.mp4' },
+      { bvid: 'BV1URuw61EmM', type: 'mp4', src: '/videos/previews/douyin-09.mp4' },
     ],
   },
 ]
 
 type GalleryImage = { src?: string; caption: string }
+type BlockItem = { title: string; src?: string; videos?: string[]; videoRow?: boolean; videoCols?: number }
 type ToolItem = { name: string; desc: string }
 type Section =
   | { key: string; label: string; type: 'gallery'; images: GalleryImage[] }
+  | { key: string; label: string; type: 'cards'; items: BlockItem[] }
   | {
       key: string
       label: string
@@ -144,30 +159,16 @@ const MODULES: Module[] = [
       {
         key: 'douyin-flow',
         label: '抖音信息流',
-        type: 'miro',
-        src: '',
-        openUrl: '',
-      },
-    ],
-  },
-  {
-    id: 'tools',
-    title: 'AI 工具矩阵',
-    tagline: '视频生产工具选型',
-    desc: '梳理视频生产各环节所使用的 AI 工具及其分工，形成可复用的工具选型参考，降低团队上手与切换成本。',
-    tags: ['工具选型', '能力边界', '协同分工'],
-    sections: [
-      {
-        key: 'matrix',
-        label: '工具清单',
-        type: 'tools',
-        items: [],
-      },
-      {
-        key: 'matrix-img',
-        label: '矩阵总览图',
-        type: 'gallery',
-        images: [{ caption: '工具矩阵图' }, { caption: '工具使用示例' }],
+        type: 'cards',
+        items: [
+          { title: '实拍图转视频', src: '/explorations/dy-flow/01.webp', videos: ['/videos/dy-flow/real-shot-01.mp4', '/videos/dy-flow/real-shot-02.mp4'] },
+          { title: '九宫格生视频', src: '/explorations/dy-flow/02.webp', videos: ['/videos/dy-flow/grid-01.mp4'], videoCols: 1 },
+          { title: '真人拍摄AI视频', src: '/explorations/dy-flow/03.webp', videos: ['/videos/dy-flow/real-person-01.mp4'], videoCols: 1 },
+          { title: '爆款反推脚本生视频', src: '/explorations/dy-flow/05.webp', videos: ['/videos/dy-flow/viral-01.mp4'], videoRow: true },
+          { title: '视频换背景', src: '/explorations/dy-flow/06.webp', videos: ['/videos/dy-flow/bg-change-01.mp4', '/videos/dy-flow/bg-change-02.mp4'] },
+          { title: '视频换装', src: '/explorations/dy-flow/07.webp', videos: ['/videos/dy-flow/change-clothes-01.mp4', '/videos/dy-flow/change-clothes-02.mp4'] },
+          { title: '视频换人', src: '/explorations/dy-flow/08.webp', videos: ['/videos/dy-flow/change-face-01.mp4', '/videos/dy-flow/change-face-02.mp4', '/videos/dy-flow/change-face-03.mp4'], videoCols: 3 },
+        ],
       },
     ],
   },
@@ -263,6 +264,86 @@ export default function AiVideos() {
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                       {sec.images.map((img) => (
                         <FeatureTile key={img.caption} caption={img.caption} src={img.src} />
+                      ))}
+                    </div>
+                  )}
+
+                  {sec.type === 'cards' && (
+                    <div className="columns-1 gap-4 md:columns-2">
+                      {sec.items.map((item, i) => (
+                        <SpotlightCard
+                          key={item.title}
+                          className="liquid-glass mb-4 w-full break-inside-avoid overflow-hidden rounded-2xl"
+                        >
+                          <div className="flex items-baseline gap-2 border-b border-stroke px-4 py-3">
+                            <span className="font-body text-[10px] tracking-[0.2em] text-muted">
+                              {String(i + 1).padStart(2, '0')}
+                            </span>
+                            <span className="font-body text-sm font-medium text-text-primary">
+                              {item.title}
+                            </span>
+                          </div>
+                          {item.videoRow ? (
+                            <div className="grid grid-cols-1 gap-3 p-3 sm:grid-cols-2">
+                              {item.src && (
+                                <img
+                                  src={item.src}
+                                  alt={item.title}
+                                  className="h-auto w-full rounded-xl border border-stroke"
+                                  loading="lazy"
+                                />
+                              )}
+                              <div className="flex flex-col gap-3">
+                                {item.videos?.map((v) => (
+                                  <video
+                                    key={v}
+                                    src={v}
+                                    controls
+                                    muted
+                                    playsInline
+                                    className="h-auto w-full rounded-xl border border-stroke bg-black/20"
+                                  />
+                                ))}
+                              </div>
+                            </div>
+                          ) : (
+                            <>
+                              {item.src ? (
+                                <img src={item.src} alt={item.title} className="h-auto w-full" loading="lazy" />
+                              ) : (
+                                <div className="flex aspect-[4/3] w-full items-center justify-center bg-white/[0.06] px-3 text-center text-xs text-muted">
+                                  待上传截图
+                                  <span className="mt-1 block text-[10px] opacity-70">{item.title}</span>
+                                </div>
+                              )}
+                              {item.videos && item.videos.length > 0 && (
+                                <div
+                                  className={
+                                    item.videoCols
+                                      ? 'grid gap-3 p-3'
+                                      : 'grid grid-cols-1 gap-3 p-3 sm:grid-cols-2'
+                                  }
+                                  style={
+                                    item.videoCols
+                                      ? { gridTemplateColumns: `repeat(${item.videoCols}, minmax(0, 1fr))` }
+                                      : undefined
+                                  }
+                                >
+                                  {item.videos.map((v) => (
+                                    <video
+                                      key={v}
+                                      src={v}
+                                      controls
+                                      muted
+                                      playsInline
+                                      className="h-auto w-full rounded-xl border border-stroke bg-black/20"
+                                    />
+                                  ))}
+                                </div>
+                              )}
+                            </>
+                          )}
+                        </SpotlightCard>
                       ))}
                     </div>
                   )}

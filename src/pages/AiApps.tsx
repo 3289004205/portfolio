@@ -1,13 +1,13 @@
 import { useState, Fragment } from 'react'
+import { useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import RaysBackground from '../components/SideRays/RaysBackground'
 import Navbar from '../components/Navbar'
 import SpotlightCard from '../components/SpotlightCard/SpotlightCard'
-import FeaturesChess from '../components/FeaturesChess/FeaturesChess'
 import StatsPanel from '../components/StatsPanel/StatsPanel'
 import BackToTop from '../components/BackToTop'
 
-type GalleryImage = { src?: string; caption: string }
+type GalleryImage = { src?: string; caption: string; aspect?: string }
 type FlowStep = { title: string; desc: string }
 type BadcaseItem = { problem: string; fix: string }
 type Section =
@@ -25,7 +25,7 @@ type App = {
 }
 
 /** 需要在详情区最下方展示数据面板的子页面 */
-const STATS_PAGES = ['visual', 'preset', 'kb', 'others']
+const STATS_PAGES = ['visual', 'preset', 'kb']
 
 const APPS: App[] = [
   {
@@ -40,9 +40,9 @@ const APPS: App[] = [
         label: '页面展示',
         type: 'gallery',
         images: [
+          { src: '/explorations/visual-showcase/03-homepage.jpg', caption: '首页 · Visual Department Platform' },
           { src: '/explorations/visual-showcase/01-test-cases.jpg', caption: '测试案例 · 工作流画板' },
           { src: '/explorations/visual-showcase/02-resource-nav.jpg', caption: '资源导航 · 按需直达' },
-          { src: '/explorations/visual-showcase/03-homepage.jpg', caption: '首页 · Visual Department Platform' },
           { src: '/explorations/visual-showcase/04-ai-news.jpg', caption: 'AI 新闻 · 设计趋势' },
           { src: '/explorations/visual-showcase/05-material-library.jpg', caption: '素材库 · Pinterest 图像资源' },
           { src: '/explorations/visual-showcase/06-smart-workflow.jpg', caption: '智能图像工作流 · 一键出图' },
@@ -60,16 +60,6 @@ const APPS: App[] = [
           { title: '复用与协作', desc: '团队共享模板与资产，持续迭代优化生产流。' },
         ],
       },
-      {
-        key: 'prototype',
-        label: '原型图展示',
-        type: 'gallery',
-        images: [
-          { caption: '原型 · 信息架构' },
-          { caption: '原型 · 首页布局' },
-          { caption: '原型 · 画布交互' },
-        ],
-      },
     ],
   },
   {
@@ -77,17 +67,14 @@ const APPS: App[] = [
     title: '预设生成网站',
     tagline: '提示词预设生图平台',
     desc: '系统提示词预设生图网站，对接 ComfyUI 后端实现一键生图，大幅降低 AI 生图的使用门槛。',
-    tags: ['ComfyUI', 'Prompt', '一键生图'],
+    tags: ['Prompt', '一键生图'],
     sections: [
       {
         key: 'showcase',
         label: '页面展示',
         type: 'gallery',
         images: [
-          { caption: '首页 · 预设模板选择' },
-          { caption: '生图页 · 参数配置' },
-          { caption: '结果页 · 成片预览' },
-          { caption: '历史记录 · 参数复用' },
+          { src: '/explorations/preset/01.webp', caption: '首页 · 预设模板选择' },
         ],
       },
       {
@@ -95,20 +82,11 @@ const APPS: App[] = [
         label: '产品流程图详解',
         type: 'flow',
         steps: [
-          { title: '选择预设模板', desc: '按场景选取开箱即用的提示词与参数模板。' },
-          { title: '配置参数', desc: '统一管理采样、模型、尺寸等生图配置。' },
-          { title: '调用 ComfyUI', desc: '后端异步生图，无需本地部署环境。' },
-          { title: '结果校验', desc: '预览成片，支持重生成与微调对比。' },
-          { title: '归档复用', desc: '保存记录与可复用参数，沉淀团队资产。' },
-        ],
-      },
-      {
-        key: 'prototype',
-        label: '原型图展示',
-        type: 'gallery',
-        images: [
-          { caption: '原型 · 信息架构与流程' },
-          { caption: '原型 · 生图交互页面' },
+          { title: '用户输入信息', desc: '用户输入产品与需求信息，作为生成流程的起点。' },
+          { title: '意图识别与重写', desc: '解析用户意图，将输入重写为可执行的生成指令。' },
+          { title: '素材库检索', desc: '从素材库匹配参考图、模板与风格素材。' },
+          { title: '大模型改写文案信息', desc: '大模型基于素材与需求改写文案，提炼卖点与画面描述。' },
+          { title: 'GPT Image 2图生图', desc: 'GPT Image 2 结合文案与参考图进行图生图，输出成片。' },
         ],
       },
     ],
@@ -125,8 +103,21 @@ const APPS: App[] = [
         label: '各部门知识库及机器人展示',
         type: 'gallery',
         images: [
-          { src: '/explorations/kb-showcase/01-knowledge-base.png', caption: '飞书知识库 · 各部门空间总览' },
-          { src: '/explorations/kb-showcase/02-qa-bot.png', caption: '问答机器人 · 视觉部知识库答疑小助手' },
+          { src: '/explorations/kb-showcase/01-knowledge-base.png', caption: '飞书知识库 · 各部门空间总览', aspect: 'aspect-[3/2]' },
+          { src: '/explorations/kb-showcase/02-qa-bot.png', caption: '问答机器人 · 视觉部知识库答疑小助手', aspect: 'aspect-[3/2]' },
+        ],
+      },
+      {
+        key: 'flow',
+        label: '产品流程图详解',
+        type: 'flow',
+        steps: [
+          { title: '用户输入信息', desc: '用户提交问题，作为问答流程的起点。' },
+          { title: '向量化', desc: '将用户问题转换为向量表示，便于语义匹配。' },
+          { title: '知识库检索', desc: '在知识库中检索与问题语义最相近的内容。' },
+          { title: '召回片段', desc: '召回相关文档片段，作为上下文候选。' },
+          { title: '重排序', desc: '对召回结果重排序，筛选最相关的片段。' },
+          { title: '大模型输出', desc: '大模型基于精选上下文生成回答。' },
         ],
       },
     ],
@@ -143,8 +134,8 @@ const APPS: App[] = [
         label: '提示词反推与素材库插件',
         type: 'gallery',
         images: [
-          { caption: '提示词反推 · 结果界面' },
-          { caption: '素材库 · 归档管理' },
+          { src: '/explorations/others/01-prompt-reverse.jpg', caption: '提示词反推 · 结果界面', aspect: 'aspect-[16/10]' },
+          { src: '/explorations/others/02-material-library.jpg', caption: '素材库 · 归档管理', aspect: 'aspect-[16/10]' },
         ],
       },
       {
@@ -152,17 +143,7 @@ const APPS: App[] = [
         label: 'Figma 批量主图修改插件',
         type: 'gallery',
         images: [
-          { caption: 'Figma 插件 · 批量替换面板' },
-          { caption: 'Figma 插件 · 多尺寸导出' },
-        ],
-      },
-      {
-        key: 'comfy-cache',
-        label: 'ComfyUI 缓存清理插件',
-        type: 'gallery',
-        images: [
-          { caption: '缓存清理 · 扫描结果' },
-          { caption: '缓存清理 · 清理完成' },
+          { src: '/explorations/others/03-figma-batch.jpg', caption: 'Figma 插件 · 批量替换面板' },
         ],
       },
     ],
@@ -196,16 +177,17 @@ function ProjectIntro({ app }: { app: App }) {
 }
 
 /** 与 FeaturesChess 一致的毛玻璃图片占位（视觉 AI 整合网站形式） */
-function FeatureTile({ caption, src }: { caption: string; src?: string }) {
+function FeatureTile({ caption, src, aspect }: { caption: string; src?: string; aspect?: string }) {
   return (
     <SpotlightCard className="liquid-glass overflow-hidden rounded-2xl">
       {src ? (
-        <img
-          src={src}
-          alt={caption}
-          className="h-auto w-full"
-          loading="lazy"
-        />
+        aspect ? (
+          <div className={`w-full overflow-hidden ${aspect}`}>
+            <img src={src} alt={caption} className="h-full w-full object-cover" loading="lazy" />
+          </div>
+        ) : (
+          <img src={src} alt={caption} className="h-auto w-full" loading="lazy" />
+        )
       ) : (
         <div className="flex aspect-[4/3] w-full items-center justify-center bg-white/[0.06] px-3 text-center text-xs text-muted">
           待上传截图
@@ -217,7 +199,11 @@ function FeatureTile({ caption, src }: { caption: string; src?: string }) {
 }
 
 export default function AiApps() {
-  const [selected, setSelected] = useState(APPS[0].id)
+  const location = useLocation()
+  const [selected, setSelected] = useState<string>(() => {
+    const app = (location.state as { app?: string } | null)?.app
+    return app && APPS.some((a) => a.id === app) ? app : APPS[0].id
+  })
   const current = APPS.find((a) => a.id === selected) ?? APPS[0]
 
   return (
@@ -287,7 +273,6 @@ export default function AiApps() {
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.3 }}
           >
-            <FeaturesChess />
             {current.sections && (
               <div className="mt-16 flex flex-col">
                 {current.sections.map((sec, si) => (
@@ -304,7 +289,7 @@ export default function AiApps() {
                     {sec.type === 'gallery' && (
                       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                         {sec.images.map((img) => (
-                          <FeatureTile key={img.caption} caption={img.caption} src={img.src} />
+                          <FeatureTile key={img.caption} caption={img.caption} src={img.src} aspect={img.aspect} />
                         ))}
                       </div>
                     )}
@@ -363,7 +348,7 @@ export default function AiApps() {
                     {sec.type === 'gallery' && (
                       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                         {sec.images.map((img) => (
-                          <FeatureTile key={img.caption} caption={img.caption} src={img.src} />
+                          <FeatureTile key={img.caption} caption={img.caption} src={img.src} aspect={img.aspect} />
                         ))}
                       </div>
                     )}

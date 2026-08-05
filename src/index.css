@@ -57,12 +57,6 @@
     @apply animate-gradient-shift;
   }
 
-  /* Halftone overlay used on work cards. */
-  .halftone-overlay {
-    background-image: radial-gradient(circle, #000 1px, transparent 1px);
-    background-size: 4px 4px;
-  }
-
   /* Gradient hover border ring — reveals a 2px accent border on hover,
      without being hidden behind the element's own background. */
   .gradient-ring {

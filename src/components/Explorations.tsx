@@ -11,39 +11,17 @@ interface Exploration {
 }
 
 const ITEMS_COL_1: Exploration[] = [
-  {
-    image:
-      'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop',
-    rotate: -3,
-  },
-  {
-    image:
-      'https://images.unsplash.com/photo-1541701494587-cb58502866ab?q=80&w=600&auto=format&fit=crop',
-    rotate: 2,
-  },
-  {
-    image:
-      'https://images.unsplash.com/photo-1550859492-d5da9d8e45f3?q=80&w=600&auto=format&fit=crop',
-    rotate: -2,
-  },
+  { image: '/videos/gifs/brand-01.gif', rotate: -3 },
+  { image: '/videos/gifs/brand-02.gif', rotate: 2 },
+  { image: '/videos/gifs/brand-03.gif', rotate: -2 },
+  { image: '/videos/gifs/brand-04.gif', rotate: 3 },
 ]
 
 const ITEMS_COL_2: Exploration[] = [
-  {
-    image:
-      'https://images.unsplash.com/photo-1557672172-298e090bd0f1?q=80&w=600&auto=format&fit=crop',
-    rotate: 3,
-  },
-  {
-    image:
-      'https://images.unsplash.com/photo-1502691876148-a84978e59af8?q=80&w=600&auto=format&fit=crop',
-    rotate: -2,
-  },
-  {
-    image:
-      'https://images.unsplash.com/photo-1518998053901-5348d3961a04?q=80&w=600&auto=format&fit=crop',
-    rotate: 2,
-  },
+  { image: '/videos/gifs/brand-05.gif', rotate: 3 },
+  { image: '/videos/gifs/brand-06.gif', rotate: -2 },
+  { image: '/videos/gifs/brand-07.gif', rotate: 2 },
+  { image: '/videos/gifs/brand-08.gif', rotate: -3 },
 ]
 
 export default function Explorations() {
@@ -129,7 +107,7 @@ export default function Explorations() {
               <button
                 key={i}
                 onClick={() => setLightbox(item.image)}
-                className="pointer-events-auto mx-auto aspect-square w-full max-w-[320px] overflow-hidden rounded-3xl border border-stroke bg-surface"
+                className="pointer-events-auto mx-auto aspect-video w-full max-w-[360px] overflow-hidden rounded-3xl border border-stroke bg-surface"
                 style={{ transform: `rotate(${item.rotate}deg)` }}
               >
                 <img
@@ -146,7 +124,7 @@ export default function Explorations() {
               <button
                 key={i}
                 onClick={() => setLightbox(item.image)}
-                className="pointer-events-auto mx-auto aspect-square w-full max-w-[320px] overflow-hidden rounded-3xl border border-stroke bg-surface"
+                className="pointer-events-auto mx-auto aspect-video w-full max-w-[360px] overflow-hidden rounded-3xl border border-stroke bg-surface"
                 style={{ transform: `rotate(${item.rotate}deg)` }}
               >
                 <img

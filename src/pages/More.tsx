@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import SpotlightCard from '../components/SpotlightCard/SpotlightCard'
 import RaysBackground from '../components/SideRays/RaysBackground'
@@ -8,12 +9,27 @@ import { CATEGORIES, SubPart } from '../content/explorations'
 import BackToTop from '../components/BackToTop'
 
 export default function More() {
-  const [selected, setSelected] = useState(CATEGORIES[0].id)
-  const [selectedSub, setSelectedSub] = useState(CATEGORIES[0].subs[0].id)
+  const location = useLocation()
+  const navState = (location.state ?? {}) as { category?: string; sub?: string }
+  const initialCategory =
+    CATEGORIES.find((c) => c.id === navState.category) ?? CATEGORIES[0]
+  const initialSub =
+    initialCategory.subs.find((s) => s.id === navState.sub) ?? initialCategory.subs[0]
+  const [selected, setSelected] = useState(initialCategory.id)
+  const [selectedSub, setSelectedSub] = useState(initialSub.id)
 
   const current = CATEGORIES.find((c) => c.id === selected) ?? CATEGORIES[0]
   const activeSub =
     current.subs.find((s) => s.id === selectedSub) ?? current.subs[0]
+
+  /** 当前子项上方是否渲染了视频（B 站嵌入 / 直链视频）。
+   *  若上方有视频、下方又有图片，则图片改用整行全宽，与视频等宽。 */
+  const subHasVideoAbove = !!(
+    activeSub.bilibili ||
+    activeSub.bilibiliVideos?.length ||
+    activeSub.videos?.length ||
+    activeSub.video
+  )
 
   /** 项目简介框：与 AI 应用页风格保持一致 */
   function ProjectIntro({ sub, catTitle }: { sub: SubPart; catTitle: string }) {
@@ -28,7 +44,17 @@ export default function More() {
               {sub.desc}
             </p>
           </div>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap items-end justify-end gap-2">
+            {sub.link && (
+              <a
+                href={sub.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 rounded-full border border-stroke bg-surface px-4 py-2 font-body text-xs text-text-primary transition-colors hover:bg-text-primary hover:text-bg"
+              >
+                查看网页详情 <span>↗</span>
+              </a>
+            )}
             <span className="rounded-full border border-stroke bg-white/[0.06] px-3 py-1 font-body text-xs text-muted">
               {catTitle}
             </span>
@@ -134,10 +160,10 @@ export default function More() {
               </motion.div>
             </AnimatePresence>
 
-            {activeSub.bilibili ? (
+                        {activeSub.bilibili ? (
               <div className="mt-8 overflow-hidden rounded-2xl border border-stroke bg-black">
                 <iframe
-                  src={`https://player.bilibili.com/player.html?bvid=${activeSub.bilibili}&page=1&high_quality=1&danmaku=0`}
+                  src={`https://player.bilibili.com/player.html?bvid=${activeSub.bilibili}&page=1&high_quality=1&danmaku=0&autoplay=1&muted=1&loop=1`}
                   className="aspect-video w-full"
                   allowFullScreen
                   scrolling="no"
@@ -145,6 +171,25 @@ export default function More() {
                   referrerPolicy="no-referrer"
                   title={activeSub.title}
                 />
+              </div>
+            ) : activeSub.bilibiliVideos && activeSub.bilibiliVideos.length > 0 ? (
+              <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
+                {activeSub.bilibiliVideos.map((bvid, i) => (
+                  <div
+                    key={i}
+                    className="overflow-hidden rounded-2xl border border-stroke bg-black"
+                  >
+                    <iframe
+                      src={`https://player.bilibili.com/player.html?bvid=${bvid}&page=1&high_quality=1&danmaku=0&autoplay=1&muted=1&loop=1`}
+                      className="aspect-video w-full"
+                      allowFullScreen
+                      scrolling="no"
+                      frameBorder={0}
+                      referrerPolicy="no-referrer"
+                      title={activeSub.title}
+                    />
+                  </div>
+                ))}
               </div>
             ) : activeSub.videos && activeSub.videos.length > 0 ? (
               <div className="mt-8 flex flex-col gap-6">
@@ -161,23 +206,50 @@ export default function More() {
               <div className="mt-8 overflow-hidden rounded-2xl border border-stroke bg-black">
                 <VideoTile src={activeSub.video} autoPlayLoop />
               </div>
-            ) : activeSub.images && activeSub.images.length > 0 ? (
-              <div className="mt-8 columns-1 gap-4 md:columns-2">
-                {activeSub.images.map((src, i) => (
-                  <SpotlightCard
-                    key={i}
-                    className="liquid-glass mb-4 break-inside-avoid overflow-hidden rounded-2xl"
-                  >
-                    <img
-                      src={src}
-                      alt={`${activeSub.title} ${i + 1}`}
-                      className="h-auto w-full object-contain"
-                      loading="lazy"
-                    />
-                  </SpotlightCard>
-                ))}
-              </div>
-            ) : (
+            ) : null}
+
+            {activeSub.images && activeSub.images.length > 0 ? (
+              activeSub.equalHeightImages ? (
+                <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
+                  {activeSub.images.map((src, i) => (
+                    <SpotlightCard
+                      key={i}
+                      className="liquid-glass overflow-hidden rounded-2xl"
+                    >
+                      <img
+                        src={src}
+                        alt={`${activeSub.title} ${i + 1}`}
+                        className="aspect-[4/3] w-full object-cover"
+                        loading="lazy"
+                      />
+                    </SpotlightCard>
+                  ))}
+                </div>
+              ) : (
+                <div
+                  className={`mt-8 columns-1 gap-4 ${
+                    subHasVideoAbove && activeSub.images.length > 0 ? '' : 'md:columns-2'
+                  }`}
+                >
+                  {activeSub.images.map((src, i) => (
+                    <SpotlightCard
+                      key={i}
+                      className="liquid-glass mb-4 break-inside-avoid overflow-hidden rounded-2xl"
+                    >
+                      <img
+                        src={src}
+                        alt={`${activeSub.title} ${i + 1}`}
+                        className="h-auto w-full object-contain"
+                        loading="lazy"
+                      />
+                    </SpotlightCard>
+                  ))}
+                </div>
+              )
+            ) : !activeSub.bilibili &&
+              !activeSub.bilibiliVideos?.length &&
+              !activeSub.videos?.length &&
+              !activeSub.video ? (
               <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
                 {[0, 1, 2, 3].map((i) => (
                   <SpotlightCard
@@ -191,8 +263,8 @@ export default function More() {
                   </SpotlightCard>
                 ))}
               </div>
-            )}
-            {current.id === 'lora' && (
+            ) : null}
+{current.id === 'lora' && (
               <div className="mt-12 flex justify-center">
                 <a
                   href="https://www.modelscope.cn/profile/a927973507A"

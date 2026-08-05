@@ -13,6 +13,12 @@ export type StackingProject = {
   href?: string
   /** 三张图：左列上、左列下、右侧通栏 */
   images: { top: string; bottom: string; right: string }
+  /** B 站视频 BV 号，存在时优先渲染为 B 站嵌入播放器 */
+  bilibili?: string
+  /** 多个 B 站视频 BV 号，存在时渲染为嵌入播放器网格 */
+  bilibiliVideos?: string[]
+  /** 轻量预览：GIF / 静音循环 MP4，点击跳转 B 站原视频 */
+  previews?: { bvid: string; type: 'gif' | 'mp4'; src: string; orientation?: 'landscape' | 'portrait' }[]
   /** 视频直链列表（存在时优先渲染为视频网格） */
   videos?: string[]
   /** 项目简介 */
@@ -82,9 +88,69 @@ function CardInner({ project }: { project: StackingProject }) {
         </div>
       )}
 
-      {/* 视频：9:16 竖视频，4列×2行网格铺满媒体区，与图卡网格规律一致；
-          不再横向滚动，宽度始终在卡内，保持原比例不裁剪 */}
-      {project.videos && project.videos.length > 0 ? (
+      {/* B 站嵌入优先，其次视频直链网格，最后图片网格 */}
+      {project.bilibili ? (
+        <div className="mt-6 overflow-hidden rounded-2xl border border-stroke bg-black">
+          <iframe
+            src={`https://player.bilibili.com/player.html?bvid=${project.bilibili}&page=1&high_quality=1&danmaku=0&autoplay=1&muted=1&loop=1`}
+            title={project.name}
+            className="aspect-video w-full"
+            allowFullScreen
+            scrolling="no"
+            frameBorder={0}
+          />
+        </div>
+      ) : project.bilibiliVideos && project.bilibiliVideos.length > 0 ? (
+        <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-3">
+          {project.bilibiliVideos.map((bvid, i) => (
+            <div
+              key={i}
+              className="overflow-hidden rounded-2xl border border-stroke bg-black"
+            >
+              <iframe
+                src={`https://player.bilibili.com/player.html?bvid=${bvid}&page=1&high_quality=1&danmaku=0&autoplay=1&muted=1&loop=1`}
+                title={project.name}
+                className="aspect-video w-full"
+                allowFullScreen
+                scrolling="no"
+                frameBorder={0}
+                loading="lazy"
+              />
+            </div>
+          ))}
+        </div>
+      ) : project.previews && project.previews.length > 0 ? (
+        <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-3">
+          {project.previews.map((pv, i) => (
+            <a
+              key={i}
+              href={`https://www.bilibili.com/video/${pv.bvid}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block overflow-hidden rounded-2xl border border-stroke bg-black transition-transform hover:scale-[1.02]"
+            >
+              {pv.type === 'gif' ? (
+                <img
+                  src={pv.src}
+                  alt=""
+                  loading="lazy"
+                  className="aspect-video w-full object-cover"
+                />
+              ) : (
+                <video
+                  src={pv.src}
+                  muted
+                  loop
+                  autoPlay
+                  playsInline
+                  preload="metadata"
+                  className={`${pv.orientation === 'landscape' ? 'aspect-video' : 'aspect-[9/16]'} w-full object-cover`}
+                />
+              )}
+            </a>
+          ))}
+        </div>
+      ) : project.videos && project.videos.length > 0 ? (
         <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-4">
           {project.videos.map((src, i) => (
             <VideoTile

@@ -4,12 +4,18 @@ export type SubPart = {
   desc: string
   /** B 站视频 BV 号，优先用嵌入播放器 */
   bilibili?: string
+  /** 多个 B 站视频 BV 号，渲染为嵌入播放器网格 */
+  bilibiliVideos?: string[]
   /** 单个视频直链（对象存储 / CDN） */
   video?: string
   /** 多个视频直链，渲染为视频画廊 */
   videos?: string[]
   /** 展示截图，按顺序渲染为 2×2 图集 */
   images?: string[]
+  /** 多图是否等高等宽并排展示（默认按原比例瀑布流） */
+  equalHeightImages?: boolean
+  /** 外部详情链接 */
+  link?: string
 }
 
 export type Category = {
@@ -36,12 +42,14 @@ export const CATEGORIES: Category[] = [
         id: 'video',
         title: '数字人视频',
         desc: '基于数字人形象自动生成口播与讲解视频，核心是降低人工重复性讲解动作，把员工从反复出镜与拍摄中解放出来。',
-        video: 'https://files.catbox.moe/4xxesj.mp4',
+        bilibili: 'BV1kUGg6YELU',
       },
       {
         id: 'training',
         title: '流程与培训',
         desc: '将数字人能力封装为标准化流程，用于员工培训与业务宣贯。',
+        bilibili: 'BV1pyMB6KEhH',
+        images: ['/explorations/digital-human/training.webp'],
       },
     ],
   },
@@ -67,13 +75,12 @@ export const CATEGORIES: Category[] = [
         ],
       },
       {
-        id: 'character',
-        title: '人物类',
-        desc: '训练人物专属 LoRA，固化形象特征用于多场景复用。',
+        id: 'rongtu',
+        title: '溶图类',
+        desc: '将多张图融合到统一画面中的 LoRA 应用，保持主体一致性的同时完成自然合成。',
         images: [
-          '/explorations/lora/character/01.png',
-          '/explorations/lora/character/02.png',
-          '/explorations/lora/character/03.png',
+          '/explorations/lora/rongtu/01.webp',
+          '/explorations/lora/rongtu/02.webp',
         ],
       },
     ],
@@ -121,10 +128,10 @@ export const CATEGORIES: Category[] = [
         id: 'video',
         title: '视频',
         desc: '生成 3D 动态渲染视频，用于宣传与演示。',
-        videos: [
-          'https://files.catbox.moe/fmlg5c.mp4',
-          'https://files.catbox.moe/xa8vmc.mp4',
-          'https://files.catbox.moe/o70ltt.mp4',
+        bilibiliVideos: [
+          'BV1X8uA6QEKq',
+          'BV1a8uA6QEkE',
+          'BV1a8uA6QEk5',
         ],
       },
     ],
@@ -132,11 +139,20 @@ export const CATEGORIES: Category[] = [
   {
     id: 'prototype',
     title: '原型设计',
-    tagline: '官网页面设计 / 交互设计',
+    tagline: '官网页面设计',
     desc: '从官网页面到交互细节，快速验证产品形态与用户体验。',
     subs: [
-      { id: 'web', title: '官网页面设计', desc: '面向品牌官网的页面视觉与版式设计。' },
-      { id: 'interaction', title: '交互设计', desc: '梳理信息架构与交互流程，输出可交付原型。' },
+      {
+        id: 'web',
+        title: '官网页面设计',
+        desc: '面向品牌官网的页面视觉与版式设计。',
+        link: 'https://www.merach.com/',
+        equalHeightImages: true,
+        images: [
+          '/explorations/prototype/web-01.webp',
+          '/explorations/prototype/web-02.webp',
+        ],
+      },
     ],
   },
   {
@@ -153,6 +169,7 @@ export const CATEGORIES: Category[] = [
         id: 'digest',
         title: 'AI 日报信息收集',
         desc: '定时聚合行业与竞品信息，生成每日 AI 简报。RPA 自动抓取热点、汇总链接并推送至飞书群，减少人工浏览与复制粘贴。',
+        equalHeightImages: true,
         images: [
           '/explorations/rpa/digest-01-card.jpg',
           '/explorations/rpa/digest-02-flow.jpg',
@@ -170,6 +187,7 @@ export const CATEGORIES: Category[] = [
         id: 'table',
         title: '多维表格项目需求表搭建',
         desc: '用多维表格搭建项目需求管理表，统一需求流转与跟踪。通过产品信息表、总仪表、需求总表与自动化通知，实现从录入、看数到分配的全链路闭环。',
+        equalHeightImages: true,
         images: [
           '/explorations/process/01-table.jpg',
           '/explorations/process/02-dashboard.jpg',

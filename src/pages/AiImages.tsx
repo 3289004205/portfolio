@@ -23,18 +23,22 @@ function FeatureTile({ caption, src }: { caption: string; src?: string }) {
   )
 }
 
-// 占位图：换成真实截图时把 img / url 换掉即可。
-// 注意 Masonry 内部用全局 [data-key] 选择器，多组瀑布流的 id 必须唯一。
-const makeMasonryItems = (prefix: string, heights: number[]): MasonryItem[] =>
-  heights.map((h, i) => {
-    const src = `https://picsum.photos/seed/${prefix}${i + 1}/600/${h}`
-    return {
-      id: `${prefix}-${i + 1}`,
-      img: src,
-      url: `https://picsum.photos/seed/${prefix}${i + 1}/1200/${h * 2}`,
-      height: h,
-    }
-  })
+/** 工作流效果对比块内的单张图：有图显示图片，无图显示待上传占位 */
+function EffectImage({ label, src }: { label: string; src?: string }) {
+  return src ? (
+    <img
+      src={src}
+      alt={label}
+      className="h-auto w-full rounded-xl border border-stroke bg-white/[0.04]"
+      loading="lazy"
+    />
+  ) : (
+    <div className="flex aspect-[4/3] w-full items-center justify-center rounded-xl border border-stroke bg-white/[0.06] px-3 text-center text-xs text-muted">
+      待上传截图
+      <span className="mt-1 block text-[10px] opacity-70">{label}</span>
+    </div>
+  )
+}
 
 const DETAIL_ITEMS: MasonryItem[] = [
   { id: 'detail-01', img: '/explorations/detail/01.webp', url: '/explorations/detail/01.webp', height: 1229 },
@@ -67,7 +71,22 @@ const DETAIL_ITEMS: MasonryItem[] = [
   { id: 'detail-28', img: '/explorations/detail/28.webp', url: '/explorations/detail/28.webp', height: 2219 },
   { id: 'detail-29', img: '/explorations/detail/29.webp', url: '/explorations/detail/29.webp', height: 701 },
 ]
-const BRAND_ITEMS = makeMasonryItems('brand', [720, 520, 640, 860, 500, 680])
+const BRAND_ITEMS: MasonryItem[] = [
+  { id: 'brand-01', img: '/explorations/brand/01.webp', url: '/explorations/brand/01.webp', height: 1600 },
+  { id: 'brand-02', img: '/explorations/brand/02.webp', url: '/explorations/brand/02.webp', height: 1378 },
+  { id: 'brand-03', img: '/explorations/brand/03.webp', url: '/explorations/brand/03.webp', height: 2400 },
+  { id: 'brand-04', img: '/explorations/brand/04.webp', url: '/explorations/brand/04.webp', height: 1697 },
+  { id: 'brand-05', img: '/explorations/brand/05.webp', url: '/explorations/brand/05.webp', height: 1378 },
+  { id: 'brand-06', img: '/explorations/brand/06.webp', url: '/explorations/brand/06.webp', height: 960 },
+  { id: 'brand-07', img: '/explorations/brand/07.webp', url: '/explorations/brand/07.webp', height: 1484 },
+  { id: 'brand-08', img: '/explorations/brand/08.webp', url: '/explorations/brand/08.webp', height: 3906 },
+  { id: 'brand-09', img: '/explorations/brand/09.webp', url: '/explorations/brand/09.webp', height: 3906 },
+  { id: 'brand-10', img: '/explorations/brand/10.webp', url: '/explorations/brand/10.webp', height: 3200 },
+  { id: 'brand-11', img: '/explorations/brand/11.webp', url: '/explorations/brand/11.webp', height: 3906 },
+  { id: 'brand-12', img: '/explorations/brand/12.webp', url: '/explorations/brand/12.webp', height: 3906 },
+  { id: 'brand-13', img: '/explorations/brand/13.webp', url: '/explorations/brand/13.webp', height: 2507 },
+  { id: 'brand-14', img: '/explorations/brand/14.webp', url: '/explorations/brand/14.webp', height: 3320 },
+]
 const AMAZON_ITEMS: MasonryItem[] = [
   { id: 'amazon-1', img: '/explorations/amazon/01.png', url: '/explorations/amazon/01.png', height: 640 },
   { id: 'amazon-2', img: '/explorations/amazon/02.png', url: '/explorations/amazon/02.png', height: 2697 },
@@ -89,8 +108,10 @@ const AMAZON_ITEMS: MasonryItem[] = [
 type GalleryImage = { src?: string; caption: string }
 type FlowStep = { title: string; desc: string }
 type ContentItem = { title: string; desc: string; link?: string }
+type BeforeAfterBlock = { title: string; overview?: string; original?: string; generated?: string }
 type Section =
   | { key: string; label: string; type: 'gallery'; images: GalleryImage[] }
+  | { key: string; label: string; type: 'beforeafter'; blocks: BeforeAfterBlock[] }
   | { key: string; label: string; type: 'masonry'; items: MasonryItem[] }
   | { key: string; label: string; type: 'flow'; steps: FlowStep[] }
   | {
@@ -152,9 +173,10 @@ const MODULES: Module[] = [
       {
         key: 'detail-scene',
         label: '详情页场景图 AI 生产工作流',
-        type: 'miro',
-        src: '',
-        openUrl: '',
+        type: 'gallery',
+        images: [
+          { src: '/explorations/process/detail-workflow.webp', caption: '详情页场景图 AI 生产工作流' },
+        ],
       },
       {
         key: 'brand',
@@ -174,7 +196,7 @@ const MODULES: Module[] = [
     sections: [
       {
         key: 'modules',
-        label: '工作流构成',
+        label: 'Comfyui 工作流总览',
         type: 'content',
         items: [
           {
@@ -186,15 +208,34 @@ const MODULES: Module[] = [
       },
       {
         key: 'workflows',
-        label: '常用工作流展示',
-        type: 'gallery',
-        images: [{ caption: '详情页场景图工作流' }, { caption: '品牌物料工作流' }],
-      },
-      {
-        key: 'compare',
-        label: '生成效果对比',
-        type: 'gallery',
-        images: [{ caption: '调参前' }, { caption: '调参后' }, { caption: '风格差异' }],
+        label: '常用工作流效果展示（Before/After）',
+        type: 'beforeafter',
+        blocks: [
+          {
+            title: '产品溶图打光',
+            overview: '/explorations/post/wf-01-overview.jpg',
+            original: '/explorations/post/wf-01-original.png',
+            generated: '/explorations/post/wf-01-generated.png',
+          },
+          {
+            title: '修图打光',
+            overview: '/explorations/post/wf-02-overview.jpg',
+            original: '/explorations/post/wf-02-original.png',
+            generated: '/explorations/post/wf-02-generated.png',
+          },
+          {
+            title: '通用放大',
+            overview: '/explorations/post/wf-03-overview.jpg',
+            original: '/explorations/post/wf-03-original.png',
+            generated: '/explorations/post/wf-03-generated.jpg',
+          },
+          {
+            title: '修图打光',
+            overview: '/explorations/post/wf-04-overview.jpg',
+            original: '/explorations/post/wf-04-original.jpg',
+            generated: '/explorations/post/wf-04-generated.jpg',
+          },
+        ],
       },
     ],
   },
@@ -270,9 +311,55 @@ export default function AiImages() {
                 </div>
 
                 {sec.type === 'gallery' && (
-                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                    {sec.images.map((img) => (
-                      <FeatureTile key={img.caption} caption={img.caption} src={img.src} />
+                  sec.images.length === 1 ? (
+                    <FeatureTile caption={sec.images[0].caption} src={sec.images[0].src} />
+                  ) : (
+                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                      {sec.images.map((img) => (
+                        <FeatureTile key={img.caption} caption={img.caption} src={img.src} />
+                      ))}
+                    </div>
+                  )
+                )}
+
+                {sec.type === 'beforeafter' && (
+                  <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                    {sec.blocks.map((block, bi) => (
+                      <SpotlightCard
+                        key={block.title}
+                        className="liquid-glass rounded-2xl p-5 md:p-6"
+                      >
+                        <div className="mb-4 flex items-baseline gap-2">
+                          <span className="font-body text-[10px] tracking-[0.2em] text-muted">
+                            {String(bi + 1).padStart(2, '0')}
+                          </span>
+                          <span className="font-body text-sm font-medium text-text-primary">
+                            {block.title}
+                          </span>
+                        </div>
+                        <div className="flex flex-col gap-3">
+                          <div>
+                            <div className="mb-1.5 font-body text-[10px] tracking-[0.18em] text-muted">
+                              工作流概览
+                            </div>
+                            <EffectImage label="工作流概览" src={block.overview} />
+                          </div>
+                          <div className="grid grid-cols-2 gap-3">
+                            <div>
+                              <div className="mb-1.5 font-body text-[10px] tracking-[0.18em] text-muted">
+                                原图
+                              </div>
+                              <EffectImage label="原图" src={block.original} />
+                            </div>
+                            <div>
+                              <div className="mb-1.5 font-body text-[10px] tracking-[0.18em] text-muted">
+                                生成图
+                              </div>
+                              <EffectImage label="生成图" src={block.generated} />
+                            </div>
+                          </div>
+                        </div>
+                      </SpotlightCard>
                     ))}
                   </div>
                 )}
