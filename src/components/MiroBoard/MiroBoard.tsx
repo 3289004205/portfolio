@@ -59,14 +59,25 @@ export default function MiroBoard({
           )}
         </div>
       )}
-      <div className="relative w-full bg-white" style={{ aspectRatio: ratio }}>
+      <div
+        className="relative w-full bg-white"
+        style={src?.startsWith('http') ? { aspectRatio: ratio } : undefined}
+      >
         {src ? (
-          <iframe
-            src={src}
-            title={title}
-            className="absolute inset-0 h-full w-full"
-            allowFullScreen
-          />
+          src.startsWith('http') ? (
+            <iframe
+              src={src}
+              title={title}
+              className="absolute inset-0 h-full w-full"
+              allowFullScreen
+            />
+          ) : (
+            <img
+              src={src}
+              alt={title ?? ''}
+              className="block w-full h-auto"
+            />
+          )
         ) : (
           <div className="flex h-full w-full flex-col items-center justify-center gap-2 bg-white/[0.06] px-4 text-center text-xs text-muted">
             <span>待粘贴 Miro 嵌入链接</span>

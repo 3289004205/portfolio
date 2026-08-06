@@ -42,6 +42,18 @@
     background: hsl(213 39% 55% / 0.35);
     color: hsl(var(--text));
   }
+
+  /* 全局图片 hover 动态效果：平滑放大 + 提亮，鼠标变为缩放提示可点击放大。
+     排除放大遮罩内的大图（data-no-zoom），避免重复放大。 */
+  img {
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.45s ease;
+  }
+  img:not([data-no-zoom]):hover {
+    transform: scale(1.04);
+    filter: brightness(1.06);
+    cursor: zoom-in;
+  }
 }
 
 @layer components {

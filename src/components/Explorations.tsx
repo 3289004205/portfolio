@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -30,7 +30,6 @@ export default function Explorations() {
   const contentRef = useRef<HTMLDivElement>(null)
   const col1Ref = useRef<HTMLDivElement>(null)
   const col2Ref = useRef<HTMLDivElement>(null)
-  const [lightbox, setLightbox] = useState<string | null>(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -57,17 +56,6 @@ export default function Explorations() {
 
     return () => ctx.revert()
   }, [])
-
-  // Lock scroll when lightbox open
-  useEffect(() => {
-    if (lightbox) {
-      const prev = document.body.style.overflow
-      document.body.style.overflow = 'hidden'
-      return () => {
-        document.body.style.overflow = prev
-      }
-    }
-  }, [lightbox])
 
   return (
     <section
@@ -106,7 +94,7 @@ export default function Explorations() {
             {ITEMS_COL_1.map((item, i) => (
               <button
                 key={i}
-                onClick={() => setLightbox(item.image)}
+                type="button"
                 className="pointer-events-auto mx-auto aspect-video w-full max-w-[360px] overflow-hidden rounded-3xl border border-stroke bg-surface"
                 style={{ transform: `rotate(${item.rotate}deg)` }}
               >
@@ -123,7 +111,7 @@ export default function Explorations() {
             {ITEMS_COL_2.map((item, i) => (
               <button
                 key={i}
-                onClick={() => setLightbox(item.image)}
+                type="button"
                 className="pointer-events-auto mx-auto aspect-video w-full max-w-[360px] overflow-hidden rounded-3xl border border-stroke bg-surface"
                 style={{ transform: `rotate(${item.rotate}deg)` }}
               >
@@ -138,26 +126,6 @@ export default function Explorations() {
           </div>
         </div>
       </div>
-
-      {/* Lightbox */}
-      {lightbox && (
-        <div
-          className="fixed inset-0 z-[9998] flex items-center justify-center bg-black/90 p-8"
-          onClick={() => setLightbox(null)}
-        >
-          <img
-            src={lightbox}
-            alt="Exploration preview"
-            className="max-h-[90vh] max-w-[90vw] rounded-2xl object-contain"
-          />
-          <button
-            className="absolute right-6 top-6 text-sm uppercase tracking-[0.2em] text-muted hover:text-text-primary"
-            onClick={() => setLightbox(null)}
-          >
-            Close ✕
-          </button>
-        </div>
-      )}
     </section>
   )
 }

@@ -1,5 +1,7 @@
+import { useState } from 'react'
+
 const SUMMARY =
-  '具备从 AI 视觉设计师到 AIGC 产品化落地的完整成长路径，兼具 AI 技术深度理解与产品化系统思维。主导搭建视觉部 AI 集合化系统、AI 客服系统、知识库问答机器人、提示词预设生图平台等多个 AI 产品项目，覆盖 AI 图像生成、视频生成、数字人、智能客服、知识管理等核心场景。精通 Prompt 工程与 ComfyUI 工作流搭建，能够将模糊业务需求翻译为可落地的 AI 技术方案，推动 AI 从单点工具走向系统化产品，实现跨部门 AI 生产力提升。'
+  '主导搭建视觉部 AI 集合化系统、AI 客服系统、知识库问答机器人、提示词预设生图平台等多款 AI 产品，覆盖 AI 生图、视频生成、数字人、智能客服、知识管理等核心场景，并以数据与用户反馈驱动产品持续迭代。精通 Prompt 工程与 ComfyUI 工作流搭建，可独立完成从需求拆解、技术方案评估、MVP 验证到跨部门推广的产品全流程，善于将模糊业务诉求翻译为可落地、可衡量的产品方案，推动 AI 从单点工具走向平台化产品，实现组织级生产力提升。'
 
 const SKILL_GROUPS: { title: string; items: string[] }[] = [
   {
@@ -55,7 +57,6 @@ const EXPERIENCE: {
     period: '2025.06 — 至今',
     points: [
       '从 0 到 1 主导搭建视觉部 AI 集合化系统，整合网站导航、无限画布、知识库、图像视频资产库、提示词库、学习资源六大模块',
-      '负责 AI 智能客服系统的产品设计与落地，实现意图识别、多轮对话与自动化服务',
       '开发系统提示词预设生图网站，对接 ComfyUI 后端实现一键生图，降低 AI 生图使用门槛',
       '牵头搭建公司各部门知识库及对应问答机器人，构建数据-知识-问答闭环',
       '参与新版麦瑞克官网的 UI 设计、Figma 原型设计与动态视频产出',
@@ -89,6 +90,29 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
   )
 }
 
+/** 点击复制号码的联系按钮（微信 / 电话），复制后短暂显示「已复制」。 */
+function CopyContactButton({ label, value }: { label: string; value: string }) {
+  const [copied, setCopied] = useState(false)
+  const handleCopy = () => {
+    navigator.clipboard?.writeText(value)
+    setCopied(true)
+    window.setTimeout(() => setCopied(false), 1500)
+  }
+  return (
+    <button
+      type="button"
+      onClick={handleCopy}
+      title={`点击复制${label}`}
+      className="inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-text-primary transition-colors hover:bg-surface/70"
+    >
+      <span className="text-sm">{label}</span>
+      <span className={copied ? 'text-sm text-green-400' : 'text-sm text-muted'}>
+        {copied ? '已复制 ✓' : value}
+      </span>
+    </button>
+  )
+}
+
 export default function ResumeSection() {
   return (
     <section id="resume" className="w-full bg-transparent pb-20 pt-12 md:pb-28 md:pt-16">
@@ -112,6 +136,10 @@ export default function ResumeSection() {
               >
                 3289004205@qq.com
               </a>
+              <div className="flex flex-wrap gap-1">
+                <CopyContactButton label="微信" value="19163309757" />
+                <CopyContactButton label="电话" value="19163309757" />
+              </div>
             </div>
             <img
               src="/photo.jpg"

@@ -47,7 +47,7 @@ export default function Home() {
             eyebrow="精选作品"
             titleLead="AI"
             titleEm="Image"
-            subtext="汇集 AI 图像在各业务线的产出成果，从概念到落地，呈现完整的视觉交付链路与质量水位。"
+            subtext="汇集 AI 图像在各业务线的产出成果，从概念到落地，呈现完整的视觉交付链路与质量。"
             cta="查看全部作品"
             onCta={() => navigate('/ai-images')}
             className="!mb-0"

@@ -153,7 +153,7 @@ const MODULES: Module[] = [
         key: 'tvc',
         label: '品牌 TVC',
         type: 'miro',
-        src: '',
+        src: '/explorations/tvc/01.jpg',
         openUrl: '',
       },
       {

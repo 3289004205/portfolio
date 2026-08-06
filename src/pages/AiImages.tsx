@@ -178,13 +178,6 @@ const MODULES: Module[] = [
           { src: '/explorations/process/detail-workflow.webp', caption: '详情页场景图 AI 生产工作流' },
         ],
       },
-      {
-        key: 'brand',
-        label: '品牌物料专项工作流',
-        type: 'miro',
-        src: '',
-        openUrl: '',
-      },
     ],
   },
   {
