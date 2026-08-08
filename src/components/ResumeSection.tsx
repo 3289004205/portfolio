@@ -115,7 +115,7 @@ function CopyContactButton({ label, value }: { label: string; value: string }) {
 
 export default function ResumeSection() {
   return (
-    <section id="resume" className="w-full bg-transparent pb-20 pt-12 md:pb-28 md:pt-16">
+    <section id="resume" className="w-full bg-transparent pb-20 pt-12 md:pb-28 md:pt-16 print:pb-6 print:pt-6">
       <div className="mx-auto max-w-[1200px] px-6 md:px-10 lg:px-16">
         {/* Header */}
         <Eyebrow>Resume · 简历</Eyebrow>
@@ -150,12 +150,12 @@ export default function ResumeSection() {
         </div>
 
         {/* Summary */}
-        <p className="mt-10 max-w-5xl text-base leading-relaxed text-muted md:text-lg">
+        <p className="mt-10 max-w-5xl text-base leading-relaxed text-muted md:text-lg print:mt-6">
           {SUMMARY}
         </p>
 
         {/* Skills */}
-        <div className="mt-16">
+        <div className="mt-16 print:mt-8">
           <h3 className="text-2xl font-medium text-text-primary">核心技能</h3>
           <div className="mt-6 grid grid-cols-1 gap-8 md:grid-cols-3">
             {SKILL_GROUPS.map((g) => (
@@ -179,7 +179,7 @@ export default function ResumeSection() {
         </div>
 
         {/* Experience */}
-        <div className="mt-16">
+        <div className="mt-16 print:mt-8">
           <h3 className="text-2xl font-medium text-text-primary">工作经历</h3>
           <div className="mt-6 flex flex-col gap-8 border-t border-stroke pt-8">
             {EXPERIENCE.map((e) => (
@@ -205,7 +205,7 @@ export default function ResumeSection() {
         </div>
 
         {/* Education */}
-        <div className="mt-16">
+        <div className="mt-16 print:mt-8">
           <h3 className="text-2xl font-medium text-text-primary">教育经历</h3>
           <div className="mt-6 flex items-start justify-between border-t border-stroke pt-8">
             <div>

@@ -2,7 +2,7 @@ import SideRays from './SideRays'
 
 export default function RaysBackground() {
   return (
-    <div className="pointer-events-none fixed inset-0 -z-10">
+    <div className="pointer-events-none fixed inset-0 -z-10 print:hidden">
       <SideRays
         speed={1.5}
         rayColor1="#5b8def"

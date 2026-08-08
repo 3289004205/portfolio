@@ -56,7 +56,7 @@ export default function ContactPage() {
         transition={{ duration: 0.4 }}
         className="mx-auto w-full bg-transparent"
       >
-      <div className="mx-auto max-w-[1200px] px-6 pb-8 pt-24 md:px-10 lg:px-16" />
+      <div className="mx-auto max-w-[1200px] px-6 pb-8 pt-24 md:px-10 lg:px-16 print:pt-12" />
 
       {/* 联系方式 */}
       <section className="mx-auto max-w-[1200px] px-6 pb-4 pt-2 md:px-10 lg:px-16">
