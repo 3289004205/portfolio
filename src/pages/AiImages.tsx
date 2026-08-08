@@ -195,7 +195,7 @@ const MODULES: Module[] = [
           {
             title: 'RunningHub 链接',
             desc: '在 RunningHub 上发布与分享工作流，便于外部协作与复用。',
-            link: 'https://www.runninghub.cn/',
+            link: 'https://www.runninghub.cn/user-center/1909170883871531010/webapp?inviteCode=ridtgiqo',
           },
         ],
       },

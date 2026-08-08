@@ -7,7 +7,7 @@ import SpotlightCard from '../components/SpotlightCard/SpotlightCard'
 import StatsPanel from '../components/StatsPanel/StatsPanel'
 import BackToTop from '../components/BackToTop'
 
-type GalleryImage = { src?: string; caption: string; aspect?: string }
+type GalleryImage = { src?: string; caption: string; aspect?: string; wide?: boolean }
 type FlowStep = { title: string; desc: string }
 type BadcaseItem = { problem: string; fix: string }
 type Section =
@@ -74,7 +74,18 @@ const APPS: App[] = [
         label: '页面展示',
         type: 'gallery',
         images: [
-          { src: '/explorations/preset/01.webp', caption: '首页 · 预设模板选择' },
+          { src: '/explorations/preset/01.webp', caption: '首页 · 预设模板选择', wide: true },
+        ],
+      },
+      {
+        key: 'direct',
+        label: '直出效果展示',
+        type: 'gallery',
+        images: [
+          { src: '/explorations/preset/02.png', caption: '黑金商务风' },
+          { src: '/explorations/preset/03.png', caption: '简约白科技风' },
+          { src: '/explorations/preset/04.png', caption: '深绿质感风' },
+          { src: '/explorations/preset/05.png', caption: '暗黑科技风' },
         ],
       },
       {
@@ -177,9 +188,9 @@ function ProjectIntro({ app }: { app: App }) {
 }
 
 /** 与 FeaturesChess 一致的毛玻璃图片占位（视觉 AI 整合网站形式） */
-function FeatureTile({ caption, src, aspect }: { caption: string; src?: string; aspect?: string }) {
+function FeatureTile({ caption, src, aspect, className }: { caption: string; src?: string; aspect?: string; className?: string }) {
   return (
-    <SpotlightCard className="liquid-glass overflow-hidden rounded-2xl">
+    <SpotlightCard className={`liquid-glass overflow-hidden rounded-2xl ${className || ''}`}>
       {src ? (
         aspect ? (
           <div className={`w-full overflow-hidden ${aspect}`}>
@@ -289,7 +300,13 @@ export default function AiApps() {
                     {sec.type === 'gallery' && (
                       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                         {sec.images.map((img) => (
-                          <FeatureTile key={img.caption} caption={img.caption} src={img.src} aspect={img.aspect} />
+                          <FeatureTile
+                            key={img.caption}
+                            caption={img.caption}
+                            src={img.src}
+                            aspect={img.aspect}
+                            className={img.wide ? 'md:col-span-2' : ''}
+                          />
                         ))}
                       </div>
                     )}
@@ -348,7 +365,13 @@ export default function AiApps() {
                     {sec.type === 'gallery' && (
                       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                         {sec.images.map((img) => (
-                          <FeatureTile key={img.caption} caption={img.caption} src={img.src} aspect={img.aspect} />
+                          <FeatureTile
+                            key={img.caption}
+                            caption={img.caption}
+                            src={img.src}
+                            aspect={img.aspect}
+                            className={img.wide ? 'md:col-span-2' : ''}
+                          />
                         ))}
                       </div>
                     )}

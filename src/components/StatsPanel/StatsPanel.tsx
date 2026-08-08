@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import './StatsPanel.css'
 
-type ColKey = 'efficiency' | 'bugs' | 'satisfaction' | 'completion' | 'usage'
+type ColKey = string
 
 type Dim = {
   key: ColKey
@@ -14,13 +14,34 @@ type Dim = {
   lowerIsBetter?: boolean
 }
 
-const DIMS: Dim[] = [
+const DEF_DIMS: Dim[] = [
   { key: 'efficiency', label: '综合提效', caption: '引入 AI 后的效率提升幅度', unit: '% vs 人工基线', suffix: '%', max: 100 },
   { key: 'bugs', label: '页面 BUG 率', caption: '千次访问的前端缺陷数', unit: '缺陷 / 千次访问', max: 5, lowerIsBetter: true },
   { key: 'satisfaction', label: '用户满意度', caption: '模块满意度评分', unit: '分 / 5 分制', suffix: '分', max: 5 },
   { key: 'completion', label: '任务完成率', caption: '关键任务一次性通过率', unit: '% 一次通过', suffix: '%', max: 100 },
   { key: 'usage', label: '用户日均使用时长', caption: '活跃用户日均停留时长', unit: '小时 / 日', suffix: 'h', max: 10 },
 ]
+
+/** 知识库专属：仅展示综合提效、回答准确率、问题覆盖率三项 */
+const KB_DIMS: Dim[] = [
+  { key: 'efficiency', label: '综合提效', caption: '引入 AI 后的效率提升幅度', unit: '% vs 人工基线', suffix: '%', max: 100 },
+  { key: 'accuracy', label: '回答准确率', caption: '知识库问答的回答准确率', unit: '% 准确命中', suffix: '%', max: 100 },
+  { key: 'coverage', label: '问题覆盖率', caption: '可覆盖的问题范围占比', unit: '% 已覆盖', suffix: '%', max: 100 },
+]
+
+/** 预设生成网站专属：仅展示综合提效、商品一致性、图片质量达标率、卖点表达清晰度四项 */
+const PRESET_DIMS: Dim[] = [
+  { key: 'efficiency', label: '综合提效', caption: '引入 AI 后的效率提升幅度', unit: '% vs 人工基线', suffix: '%', max: 100 },
+  { key: 'consistency', label: '商品一致性', caption: '多图商品视觉与规格一致性', unit: '% 一致', suffix: '%', max: 100 },
+  { key: 'quality', label: '图片质量达标率', caption: '产出图片达标占比', unit: '% 达标', suffix: '%', max: 100 },
+  { key: 'clarity', label: '卖点表达清晰度', caption: '卖点信息表达清晰度', unit: '% 清晰', suffix: '%', max: 100 },
+]
+
+function getDims(appTitle: string): Dim[] {
+  if (appTitle === '知识库') return KB_DIMS
+  if (appTitle === '预设生成网站') return PRESET_DIMS
+  return DEF_DIMS
+}
 
 type Row = {
   label: string
@@ -31,9 +52,9 @@ type Row = {
   trace: number[]
 }
 
-/** 按 appTitle 返回当前模块的五个维度数据 */
+/** 按 appTitle 返回当前模块的维度数据 */
 function getModuleData(appTitle: string): Row[] {
-  const map: Record<string, Record<ColKey, Row>> = {
+  const map: Record<string, Record<string, Row>> = {
     '视觉 AI 整合网站': {
       efficiency: { label: '视觉素材产出', sub: '设计', value: 26, range: [18, 33], delta: 5.6, trace: [0.28, 0.36, 0.44, 0.52, 0.6, 0.68, 0.78, 0.9] },
       bugs:        { label: 'v2.5 当前版本', sub: '当前', value: 0.6, range: [0.4, 0.9], delta: -45.5, trace: [0.3, 0.27, 0.24, 0.21, 0.18, 0.16, 0.14, 0.12] },
@@ -42,18 +63,15 @@ function getModuleData(appTitle: string): Row[] {
       usage:       { label: '视觉 AI 整合网站', sub: '整合', value: 6.4, range: [5.2, 7.3], delta: 12.3, trace: [0.2, 0.24, 0.28, 0.34, 0.4, 0.48, 0.6, 0.74] },
     },
     '预设生成网站': {
-      efficiency: { label: '预设配置流程', sub: '配置', value: 68, range: [55, 74], delta: 14.2, trace: [0.26, 0.32, 0.4, 0.46, 0.54, 0.62, 0.7, 0.82] },
-      bugs:        { label: 'v2.3 版本', value: 1.1, range: [0.8, 1.5], delta: -31.3, trace: [0.44, 0.4, 0.36, 0.33, 0.3, 0.27, 0.25, 0.22] },
-      satisfaction:{ label: '预设生成网站', value: 4.4, range: [4.0, 4.7], delta: 4.8, trace: [0.6, 0.63, 0.66, 0.7, 0.72, 0.76, 0.8, 0.86] },
-      completion:  { label: '素材批量导出', value: 91, range: [84, 95], delta: 4.2, trace: [0.64, 0.68, 0.71, 0.75, 0.79, 0.83, 0.86, 0.9] },
-      usage:       { label: '预设生成网站', sub: '生图', value: 0.6, range: [0.5, 0.68], delta: 9.1, trace: [0.22, 0.26, 0.3, 0.34, 0.38, 0.44, 0.52, 0.62] },
+      efficiency:  { label: '预设配置流程', sub: '配置', value: 68, range: [55, 74], delta: 14.2, trace: [0.26, 0.32, 0.4, 0.46, 0.54, 0.62, 0.7, 0.82] },
+      consistency: { label: '多图商品一致性', sub: '一致性', value: 90, range: [85, 93], delta: 11.2, trace: [0.55, 0.6, 0.66, 0.71, 0.76, 0.81, 0.86, 0.9] },
+      quality:     { label: '产出图片达标', sub: '达标率', value: 94, range: [90, 96], delta: 9.8, trace: [0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.94] },
+      clarity:     { label: '卖点信息表达', sub: '清晰度', value: 96, range: [92, 98], delta: 13.5, trace: [0.62, 0.68, 0.74, 0.79, 0.84, 0.89, 0.93, 0.96] },
     },
-    '知识库检索': {
-      efficiency: { label: '文档与知识检索', sub: '知识库', value: 61, range: [48, 70], delta: 21.6, trace: [0.18, 0.24, 0.3, 0.4, 0.48, 0.56, 0.66, 0.78] },
-      bugs:        { label: 'v2.0 版本', value: 1.6, range: [1.2, 2.1], delta: -33.3, trace: [0.56, 0.52, 0.48, 0.44, 0.4, 0.37, 0.35, 0.32] },
-      satisfaction:{ label: '知识库检索', value: 4.3, range: [3.9, 4.6], delta: 7.5, trace: [0.5, 0.55, 0.6, 0.64, 0.68, 0.73, 0.78, 0.84] },
-      completion:  { label: '知识库问答', value: 87, range: [79, 92], delta: 8.9, trace: [0.48, 0.54, 0.6, 0.65, 0.7, 0.76, 0.81, 0.87] },
-      usage:       { label: '知识库检索', sub: '知识', value: 3.2, range: [2.6, 3.8], delta: 15.4, trace: [0.16, 0.2, 0.26, 0.32, 0.38, 0.46, 0.56, 0.68] },
+    '知识库': {
+      efficiency: { label: '文档与知识检索', sub: '知识库', value: 44, range: [36, 44], delta: 21.6, trace: [0.18, 0.24, 0.3, 0.4, 0.48, 0.56, 0.66, 0.78] },
+      accuracy:   { label: '知识库问答', sub: '问答', value: 92, range: [88, 94], delta: 12.3, trace: [0.5, 0.56, 0.62, 0.68, 0.74, 0.8, 0.86, 0.92] },
+      coverage:   { label: '问题覆盖范围', sub: '覆盖', value: 97, range: [93, 99], delta: 8.5, trace: [0.6, 0.66, 0.72, 0.78, 0.83, 0.88, 0.93, 0.97] },
     },
     '其他应用': {
       efficiency: { label: '方案与文案撰写', sub: '内容', value: 38, range: [28, 47], delta: 7.5, trace: [0.18, 0.22, 0.26, 0.3, 0.34, 0.38, 0.43, 0.5] },
@@ -66,7 +84,7 @@ function getModuleData(appTitle: string): Row[] {
 
   // 默认 fallback（匹配不到时用第一个）
   const picked = map[appTitle] ?? Object.values(map)[0]
-  return DIMS.map((d) => picked[d.key])
+  return getDims(appTitle).map((d) => picked[d.key]).filter(Boolean) as Row[]
 }
 
 /* ---------- SVG 轨迹 ---------- */
@@ -95,7 +113,7 @@ function getMeta(appTitle: string) {
   const map: Record<string, { period: string; sample: string; updated: string }> = {
     '视觉 AI 整合网站': { period: '2025 Q3 – 2026 Q2', sample: '25 人', updated: '2026 Q2 · rev 4' },
     '预设生成网站':     { period: '2025 Q3 – 2026 Q2', sample: '56 人', updated: '2026 Q2 · rev 3' },
-    '知识库检索':       { period: '2025 Q3 – 2026 Q2', sample: '128 人', updated: '2026 Q2 · rev 2' },
+    '知识库':       { period: '2025 Q3 – 2026 Q2', sample: '128 人', updated: '2026 Q2 · rev 2' },
   }
   return map[appTitle] ?? { period: '2025 Q3 – 2026 Q2', sample: '128 人', updated: '2026 Q2 · rev 1' }
 }
@@ -104,6 +122,7 @@ export default function StatsPanel({ appTitle }: { appTitle?: string }) {
   const [visible, setVisible] = useState(false)
   const rootRef = useRef<HTMLElement | null>(null)
   const appLabel = appTitle ?? '当前应用'
+  const dims = getDims(appLabel)
   const rows = getModuleData(appLabel)
   const meta = getMeta(appLabel)
 
@@ -139,7 +158,7 @@ export default function StatsPanel({ appTitle }: { appTitle?: string }) {
         </div>
         <div>
           <p className="stats__lede">
-            覆盖综合提效、页面 BUG 率、用户满意度、任务完成率与用户日均使用时长五个维度。
+            覆盖{dims.map((d) => d.label).join('、')}维度。
             区间指示器表示同口径下的波动范围，虚线为近八期趋势轨迹。
           </p>
           <div className="stats__meta">
@@ -166,7 +185,7 @@ export default function StatsPanel({ appTitle }: { appTitle?: string }) {
         </div>
 
         <div className="stats__bars">
-          {DIMS.map((dim, i) => {
+          {dims.map((dim, i) => {
             const row = rows[i]
             const w = `${Math.min(100, (row.value / dim.max) * 100)}%`
             const ticks = dim.max <= 5 ? dim.max : 4

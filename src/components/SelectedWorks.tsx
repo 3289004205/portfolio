@@ -83,7 +83,7 @@ export default function SelectedWorks() {
                                     <motion.a
               variants={item}
               key={p.title}
-              href="#"
+              href={`#/ai-apps`}
               onClick={(e) => {
                 e.preventDefault()
                 navigate('/ai-apps', { state: { app: p.id } })
@@ -94,6 +94,7 @@ export default function SelectedWorks() {
                 <img
                   src={p.image}
                   alt={p.title}
+                  data-no-zoom
                   loading="lazy"
                   className={`h-full w-full object-cover ${p.align ?? ''} transition-transform duration-700 group-hover:scale-105`}
                 />

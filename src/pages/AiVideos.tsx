@@ -75,6 +75,8 @@ const PROJECTS: StackingProject[] = [
       bottom: 'https://picsum.photos/seed/v-taobao-bot/600/400',
       right: 'https://picsum.photos/seed/v-taobao-right/600/800',
     },
+    heroVideo: '/videos/previews/taobao-opening-01.mp4',
+    heroImage: '/explorations/videos/taobao-opening-side.jpg',
     intro:
       '淘宝首页开屏级电商动画，服务大促节点曝光，从创意、剧本到成片全流程把控。',
     roles: ['导演', '编剧', '生图', '生视频', '剪辑'],

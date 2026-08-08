@@ -1,6 +1,91 @@
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import VideoTile from '../VideoTile/VideoTile'
+
+/** 预览视频：仅进入视口时自动播放，离开视口立即暂停，
+ *  避免整页大量视频同时解码导致卡顿。 */
+function PreviewVideo({ src, className }: { src: string; className?: string }) {
+  const ref = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    const v = ref.current
+    if (!v) return
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            v.play().catch(() => {})
+          } else {
+            v.pause()
+          }
+        })
+      },
+      { threshold: 0.5 }
+    )
+    io.observe(v)
+    return () => io.disconnect()
+  }, [])
+
+  return (
+    <video
+      ref={ref}
+      src={src}
+      muted
+      loop
+      playsInline
+      preload="metadata"
+      className={className}
+    />
+  )
+}
+
+/** 主视频：默认不自动播放，点击播放按钮播放 / 再点暂停 */
+function HeroVideo({ src, className }: { src: string; className?: string }) {
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const [playing, setPlaying] = useState(false)
+
+  const toggle = () => {
+    const v = videoRef.current
+    if (!v) return
+    if (v.paused) {
+      // 播放主视频时，暂停页面其它所有视频，避免并发解码导致卡顿
+      document.querySelectorAll('video').forEach((o) => {
+        if (o !== v) o.pause()
+      })
+      void v.play()
+    } else {
+      v.pause()
+    }
+  }
+
+  return (
+    <div
+      className={`group/vid relative cursor-pointer ${className ?? ''}`}
+      onClick={toggle}
+    >
+      <video
+        ref={videoRef}
+        src={src}
+        loop
+        playsInline
+        preload="metadata"
+        onPlay={() => setPlaying(true)}
+        onPause={() => setPlaying(false)}
+        onEnded={() => setPlaying(false)}
+        className="h-full w-full rounded-2xl border border-stroke bg-black object-contain"
+      />
+      {!playing && (
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+          <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/30 bg-black/60 backdrop-blur transition-transform duration-300 group-hover/vid:scale-110">
+            <svg viewBox="0 0 24 24" className="ml-1 h-7 w-7 fill-white" aria-hidden="true">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </span>
+        </div>
+      )}
+    </div>
+  )
+}
 
 export type StackingProject = {
   /** 序号，如 "01" */
@@ -13,6 +98,10 @@ export type StackingProject = {
   href?: string
   /** 三张图：左列上、左列下、右侧通栏 */
   images: { top: string; bottom: string; right: string }
+  /** 单条主视频：存在时替换右侧通栏图（仅图片网格分支生效，尺寸不变） */
+  heroVideo?: string
+  /** 主视频右侧配图：与 heroVideo 同高，右侧展示，可裁切 */
+  heroImage?: string
   /** B 站视频 BV 号，存在时优先渲染为 B 站嵌入播放器 */
   bilibili?: string
   /** 多个 B 站视频 BV 号，存在时渲染为嵌入播放器网格 */
@@ -137,13 +226,8 @@ function CardInner({ project }: { project: StackingProject }) {
                   className="aspect-video w-full object-cover"
                 />
               ) : (
-                <video
+                <PreviewVideo
                   src={pv.src}
-                  muted
-                  loop
-                  autoPlay
-                  playsInline
-                  preload="metadata"
                   className={`${pv.orientation === 'landscape' ? 'aspect-video' : 'aspect-[9/16]'} w-full object-cover`}
                 />
               )}
@@ -160,33 +244,54 @@ function CardInner({ project }: { project: StackingProject }) {
             />
           ))}
         </div>
-      ) : (
-        /* 图片网格：左列两张堆叠，右侧一张通栏拉伸 */
-        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-[1fr_1.2fr]">
-          <div className="flex flex-col gap-4">
-            <img
-              src={project.images.top}
-              alt=""
-              loading="lazy"
-              className="aspect-video w-full rounded-2xl border border-stroke object-cover"
-            />
-            <img
-              src={project.images.bottom}
-              alt=""
-              loading="lazy"
-              className="aspect-video w-full rounded-2xl border border-stroke object-cover"
-            />
-          </div>
-          <div className="flex">
-            <img
-              src={project.images.right}
-              alt=""
-              loading="lazy"
-              className="aspect-[3/4] min-h-[420px] w-full rounded-2xl border border-stroke object-cover md:aspect-auto md:h-full"
-            />
-          </div>
-        </div>
-      )}
+      ) : project.heroVideo ? (
+        /* 主视频布局：左两张图去除，容器高度固定（卡片高度不变），内部媒体缩小并居中 */
+        <div className="mt-6 flex min-h-[420px] items-center justify-center md:h-[62vh]">
+          {project.heroImage ? (
+            /* 视频 + 右侧配图，等高并排，视频完整露出、图片宽度适当放大可裁切 */
+            <div className="grid w-full grid-cols-[1fr_1.6fr] gap-4">
+              <HeroVideo
+                src={project.heroVideo}
+                className="h-[320px] w-full self-center md:h-[46vh]"
+              />
+              <img
+                src={project.heroImage}
+                alt=""
+                loading="lazy"
+                className="h-[320px] w-full self-center rounded-2xl border border-stroke object-cover md:h-[46vh]"
+              />
+            </div>
+              ) : (
+                <HeroVideo src={project.heroVideo} className="h-full w-full" />
+              )}
+            </div>
+          ) : (
+            /* 图片网格：左列两张堆叠，右侧一张通栏拉伸 */
+            <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-[1fr_1.2fr]">
+              <div className="flex flex-col gap-4">
+                <img
+                  src={project.images.top}
+                  alt=""
+                  loading="lazy"
+                  className="aspect-video w-full rounded-2xl border border-stroke object-cover"
+                />
+                <img
+                  src={project.images.bottom}
+                  alt=""
+                  loading="lazy"
+                  className="aspect-video w-full rounded-2xl border border-stroke object-cover"
+                />
+              </div>
+              <div className="flex min-h-[420px] md:h-full">
+                <img
+                  src={project.images.right}
+                  alt=""
+                  loading="lazy"
+                  className="aspect-[3/4] min-h-[420px] w-full rounded-2xl border border-stroke object-cover md:aspect-auto md:h-full"
+                />
+              </div>
+            </div>
+          )}
     </div>
   )
 }

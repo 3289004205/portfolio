@@ -101,6 +101,7 @@ export default function Explorations() {
                 <img
                   src={item.image}
                   alt="Exploration"
+                  data-no-zoom
                   loading="lazy"
                   className="h-full w-full object-cover transition-transform duration-500 hover:scale-110"
                 />
@@ -118,6 +119,7 @@ export default function Explorations() {
                 <img
                   src={item.image}
                   alt="Exploration"
+                  data-no-zoom
                   loading="lazy"
                   className="h-full w-full object-cover transition-transform duration-500 hover:scale-110"
                 />
