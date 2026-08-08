@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 const SUMMARY =
-  '主导搭建视觉部 AI 集合化系统、AI 客服系统、知识库问答机器人、提示词预设生图平台等多款 AI 产品，覆盖 AI 生图、视频生成、数字人、智能客服、知识管理等核心场景，并以数据与用户反馈驱动产品持续迭代。精通 Prompt 工程与 ComfyUI 工作流搭建，可独立完成从需求拆解、技术方案评估、MVP 验证到跨部门推广的产品全流程，善于将模糊业务诉求翻译为可落地、可衡量的产品方案，推动 AI 从单点工具走向平台化产品，实现组织级生产力提升。'
+  '具备 AI 技术认知与产品化系统思维，主导搭建视觉部 AI 集成系统、知识库问答智能体、预设生图平台等项目，覆盖图像/视频生成、数字人、知识管理场景。精通 Prompt 工程、ComfyUI 工作流搭建，可将业务需求转化为落地 AI 方案，推动 AI 由单点工具升级为系统化产品，提升跨部门 AI 生产力。'
 
 const SKILL_GROUPS: { title: string; items: string[] }[] = [
   {
@@ -21,13 +21,13 @@ const SKILL_GROUPS: { title: string; items: string[] }[] = [
     title: 'AI 技术能力',
     items: [
       'ComfyUI 工作流搭建与封装',
-      'Stable Diffusion',
+      'RAG',
+      'Vibe Coding',
       'Midjourney',
       'LoRA 模型微调训练',
       'Fluxgym / SD-trainer',
       '数字人技术',
       'AI 视频生成与剪辑',
-      'AI 客服系统搭建',
       '知识库搭建与问答机器人',
       '飞书平台应用开发',
     ],
@@ -39,8 +39,6 @@ const SKILL_GROUPS: { title: string; items: string[] }[] = [
       'C4D / OC 渲染',
       'Photoshop',
       'After Effects',
-      'Premiere Pro',
-      'Illustrator',
     ],
   },
 ]
@@ -53,14 +51,13 @@ const EXPERIENCE: {
 }[] = [
   {
     company: '浙江麦瑞克科技有限公司',
-    role: 'AIGC 专员',
+    role: 'AIGC 专家',
     period: '2025.06 — 至今',
     points: [
-      '从 0 到 1 主导搭建视觉部 AI 集合化系统，整合网站导航、无限画布、知识库、图像视频资产库、提示词库、学习资源六大模块',
-      '开发系统提示词预设生图网站，对接 ComfyUI 后端实现一键生图，降低 AI 生图使用门槛',
-      '牵头搭建公司各部门知识库及对应问答机器人，构建数据-知识-问答闭环',
-      '参与新版麦瑞克官网的 UI 设计、Figma 原型设计与动态视频产出',
-      '完成 ComfyUI 工作流本地化搭建与封装，面向团队培训推广，推动 AI 生图工具跨部门普及',
+      '主导视觉部 AI 集合化系统、预设生图平台、知识库问答机器人等 AI 产品从 0 到 1 搭建与落地，覆盖图像/视频生成、知识管理场景',
+      '负责 ComfyUI 工作流本地化推广、AI 视频流程优化与多部门数字人技术落地，推动 AI 工具跨部门普及',
+      '参与新版麦瑞克官网 UI 设计、Figma 原型与动态视频产出，支撑官网视觉升级',
+      '主导多个 AI 产品落地，推动 AI 工具跨部门普及，显著提升团队 AI 生产力',
     ],
   },
   {
@@ -68,9 +65,90 @@ const EXPERIENCE: {
     role: 'AIGC 设计师',
     period: '2024.11 — 2025.06',
     points: [
-      '搭建飞书需求流程系统，规范亚马逊运营与设计协作流程，实现需求提报、审批、进度跟踪线上化',
-      '使用 ComfyUI 生成图像、训练产品/人物类 LoRA 模型，产出亚马逊、Facebook 等投放物料，效率提升数倍、广告转化率平均 +10%',
-      '对生成图像进行质量评估与后期编辑优化，确保准确性、商业性与美观性',
+      '搭建飞书需求流程系统，规范亚马逊运营与设计协作流程，实现需求线上化闭环',
+      '使用 ComfyUI 生成图像、训练产品/人物 LoRA，产出亚马逊、Facebook 等平台投放物料，效率提升数倍、广告转化率平均 +10%',
+      '实现运营-设计协作线上化，AI 物料产出效率提升数倍，广告转化率平均 +10%',
+    ],
+  },
+]
+
+const PROJECTS: {
+  title: string
+  role: string
+  company: string
+  period: string
+  points: string[]
+}[] = [
+  {
+    title: '视觉部 AI 集合化系统',
+    role: '产品主导',
+    company: '浙江麦瑞克科技有限公司',
+    period: '2025.06 — 至今',
+    points: [
+      '从 0 到 1 主导搭建部门级 AI 生产力平台，定义网站导航、无限画布、知识库、图像视频资产库、提示词库、学习资源六大模块及协同数据流转',
+      '推动系统在视觉部与多部门落地，统一 AI 工具入口，显著提升生图/视频产出效率与资产复用率',
+    ],
+  },
+  {
+    title: '知识库搭建与问答机器人',
+    role: '产品主导',
+    company: '浙江麦瑞克科技有限公司',
+    period: '2025.06 — 至今',
+    points: [
+      '牵头搭建公司各部门知识库并开发对应问答机器人，整合业务文档、设计规范、AI 工具教程，构建「提问-回答-补充-优化」数据闭环',
+      '实现知识统一沉淀与智能检索，降低新人学习成本与重复沟通成本',
+    ],
+  },
+  {
+    title: '预设生图平台',
+    role: '产品主导',
+    company: '浙江麦瑞克科技有限公司',
+    period: '2025.06 — 至今',
+    points: [
+      '开发面向团队的生图网站，通过系统提示词预设模板化降低使用门槛，对接 ComfyUI 后端实现一键生图',
+      '覆盖多场景生图需求，实现提示词模板化与参数配置自动化，提升整体产出效率',
+    ],
+  },
+  {
+    title: '图像生成工作流优化与 ComfyUI 本地化推广',
+    role: '主导推进',
+    company: '浙江麦瑞克科技有限公司',
+    period: '2025.06 — 至今',
+    points: [
+      '搭建并封装 ComfyUI 工作流（文生图/图生图/扩图/产品背景生成），面向团队开展培训并编写使用文档',
+      '推动 AI 生图流程标准化与跨部门普及，实现从需求到产出的可复制工作流',
+    ],
+  },
+  {
+    title: '飞书需求流程系统搭建',
+    role: '主导推进',
+    company: '宁波睿特菲体育科技有限公司',
+    period: '2025.01 — 2025.06',
+    points: [
+      '基于飞书多维表格与自动化搭建需求管理系统，梳理亚马逊运营与设计协作全流程节点',
+      '实现需求提报-审批-交付线上化闭环，降低跨部门沟通成本，提升协作效率',
+    ],
+  },
+  {
+    title: '新版麦瑞克官网（UI / 原型 / 动态视频）',
+    role: '参与设计',
+    company: '浙江麦瑞克科技有限公司',
+    period: '2025.06 — 至今',
+    points: [
+      '参与官网视觉风格定义与 UI 设计，使用 Figma 完成交互原型，推动设计到开发高效交付',
+      '结合 AI 视频工具产出动态视觉物料，支撑官网视觉升级与品牌展示',
+    ],
+  },
+  {
+    title: '详情页图片与视频 AI 素材规模化产出',
+    role: '主导推进',
+    company: '浙江麦瑞克科技有限公司',
+    period: '2025.06 — 至今',
+    points: [
+      '详情页 AI 生图流程：制定详情页标准化 AI 生图工作流，批量产出产品场景图与营销物料，提升单品素材交付效率',
+      '抖音信息流 AI 流程：搭建抖音信息流广告 AI 素材生产流程，适配多版本短视频投放，提升素材产出与迭代速度',
+      '品牌 TVC 与首页视频：制定品牌 TVC AI 生产流程，完成首页宣传视频的 AI 生成与剪辑交付，支撑品牌视觉传播',
+      '打通详情页、信息流、品牌 TVC 多场景 AI 素材生产链路，显著提升营销素材规模化产出与交付效率',
     ],
   },
 ]
@@ -199,6 +277,36 @@ export default function ResumeSection() {
                 <span className="flex-shrink-0 text-sm text-muted md:text-right">
                   {e.period}
                 </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Projects */}
+        <div className="mt-16 print:mt-8">
+          <h3 className="text-2xl font-medium text-text-primary">项目经历</h3>
+          <div className="mt-6 flex flex-col gap-8 border-t border-stroke pt-8">
+            {PROJECTS.map((p) => (
+              <div
+                key={p.title}
+                className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between"
+              >
+                <div className="max-w-2xl">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <h4 className="text-lg text-text-primary">{p.title}</h4>
+                    <span className="rounded-full border border-stroke bg-surface px-2.5 py-0.5 text-xs text-muted">
+                      {p.role}
+                    </span>
+                  </div>
+                  <p className="mt-1 text-sm text-muted">
+                    {p.company} · {p.period}
+                  </p>
+                  <ul className="mt-3 flex list-disc flex-col gap-2 pl-5 text-sm text-muted">
+                    {p.points.map((pt, i) => (
+                      <li key={i}>{pt}</li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             ))}
           </div>
