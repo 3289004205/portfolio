@@ -6,6 +6,7 @@ import SpotlightCard from '../components/SpotlightCard/SpotlightCard'
 import Masonry, { type MasonryItem } from '../components/Masonry/Masonry'
 import BackToTop from '../components/BackToTop'
 import MiroBoard from '../components/MiroBoard/MiroBoard'
+import StatsPanel from '../components/StatsPanel/StatsPanel'
 
 /** 与 FeaturesChess 一致的毛玻璃图片占位（视觉 AI 整合网站形式） */
 function FeatureTile({ caption, src }: { caption: string; src?: string }) {
@@ -36,6 +37,35 @@ function EffectImage({ label, src }: { label: string; src?: string }) {
     <div className="flex aspect-[4/3] w-full items-center justify-center rounded-xl border border-stroke bg-white/[0.06] px-3 text-center text-xs text-muted">
       待上传截图
       <span className="mt-1 block text-[10px] opacity-70">{label}</span>
+    </div>
+  )
+}
+
+/** 内容卡片列表（含可选外链），供 content 区块与 gallery 区块复用 */
+function ContentList({ items }: { items: ContentItem[] }) {
+  return (
+    <div className="flex flex-col gap-4">
+      {items.map((item, i) => (
+        <SpotlightCard key={i} className="liquid-glass rounded-2xl p-6">
+          <div className="font-body text-base font-medium text-text-primary">
+            {item.link ? (
+              <a
+                href={item.link}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 text-text-primary transition-colors hover:text-muted"
+              >
+                {item.title} <span className="text-xs">↗</span>
+              </a>
+            ) : (
+              item.title
+            )}
+          </div>
+          <p className="mt-2 font-body text-sm leading-relaxed text-muted">
+            {item.desc}
+          </p>
+        </SpotlightCard>
+      ))}
     </div>
   )
 }
@@ -110,7 +140,7 @@ type FlowStep = { title: string; desc: string }
 type ContentItem = { title: string; desc: string; link?: string }
 type BeforeAfterBlock = { title: string; overview?: string; original?: string; generated?: string }
 type Section =
-  | { key: string; label: string; type: 'gallery'; images: GalleryImage[] }
+  | { key: string; label: string; type: 'gallery'; images: GalleryImage[]; noteItems?: ContentItem[] }
   | { key: string; label: string; type: 'beforeafter'; blocks: BeforeAfterBlock[] }
   | { key: string; label: string; type: 'masonry'; items: MasonryItem[] }
   | { key: string; label: string; type: 'flow'; steps: FlowStep[] }
@@ -124,6 +154,7 @@ type Section =
       caption: string
     }
   | { key: string; label: string; type: 'content'; items: ContentItem[] }
+  | { key: string; label: string; type: 'stats'; appTitle: string; noteItems?: ContentItem[] }
   | { key: string; label: string; type: 'miro'; src?: string; openUrl?: string }
 
 type Module = {
@@ -176,6 +207,32 @@ const MODULES: Module[] = [
         type: 'gallery',
         images: [
           { src: '/explorations/process/detail-workflow.webp', caption: '详情页场景图 AI 生产工作流' },
+        ],
+        noteItems: [
+          {
+            title: '原流程与优化框架',
+            desc: '商详设计原有流程为：需求提出 → 设计师找参考 → AI 生成初稿（前期）→ 渲染产品（中期）→ 精修产品与场景（后期）→ 上线。我在前期、中期、后期三个环节分别做了流程闭环与模型链路固化，把原本分散在多个软件的工具与资产统一到 AI 集合化系统内，减少成员在工具间的反复流转。',
+          },
+        ],
+      },
+      {
+        key: 'detail-results',
+        label: '提效成果',
+        type: 'stats',
+        appTitle: '详情页场景图',
+        noteItems: [
+          {
+            title: '整体周期：20 天 → 12–15 天',
+            desc: '在完整流程优化前，做一套详情页约需 20 天；优化后周期缩短至 12–15 天，交付节奏明显加快，单品素材的规模化产出能力随之提升。',
+          },
+          {
+            title: '团队与质量',
+            desc: '流程标准化与资产复用缓解了人员压力，同时提升了详情页整体质量水位，让设计师把精力投入到更高价值的创意与把控上。',
+          },
+          {
+            title: '下一步探索',
+            desc: '正在将详情流程拆解为 Skill 结构化能力，并搭建素材库「洗图裂变」智能体。目前仍处 demo 阶段，但相信结合真实业务持续打磨，能进一步释放增效空间。',
+          },
         ],
       },
     ],
@@ -304,15 +361,22 @@ export default function AiImages() {
                 </div>
 
                 {sec.type === 'gallery' && (
-                  sec.images.length === 1 ? (
-                    <FeatureTile caption={sec.images[0].caption} src={sec.images[0].src} />
-                  ) : (
-                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                      {sec.images.map((img) => (
-                        <FeatureTile key={img.caption} caption={img.caption} src={img.src} />
-                      ))}
-                    </div>
-                  )
+                  <>
+                    {sec.images.length === 1 ? (
+                      <FeatureTile caption={sec.images[0].caption} src={sec.images[0].src} />
+                    ) : (
+                      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                        {sec.images.map((img) => (
+                          <FeatureTile key={img.caption} caption={img.caption} src={img.src} />
+                        ))}
+                      </div>
+                    )}
+                    {sec.noteItems && sec.noteItems.length > 0 && (
+                      <div className="mt-12">
+                        <ContentList items={sec.noteItems} />
+                      </div>
+                    )}
+                  </>
                 )}
 
                 {sec.type === 'beforeafter' && (
@@ -448,33 +512,29 @@ export default function AiImages() {
                   </div>
                 )}
 
-                {sec.type === 'content' && (
-                  <div className="flex flex-col gap-4">
-                    {sec.items.map((item, i) => (
-                      <SpotlightCard
-                        key={i}
-                        className="liquid-glass rounded-2xl p-6"
-                      >
-                        <div className="font-body text-base font-medium text-text-primary">
-                          {item.link ? (
-                            <a
-                              href={item.link}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="inline-flex items-center gap-2 text-text-primary transition-colors hover:text-muted"
-                            >
-                              {item.title} <span className="text-xs">↗</span>
-                            </a>
-                          ) : (
-                            item.title
-                          )}
-                        </div>
-                        <p className="mt-2 font-body text-sm leading-relaxed text-muted">
-                          {item.desc}
-                        </p>
-                      </SpotlightCard>
-                    ))}
-                  </div>
+                {sec.type === 'content' && <ContentList items={sec.items} />}
+
+                {sec.type === 'stats' && (
+                  <>
+                    <StatsPanel appTitle={sec.appTitle} />
+                    {sec.noteItems && sec.noteItems.length > 0 && (
+                      <div className="mt-16 flex flex-col gap-4">
+                        {sec.noteItems.map((item, i) => (
+                          <SpotlightCard
+                            key={i}
+                            className="liquid-glass rounded-2xl p-6"
+                          >
+                            <div className="font-body text-base font-medium text-text-primary">
+                              {item.title}
+                            </div>
+                            <p className="mt-2 font-body text-sm leading-relaxed text-muted">
+                              {item.desc}
+                            </p>
+                          </SpotlightCard>
+                        ))}
+                      </div>
+                    )}
+                  </>
                 )}
               </div>
             ))}

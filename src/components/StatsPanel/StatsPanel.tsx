@@ -37,9 +37,18 @@ const PRESET_DIMS: Dim[] = [
   { key: 'clarity', label: '卖点表达清晰度', caption: '卖点信息表达清晰度', unit: '% 清晰', suffix: '%', max: 100 },
 ]
 
+/** 详情页场景图专属：展示前期 / 中期 / 后期各环节提效与整体周期缩短 */
+const DETAIL_DIMS: Dim[] = [
+  { key: 'early', label: '前期提效', caption: '找参考与生成初稿环节效率提升', unit: '% vs 原流程', suffix: '%', max: 100 },
+  { key: 'mid', label: '中期提效', caption: '产品渲染环节效率提升', unit: '% vs 原流程', suffix: '%', max: 100 },
+  { key: 'late', label: '后期提效', caption: '精修环节效率提升', unit: '% vs 原流程', suffix: '%', max: 100 },
+  { key: 'overall', label: '综合提效', caption: '整套详情页交付周期缩短', unit: '% vs 原流程', suffix: '%', max: 100 },
+]
+
 function getDims(appTitle: string): Dim[] {
   if (appTitle === '知识库') return KB_DIMS
   if (appTitle === '预设生成网站') return PRESET_DIMS
+  if (appTitle === '详情页场景图') return DETAIL_DIMS
   return DEF_DIMS
 }
 
@@ -80,6 +89,12 @@ function getModuleData(appTitle: string): Row[] {
       completion:  { label: '跨模块跳转', value: 74, range: [64, 82], delta: -2.4, trace: [0.7, 0.68, 0.66, 0.65, 0.63, 0.62, 0.6, 0.58] },
       usage:       { label: '模板与提示词', sub: '模板', value: 0.3, range: [0.2, 0.4], delta: 4.2, trace: [0.18, 0.2, 0.22, 0.26, 0.3, 0.34, 0.4, 0.46] },
     },
+    '详情页场景图': {
+      early:   { label: '找参考与生成初稿', sub: '前期', value: 33, range: [25, 40], delta: 33, trace: [0.2, 0.26, 0.32, 0.4, 0.5, 0.6, 0.72, 0.9] },
+      mid:     { label: '产品渲染', sub: '中期', value: 50, range: [40, 58], delta: 50, trace: [0.2, 0.26, 0.34, 0.44, 0.54, 0.64, 0.74, 0.9] },
+      late:    { label: '精修', sub: '后期', value: 70, range: [60, 78], delta: 70, trace: [0.2, 0.3, 0.42, 0.54, 0.66, 0.76, 0.86, 0.96] },
+      overall: { label: '整套详情页周期', sub: '综合', value: 33, range: [25, 40], delta: 33, trace: [0.2, 0.27, 0.35, 0.46, 0.58, 0.7, 0.82, 0.9] },
+    },
   }
 
   // 默认 fallback（匹配不到时用第一个）
@@ -114,6 +129,7 @@ function getMeta(appTitle: string) {
     '视觉 AI 整合网站': { period: '2025 Q3 – 2026 Q2', sample: '25 人', updated: '2026 Q2 · rev 4' },
     '预设生成网站':     { period: '2025 Q3 – 2026 Q2', sample: '56 人', updated: '2026 Q2 · rev 3' },
     '知识库':       { period: '2025 Q3 – 2026 Q2', sample: '128 人', updated: '2026 Q2 · rev 2' },
+    '详情页场景图':     { period: '2025 Q3 – 2026 Q2', sample: '视觉部', updated: '2026 Q2 · rev 1' },
   }
   return map[appTitle] ?? { period: '2025 Q3 – 2026 Q2', sample: '128 人', updated: '2026 Q2 · rev 1' }
 }
