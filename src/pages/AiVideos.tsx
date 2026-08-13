@@ -6,6 +6,7 @@ import SpotlightCard from '../components/SpotlightCard/SpotlightCard'
 import StackingCards, { type StackingProject } from '../components/StackingCards/StackingCards'
 import BackToTop from '../components/BackToTop'
 import MiroBoard from '../components/MiroBoard/MiroBoard'
+import StatsPanel from '../components/StatsPanel/StatsPanel'
 
 /** 与 FeaturesChess 一致的毛玻璃图片占位（视觉 AI 整合网站形式） */
 function FeatureTile({ caption, src }: { caption: string; src?: string }) {
@@ -111,6 +112,7 @@ const PROJECTS: StackingProject[] = [
 type GalleryImage = { src?: string; caption: string }
 type BlockItem = { title: string; src?: string; videos?: string[]; videoRow?: boolean; videoCols?: number }
 type ToolItem = { name: string; desc: string }
+type ContentItem = { title: string; desc: string }
 type Section =
   | { key: string; label: string; type: 'gallery'; images: GalleryImage[] }
   | { key: string; label: string; type: 'cards'; items: BlockItem[] }
@@ -125,6 +127,7 @@ type Section =
     }
   | { key: string; label: string; type: 'tools'; items: ToolItem[] }
   | { key: string; label: string; type: 'miro'; src?: string; openUrl?: string }
+  | { key: string; label: string; type: 'stats'; appTitle: string; noteItems?: ContentItem[] }
 
 type Module = {
   id: string
@@ -170,6 +173,26 @@ const MODULES: Module[] = [
           { title: '视频换背景', src: '/explorations/dy-flow/06.webp', videos: ['/videos/dy-flow/bg-change-01.mp4', '/videos/dy-flow/bg-change-02.mp4'] },
           { title: '视频换装', src: '/explorations/dy-flow/07.webp', videos: ['/videos/dy-flow/change-clothes-01.mp4', '/videos/dy-flow/change-clothes-02.mp4'] },
           { title: '视频换人', src: '/explorations/dy-flow/08.webp', videos: ['/videos/dy-flow/change-face-01.mp4', '/videos/dy-flow/change-face-02.mp4', '/videos/dy-flow/change-face-03.mp4'], videoCols: 3 },
+        ],
+      },
+      {
+        key: 'video-results',
+        label: '提效成果',
+        type: 'stats',
+        appTitle: '视频流程',
+        noteItems: [
+          {
+            title: '主图视频 · 全流程 AI 介入',
+            desc: '主图视频原有流程为 提案 → 脚本 → 参考画面寻找 → 拍摄 → 剪辑。我进行了完整流程的 AI 介入测试并推行，目前优化为 提案 → AI 写脚本 → 素材混剪 → 拍摄（AI 生图生视频辅助）→ 剪辑。脚本环节搭建了智能体，预设品牌调性、主营产品与系统提示词，输入提案信息、视频时长、产品类型即可输出符合业务需求的脚本；经人工审核后进入素材拼接阶段查看整体表现，由人工找对应画面参考、AI 依据脚本用 Codex 混剪（不直接用 Codex 自行找素材，因其无法判断画面色调与美感），生图生视频逻辑与详情页一致。相比拍摄的人力与场地道具成本节约至少 80%，导拍剪周期从 20 天以上缩短到两周以内。',
+          },
+          {
+            title: '信息流视频 · AI 画面穿插与素材替代',
+            desc: '信息流视频主要做噱头与难拍摄 AI 画面的穿插，我的网站中已列出 AI 介入点，产出以数秒素材为主，与实拍、剪辑手法结合。抖音、TikTok 等渠道视频素材用 AI 替代了约 40%，省下大量人力与布景成本，同时销售额环比增加 31%。',
+          },
+          {
+            title: '其他应用 · 换人 / 换背景 / 换装',
+            desc: '此外还有视频换人、换背景、换装等应用，主要用于安装视频与信息流视频，进一步降低重复拍摄与场景搭建的成本。',
+          },
         ],
       },
     ],
@@ -252,11 +275,13 @@ export default function AiVideos() {
                   key={sec.key}
                   className={si < current.sections.length - 1 ? 'mb-24' : ''}
                 >
-                  <div className="mb-10 max-w-2xl space-y-5">
-                    <h3 className="text-3xl font-display italic leading-[0.9] tracking-tight text-text-primary md:text-4xl">
-                      {sec.label}
-                    </h3>
-                  </div>
+                  {sec.type !== 'stats' && (
+                    <div className="mb-10 max-w-2xl space-y-5">
+                      <h3 className="text-3xl font-display italic leading-[0.9] tracking-tight text-text-primary md:text-4xl">
+                        {sec.label}
+                      </h3>
+                    </div>
+                  )}
 
                   {sec.type === 'miro' && (
                   <MiroBoard src={sec.src} title={sec.label} openUrl={sec.openUrl} />
@@ -435,6 +460,26 @@ export default function AiVideos() {
                       ) : (
                         <div className="flex items-center justify-center rounded-2xl border border-dashed border-stroke bg-bg/40 px-6 py-10 font-body text-xs text-muted">
                           工具清单待补充
+                        </div>
+                      )}
+                    </>
+                  )}
+
+                  {sec.type === 'stats' && (
+                    <>
+                      <StatsPanel appTitle={sec.appTitle} />
+                      {sec.noteItems && sec.noteItems.length > 0 && (
+                        <div className="mt-16 flex flex-col gap-4">
+                          {sec.noteItems.map((item, i) => (
+                            <SpotlightCard key={i} className="liquid-glass rounded-2xl p-6">
+                              <div className="font-body text-base font-medium text-text-primary">
+                                {item.title}
+                              </div>
+                              <p className="mt-2 font-body text-sm leading-relaxed text-muted">
+                                {item.desc}
+                              </p>
+                            </SpotlightCard>
+                          ))}
                         </div>
                       )}
                     </>

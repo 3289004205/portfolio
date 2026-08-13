@@ -45,10 +45,19 @@ const DETAIL_DIMS: Dim[] = [
   { key: 'overall', label: '综合提效', caption: '整套详情页交付周期缩短', unit: '% vs 原流程', suffix: '%', max: 100 },
 ]
 
+/** 视频流程专属：展示主图视频成本/周期、信息流素材替代与销售额环比增长 */
+const VIDEO_DIMS: Dim[] = [
+  { key: 'cost', label: '主图视频成本节约', caption: '拍摄人力与场地道具费用节约', unit: '% 成本节约', suffix: '%', max: 100 },
+  { key: 'cycle', label: '主图视频周期提效', caption: '导拍剪周期 20 天+ → 两周以内', unit: '% 周期缩短', suffix: '%', max: 100 },
+  { key: 'material', label: '信息流素材 AI 替代', caption: '抖音 / TikTok 素材 AI 替代占比', unit: '% 替代', suffix: '%', max: 100 },
+  { key: 'sales', label: '销售额环比增长', caption: '信息流视频上线后销售额环比', unit: '% 环比增长', suffix: '%', max: 100 },
+]
+
 function getDims(appTitle: string): Dim[] {
   if (appTitle === '知识库') return KB_DIMS
   if (appTitle === '预设生成网站') return PRESET_DIMS
   if (appTitle === '详情页场景图') return DETAIL_DIMS
+  if (appTitle === '视频流程') return VIDEO_DIMS
   return DEF_DIMS
 }
 
@@ -95,6 +104,12 @@ function getModuleData(appTitle: string): Row[] {
       late:    { label: '精修', sub: '后期', value: 70, range: [60, 78], delta: 70, trace: [0.2, 0.3, 0.42, 0.54, 0.66, 0.76, 0.86, 0.96] },
       overall: { label: '整套详情页周期', sub: '综合', value: 33, range: [25, 40], delta: 33, trace: [0.2, 0.27, 0.35, 0.46, 0.58, 0.7, 0.82, 0.9] },
     },
+    '视频流程': {
+      cost:     { label: '拍摄与布景', sub: '主图视频', value: 80, range: [70, 85], delta: 80, trace: [0.2, 0.3, 0.45, 0.6, 0.72, 0.82, 0.9, 0.95] },
+      cycle:    { label: '导拍剪周期', sub: '主图视频', value: 30, range: [25, 40], delta: 30, trace: [0.2, 0.28, 0.36, 0.45, 0.55, 0.68, 0.82, 0.9] },
+      material: { label: '抖音 / TikTok', sub: '信息流', value: 40, range: [30, 50], delta: 40, trace: [0.2, 0.26, 0.32, 0.4, 0.5, 0.6, 0.72, 0.85] },
+      sales:    { label: '销售额环比', sub: '信息流', value: 31, range: [20, 40], delta: 31, trace: [0.2, 0.25, 0.3, 0.38, 0.48, 0.6, 0.74, 0.88] },
+    },
   }
 
   // 默认 fallback（匹配不到时用第一个）
@@ -130,6 +145,7 @@ function getMeta(appTitle: string) {
     '预设生成网站':     { period: '2025 Q3 – 2026 Q2', sample: '56 人', updated: '2026 Q2 · rev 3' },
     '知识库':       { period: '2025 Q3 – 2026 Q2', sample: '128 人', updated: '2026 Q2 · rev 2' },
     '详情页场景图':     { period: '2025 Q3 – 2026 Q2', sample: '视觉部', updated: '2026 Q2 · rev 1' },
+    '视频流程':       { period: '2025 Q3 – 2026 Q2', sample: '视觉部', updated: '2026 Q2 · rev 1' },
   }
   return map[appTitle] ?? { period: '2025 Q3 – 2026 Q2', sample: '128 人', updated: '2026 Q2 · rev 1' }
 }

@@ -10,10 +10,28 @@ import BackToTop from '../components/BackToTop'
 type GalleryImage = { src?: string; caption: string; aspect?: string; wide?: boolean }
 type FlowStep = { title: string; desc: string }
 type BadcaseItem = { problem: string; fix: string }
+type ContentItem = { title: string; desc: string; highlights?: string[] }
 type Section =
-  | { key: string; label: string; type: 'gallery'; images: GalleryImage[] }
-  | { key: string; label: string; type: 'flow'; steps: FlowStep[] }
-  | { key: string; label: string; type: 'badcase'; items: BadcaseItem[] }
+  | { key: string; label: string; type: 'gallery'; images: GalleryImage[]; noteItems?: ContentItem[] }
+  | { key: string; label: string; type: 'flow'; steps: FlowStep[]; noteItems?: ContentItem[] }
+  | { key: string; label: string; type: 'badcase'; items: BadcaseItem[]; noteItems?: ContentItem[] }
+
+/** 将 desc 中命中的 highlights 词用高亮样式包裹 */
+function renderHighlighted(text: string, words?: string[]) {
+  if (!words || words.length === 0) return text
+  const escaped = words.map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+  const re = new RegExp(`(${escaped.join('|')})`, 'g')
+  const parts = text.split(re)
+  return parts.map((part, i) =>
+    words.includes(part) ? (
+      <span key={i} className="font-semibold text-text-primary">
+        {part}
+      </span>
+    ) : (
+      part
+    ),
+  )
+}
 
 type App = {
   id: string
@@ -148,6 +166,13 @@ const APPS: App[] = [
           { src: '/explorations/others/01-prompt-reverse.jpg', caption: '提示词反推 · 结果界面', aspect: 'aspect-[16/10]' },
           { src: '/explorations/others/02-material-library.jpg', caption: '素材库 · 归档管理', aspect: 'aspect-[16/10]' },
         ],
+        noteItems: [
+          {
+            title: '综合提效成果',
+            desc: '整合图像素材库、提示词库、反推提示词功能，减少多应用流转，日均使用时长 4.8h、效率提升每天 1.2h。',
+            highlights: ['4.8h', '1.2h'],
+          },
+        ],
       },
       {
         key: 'figma-batch',
@@ -155,6 +180,13 @@ const APPS: App[] = [
         type: 'gallery',
         images: [
           { src: '/explorations/others/03-figma-batch.jpg', caption: 'Figma 插件 · 批量替换面板' },
+        ],
+        noteItems: [
+          {
+            title: '综合提效成果',
+            desc: '按单次活动主图套图的口径，人力 / 工时投入下降约 90%（原来每次活动 4 名设计师专职改图，现在变成「运营改表 + 设计师检查」），产能提升到原来的约 10 倍。',
+            highlights: ['90%', '4 名设计师', '10 倍'],
+          },
         ],
       },
     ],
@@ -311,6 +343,24 @@ export default function AiApps() {
                       </div>
                     )}
 
+                    {sec.noteItems && sec.noteItems.length > 0 && (
+                      <div className="mt-6 flex flex-col gap-4">
+                        {sec.noteItems.map((item, i) => (
+                          <SpotlightCard
+                            key={i}
+                            className="liquid-glass rounded-2xl p-6"
+                          >
+                            <div className="font-body text-base font-medium text-text-primary">
+                              {item.title}
+                            </div>
+                            <p className="mt-2 font-body text-sm leading-relaxed text-muted">
+                              {renderHighlighted(item.desc, item.highlights)}
+                            </p>
+                          </SpotlightCard>
+                        ))}
+                      </div>
+                    )}
+
                     {sec.type === 'flow' && (
                       <div className="flex flex-col gap-5 md:flex-row md:items-stretch md:gap-5">
                         {sec.steps.map((step, i) => (
@@ -372,6 +422,24 @@ export default function AiApps() {
                             aspect={img.aspect}
                             className={img.wide ? 'md:col-span-2' : ''}
                           />
+                        ))}
+                      </div>
+                    )}
+
+                    {sec.noteItems && sec.noteItems.length > 0 && (
+                      <div className="mt-6 flex flex-col gap-4">
+                        {sec.noteItems.map((item, i) => (
+                          <SpotlightCard
+                            key={i}
+                            className="liquid-glass rounded-2xl p-6"
+                          >
+                            <div className="font-body text-base font-medium text-text-primary">
+                              {item.title}
+                            </div>
+                            <p className="mt-2 font-body text-sm leading-relaxed text-muted">
+                              {renderHighlighted(item.desc, item.highlights)}
+                            </p>
+                          </SpotlightCard>
                         ))}
                       </div>
                     )}

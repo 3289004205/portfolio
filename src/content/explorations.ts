@@ -16,6 +16,8 @@ export type SubPart = {
   equalHeightImages?: boolean
   /** 外部详情链接 */
   link?: string
+  /** 综合提效模块：展示该子项的量化收益 */
+  efficiency?: { title?: string; desc: string; highlights?: string[] }
 }
 
 export type Category = {
@@ -164,7 +166,13 @@ export const CATEGORIES: Category[] = [
       { id: 'collect', title: '自动素材搜集', desc: '自动化采集与归档设计、营销素材，减少重复人工。', images: [
           '/explorations/rpa/collect-01-flow.jpg',
           '/explorations/rpa/collect-02-result.jpg',
-        ] },
+        ],
+        efficiency: {
+          title: '综合提效',
+          desc: '每日定时搜集业务需求相关图像素材，扩充素材库，减少人工工作时间寻找素材时间约日均2h。',
+          highlights: ['日均2h'],
+        },
+      },
       {
         id: 'digest',
         title: 'AI 日报信息收集',
@@ -174,6 +182,11 @@ export const CATEGORIES: Category[] = [
           '/explorations/rpa/digest-01-card.jpg',
           '/explorations/rpa/digest-02-flow.jpg',
         ],
+        efficiency: {
+          title: '综合提效',
+          desc: '增强团队成员接受 AI 新闻的实时性，减少各种网站搜集相关新闻时间。',
+          highlights: ['增强团队成员接受 AI 新闻的实时性', '减少各种网站搜集相关新闻时间'],
+        },
       },
     ],
   },

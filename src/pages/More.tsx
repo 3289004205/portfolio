@@ -8,6 +8,23 @@ import VideoTile from '../components/VideoTile/VideoTile'
 import { CATEGORIES, SubPart } from '../content/explorations'
 import BackToTop from '../components/BackToTop'
 
+/** 将 desc 中命中的 highlights 词用高亮样式包裹 */
+function renderHighlighted(text: string, words?: string[]) {
+  if (!words || words.length === 0) return text
+  const escaped = words.map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+  const re = new RegExp(`(${escaped.join('|')})`, 'g')
+  const parts = text.split(re)
+  return parts.map((part, i) =>
+    words.includes(part) ? (
+      <span key={i} className="font-semibold text-text-primary">
+        {part}
+      </span>
+    ) : (
+      part
+    ),
+  )
+}
+
 export default function More() {
   const location = useLocation()
   const navState = (location.state ?? {}) as { category?: string; sub?: string }
@@ -264,6 +281,25 @@ export default function More() {
                 ))}
               </div>
             ) : null}
+
+            {activeSub.efficiency && (
+              <div className="mt-12">
+                <div className="mb-5 flex items-center gap-3">
+                  <span className="h-px w-8 bg-stroke" />
+                  <span className="text-xs uppercase tracking-[0.3em] text-muted">
+                    综合提效
+                  </span>
+                </div>
+                <SpotlightCard className="liquid-glass rounded-2xl p-6">
+                  <div className="font-body text-base font-medium text-text-primary">
+                    {activeSub.efficiency.title ?? '综合提效'}
+                  </div>
+                  <p className="mt-2 font-body text-sm leading-relaxed text-muted">
+                    {renderHighlighted(activeSub.efficiency.desc, activeSub.efficiency.highlights)}
+                  </p>
+                </SpotlightCard>
+              </div>
+            )}
 {current.id === 'lora' && (
               <div className="mt-12 flex justify-center">
                 <a

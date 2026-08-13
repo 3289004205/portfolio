@@ -203,10 +203,10 @@ const MODULES: Module[] = [
     sections: [
       {
         key: 'detail-scene',
-        label: '详情页场景图 AI 生产工作流',
+        label: '图像AI生产工作流',
         type: 'gallery',
         images: [
-          { src: '/explorations/process/detail-workflow.webp', caption: '详情页场景图 AI 生产工作流' },
+          { src: '/explorations/process/detail-workflow.webp', caption: '图像AI生产工作流' },
         ],
         noteItems: [
           {
@@ -354,11 +354,13 @@ export default function AiImages() {
                 key={sec.key}
                 className={si < current.sections.length - 1 ? 'mb-24' : ''}
               >
-                <div className="mb-10 max-w-2xl space-y-5">
-                  <h3 className="text-3xl font-display italic leading-[0.9] tracking-tight text-text-primary md:text-4xl">
-                    {sec.label}
-                  </h3>
-                </div>
+                {sec.type !== 'stats' && (
+                  <div className="mb-10 max-w-2xl space-y-5">
+                    <h3 className="text-3xl font-display italic leading-[0.9] tracking-tight text-text-primary md:text-4xl">
+                      {sec.label}
+                    </h3>
+                  </div>
+                )}
 
                 {sec.type === 'gallery' && (
                   <>
