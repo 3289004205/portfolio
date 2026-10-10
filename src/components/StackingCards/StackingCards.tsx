@@ -1,3 +1,4 @@
+import OptimizedImage from '../OptimizedImage'
 import { useEffect, useRef, useState } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import VideoTile from '../VideoTile/VideoTile'
@@ -219,7 +220,7 @@ function CardInner({ project }: { project: StackingProject }) {
               className="block overflow-hidden rounded-2xl border border-stroke bg-black transition-transform hover:scale-[1.02]"
             >
               {pv.type === 'gif' ? (
-                <img
+                <OptimizedImage
                   src={pv.src}
                   alt=""
                   loading="lazy"
@@ -254,7 +255,7 @@ function CardInner({ project }: { project: StackingProject }) {
                 src={project.heroVideo}
                 className="h-[320px] w-full self-center md:h-[46vh]"
               />
-              <img
+              <OptimizedImage
                 src={project.heroImage}
                 alt=""
                 loading="lazy"
@@ -269,13 +270,13 @@ function CardInner({ project }: { project: StackingProject }) {
             /* 图片网格：左列两张堆叠，右侧一张通栏拉伸 */
             <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-[1fr_1.2fr]">
               <div className="flex flex-col gap-4">
-                <img
+                <OptimizedImage
                   src={project.images.top}
                   alt=""
                   loading="lazy"
                   className="aspect-video w-full rounded-2xl border border-stroke object-cover"
                 />
-                <img
+                <OptimizedImage
                   src={project.images.bottom}
                   alt=""
                   loading="lazy"
@@ -283,7 +284,7 @@ function CardInner({ project }: { project: StackingProject }) {
                 />
               </div>
               <div className="flex min-h-[420px] md:h-full">
-                <img
+                <OptimizedImage
                   src={project.images.right}
                   alt=""
                   loading="lazy"

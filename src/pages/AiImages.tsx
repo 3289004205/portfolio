@@ -1,7 +1,6 @@
+import OptimizedImage from '../components/OptimizedImage'
 import { useState, Fragment } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import RaysBackground from '../components/SideRays/RaysBackground'
-import Navbar from '../components/Navbar'
 import SpotlightCard from '../components/SpotlightCard/SpotlightCard'
 import Masonry, { type MasonryItem } from '../components/Masonry/Masonry'
 import BackToTop from '../components/BackToTop'
@@ -13,7 +12,7 @@ function FeatureTile({ caption, src }: { caption: string; src?: string }) {
   return (
     <SpotlightCard className="liquid-glass overflow-hidden rounded-2xl">
       {src ? (
-        <img src={src} alt={caption} className="h-auto w-full" loading="lazy" />
+        <OptimizedImage src={src} alt={caption} className="h-auto w-full" loading="lazy" />
       ) : (
         <div className="flex aspect-[4/3] w-full items-center justify-center bg-white/[0.06] px-3 text-center text-xs text-muted">
           待上传截图
@@ -27,7 +26,7 @@ function FeatureTile({ caption, src }: { caption: string; src?: string }) {
 /** 工作流效果对比块内的单张图：有图显示图片，无图显示待上传占位 */
 function EffectImage({ label, src }: { label: string; src?: string }) {
   return src ? (
-    <img
+    <OptimizedImage
       src={src}
       alt={label}
       className="h-auto w-full rounded-xl border border-stroke bg-white/[0.04]"
@@ -229,10 +228,6 @@ const MODULES: Module[] = [
             title: '团队与质量',
             desc: '流程标准化与资产复用缓解了人员压力，同时提升了详情页整体质量水位，让设计师把精力投入到更高价值的创意与把控上。',
           },
-          {
-            title: '下一步探索',
-            desc: '正在将详情流程拆解为 Skill 结构化能力，并搭建素材库「洗图裂变」智能体。目前仍处 demo 阶段，但相信结合真实业务持续打磨，能进一步释放增效空间。',
-          },
         ],
       },
     ],
@@ -280,7 +275,7 @@ const MODULES: Module[] = [
             generated: '/explorations/post/wf-03-generated.jpg',
           },
           {
-            title: '修图打光',
+            title: '无损放大',
             overview: '/explorations/post/wf-04-overview.jpg',
             original: '/explorations/post/wf-04-original.jpg',
             generated: '/explorations/post/wf-04-generated.jpg',
@@ -297,10 +292,8 @@ export default function AiImages() {
 
   return (
     <>
-      <Navbar />
-      <RaysBackground />
       <motion.main
-        initial={{ opacity: 0 }}
+        initial={false}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.4 }}
@@ -339,7 +332,7 @@ export default function AiImages() {
       </div>
 
       {/* 选中模块详情 */}
-      <AnimatePresence mode="wait">
+      <AnimatePresence initial={false} mode="wait">
         <motion.section
           key={current.id}
           initial={{ opacity: 0, y: 8 }}
@@ -496,7 +489,7 @@ export default function AiImages() {
                     {/* 流程图片卡片 */}
                     <figure className="relative liquid-glass overflow-hidden rounded-2xl">
                       {sec.image ? (
-                        <img
+                        <OptimizedImage
                           src={sec.image}
                           alt={sec.caption}
                           className="aspect-[16/9] w-full object-cover"

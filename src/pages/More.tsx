@@ -1,9 +1,8 @@
+import OptimizedImage from '../components/OptimizedImage'
 import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import SpotlightCard from '../components/SpotlightCard/SpotlightCard'
-import RaysBackground from '../components/SideRays/RaysBackground'
-import Navbar from '../components/Navbar'
 import VideoTile from '../components/VideoTile/VideoTile'
 import { CATEGORIES, SubPart } from '../content/explorations'
 import BackToTop from '../components/BackToTop'
@@ -91,10 +90,8 @@ export default function More() {
 
   return (
     <>
-      <Navbar />
-      <RaysBackground />
       <motion.main
-        initial={{ opacity: 0 }}
+        initial={false}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.4 }}
@@ -154,7 +151,7 @@ export default function More() {
         </div>
 
         {/* 详情 */}
-        <AnimatePresence mode="wait">
+        <AnimatePresence initial={false} mode="wait">
           <motion.div
             key={`${current.id}-${activeSub.id}`}
             initial={{ opacity: 0, y: 8 }}
@@ -164,7 +161,7 @@ export default function More() {
             className="mt-8 py-16"
           >
             {/* 项目简介模块 */}
-            <AnimatePresence mode="wait">
+            <AnimatePresence initial={false} mode="wait">
               <motion.div
                 key={`intro-${current.id}-${activeSub.id}`}
                 initial={{ opacity: 0, y: 8 }}
@@ -233,7 +230,7 @@ export default function More() {
                       key={i}
                       className="liquid-glass overflow-hidden rounded-2xl"
                     >
-                      <img
+                      <OptimizedImage
                         src={src}
                         alt={`${activeSub.title} ${i + 1}`}
                         className="aspect-[4/3] w-full object-cover"
@@ -253,7 +250,7 @@ export default function More() {
                       key={i}
                       className="liquid-glass mb-4 break-inside-avoid overflow-hidden rounded-2xl"
                     >
-                      <img
+                      <OptimizedImage
                         src={src}
                         alt={`${activeSub.title} ${i + 1}`}
                         className="h-auto w-full object-contain"

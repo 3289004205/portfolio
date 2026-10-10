@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import GlassSurface from './GlassSurface/GlassSurface'
+import { prefetchPage } from '../lib/route-modules'
 
 const NAV_LINKS = [
   { label: '首页', target: 'home', href: '/' },
@@ -28,6 +29,7 @@ export default function Navbar() {
   }, [])
 
   const handleNav = (href: string) => {
+    prefetchPage(href)
     if (href === '/') {
       window.scrollTo({ top: 0, behavior: 'smooth' })
     }
@@ -35,7 +37,7 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 md:pt-6 px-4 print:hidden">
+    <nav className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-3 md:pt-4 px-3 print:hidden">
       <GlassSurface
         width="auto"
         height="auto"
@@ -53,50 +55,42 @@ export default function Navbar() {
         blueOffset={18}
         xChannel="R"
         yChannel="B"
-        className={`max-w-full overflow-x-auto no-scrollbar transition-shadow duration-300 ${
-          scrolled ? 'shadow-md shadow-black/10' : ''
-        }`}
+        className="max-w-full overflow-x-auto no-scrollbar transition-[background-color,box-shadow] duration-300"
+        style={{
+          background: scrolled ? 'rgba(15, 15, 18, 0.94)' : 'rgba(15, 15, 18, 0.88)',
+          backdropFilter: 'blur(18px) saturate(0.8)',
+          WebkitBackdropFilter: 'blur(18px) saturate(0.8)',
+          border: '1px solid rgba(255, 255, 255, 0.18)',
+          boxShadow: scrolled
+            ? 'inset 0 1px 0 rgba(255,255,255,0.08), 0 8px 28px rgba(0,0,0,0.35)'
+            : 'inset 0 1px 0 rgba(255,255,255,0.08), 0 4px 16px rgba(0,0,0,0.2)',
+        }}
       >
-        <div className="inline-flex max-w-full items-center gap-1 px-2 py-2">
+        <div className="inline-flex max-w-full items-center gap-0.5 px-1.5 py-1.5">
           {/* Logo */}
           <button
             aria-label="首页"
             onClick={() => handleNav('/')}
-            className="group relative mr-1 grid h-9 w-9 flex-none place-items-center rounded-full transition-transform duration-300 hover:scale-110"
+            className="group relative mr-0.5 grid h-7 w-7 flex-none place-items-center overflow-hidden rounded-full border border-white/15 bg-gradient-to-b from-white/[0.10] to-white/[0.02] shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] transition-[border-color,box-shadow,transform] duration-300 hover:-translate-y-px hover:border-white/35 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_0_12px_rgba(255,255,255,0.08)] active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-black motion-reduce:transform-none"
           >
-            {/* 旋转的开口圆环：复刻 X 视频样式（暖白弧段 + 缺口，缓慢自转，悬停加速） */}
-            <span className="absolute inset-0 animate-[spin_6s_linear_infinite] group-hover:[animation-duration:2.5s]">
-              <svg viewBox="0 0 36 36" className="h-full w-full overflow-visible">
-                <circle
-                  cx="18"
-                  cy="18"
-                  r="16"
-                  fill="none"
-                  stroke="#d5d3b8"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeDasharray="56 44.5"
-                  transform="rotate(-90 18 18)"
-                  style={{ filter: 'drop-shadow(0 0 3px rgba(213,211,184,0.5))' }}
-                />
-              </svg>
-            </span>
-            <span className="grid h-[33px] w-[33px] place-items-center rounded-full bg-bg">
-              <span className="font-display italic text-[13px] text-text-primary">XL</span>
-            </span>
+            <span aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.14),transparent_65%)] opacity-50 transition-opacity duration-300 group-hover:opacity-100" />
+            <span className="relative font-display italic text-[12px] leading-none tracking-[-0.08em] text-white/85 transition-colors duration-300 group-hover:text-white">XL</span>
           </button>
 
-          <span className="mx-1 hidden w-px h-5 bg-stroke sm:block" />
+          <span className="mx-0.5 hidden w-px h-4 bg-stroke sm:block" />
 
           {/* Nav links */}
           {NAV_LINKS.map(({ label, href }) => (
             <button
               key={label}
+              onPointerEnter={() => prefetchPage(href)}
+              onFocus={() => prefetchPage(href)}
               onClick={() => handleNav(href)}
-              className={`flex-none rounded-full px-2.5 py-1.5 text-xs transition-colors duration-200 sm:px-4 sm:py-2 sm:text-sm ${
+              aria-current={active === label ? 'page' : undefined}
+              className={`flex-none rounded-full px-2 py-1 text-[11px] font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 sm:px-3 sm:py-1.5 sm:text-xs ${
                 active === label
-                  ? 'text-text-primary bg-stroke/50'
-                  : 'text-muted hover:text-text-primary hover:bg-stroke/50'
+                  ? 'text-white bg-white/[0.14] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]'
+                  : 'text-[#d4d4da] hover:text-white hover:bg-white/[0.08]'
               }`}
             >
               {label}

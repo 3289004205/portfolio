@@ -1,3 +1,4 @@
+import OptimizedImage from './OptimizedImage'
 import { useNavigate } from 'react-router-dom'
 import FadeContent from './FadeContent/FadeContent'
 
@@ -89,7 +90,7 @@ export default function MoreExplorationsSection() {
             >
               <div className="group flex h-full flex-col overflow-hidden rounded-2xl border border-stroke bg-surface transition-colors hover:bg-surface/70">
                 <div className="aspect-[4/3] w-full overflow-hidden">
-                  <img
+                  <OptimizedImage
                     src={item.image}
                     alt={item.title}
                     loading="lazy"

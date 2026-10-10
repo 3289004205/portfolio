@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import LoadingScreen from '../components/LoadingScreen'
-import Navbar from '../components/Navbar'
 import Hero from '../components/Hero'
 import SelectedWorks from '../components/SelectedWorks'
 import SectionHeader from '../components/SectionHeader'
@@ -32,13 +31,12 @@ export default function Home() {
 
   return (
     <motion.main
-      initial={{ opacity: 0 }}
+      initial={false}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.4 }}
     >
       {isLoading && <LoadingScreen onComplete={handleIntroComplete} />}
-      <Navbar />
       <Hero />
       <SelectedWorks />
       <section style={{ backgroundColor: '#0C0C0C' }}>

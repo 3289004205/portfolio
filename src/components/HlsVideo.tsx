@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react'
-import Hls from 'hls.js'
 
 interface HlsVideoProps {
   src: string
@@ -16,14 +15,23 @@ export default function HlsVideo({ src, className = '', flip = false }: HlsVideo
 
     const isHls = src.endsWith('.m3u8')
 
-    if (isHls && Hls.isSupported()) {
-      const hls = new Hls({ enableWorker: true })
-      hls.loadSource(src)
-      hls.attachMedia(video)
-      return () => hls.destroy()
-    } else if (isHls && video.canPlayType('application/vnd.apple.mpegurl')) {
+    if (isHls && video.canPlayType('application/vnd.apple.mpegurl')) {
       // Native HLS (Safari)
       video.src = src
+    } else if (isHls) {
+      let cancelled = false
+      let destroy: (() => void) | undefined
+      void import('hls.js').then(({ default: Hls }) => {
+        if (cancelled || !Hls.isSupported()) return
+        const hls = new Hls({ enableWorker: true })
+        destroy = () => hls.destroy()
+        hls.loadSource(src)
+        hls.attachMedia(video)
+      }).catch(() => {})
+      return () => {
+        cancelled = true
+        destroy?.()
+      }
     } else {
       // Direct MP4 / native format
       video.src = src

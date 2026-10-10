@@ -1,3 +1,4 @@
+import OptimizedImage from '../OptimizedImage'
 /**
  * MiroBoard —— 「画板」式嵌入卡片。
  * 用于把 Miro 协作画板嵌进作品集，呈现类似飞书云文档画板的展示效果。
@@ -72,7 +73,7 @@ export default function MiroBoard({
               allowFullScreen
             />
           ) : (
-            <img
+            <OptimizedImage
               src={src}
               alt={title ?? ''}
               className="block w-full h-auto"

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const ROTATING_WORDS = ['Design', 'Create', 'Inspire']
-const DURATION = 2700 // ms
+const DURATION = 700 // ms
 
 interface LoadingScreenProps {
   onComplete: () => void
@@ -25,8 +25,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       if (progress < 1) {
         rafRef.current = requestAnimationFrame(step)
       } else {
-        // 400ms delay then call onComplete
-        setTimeout(onComplete, 400)
+        onComplete()
       }
     }
     rafRef.current = requestAnimationFrame(step)

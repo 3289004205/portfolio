@@ -4,6 +4,7 @@ dist-ssr
 *.tsbuildinfo
 *.local
 .codebuddy
+.codex-tmp/
 
 # preview screenshots
 preview-*.png

@@ -1,54 +1,20 @@
-import { useState, Fragment } from 'react'
-import { useLocation } from 'react-router-dom'
+import { MotionTemplateHero, MotionTemplateDetails } from '../components/MotionTemplateCase'
+import { AppProjectHero, AppProjectDetails, type CaseProject } from '../components/AppProjectCase'
+import { useLocation, useSearchParams } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import RaysBackground from '../components/SideRays/RaysBackground'
-import Navbar from '../components/Navbar'
 import SpotlightCard from '../components/SpotlightCard/SpotlightCard'
 import StatsPanel from '../components/StatsPanel/StatsPanel'
 import BackToTop from '../components/BackToTop'
 
-type GalleryImage = { src?: string; caption: string; aspect?: string; wide?: boolean }
-type FlowStep = { title: string; desc: string }
-type BadcaseItem = { problem: string; fix: string }
-type ContentItem = { title: string; desc: string; highlights?: string[] }
-type Section =
-  | { key: string; label: string; type: 'gallery'; images: GalleryImage[]; noteItems?: ContentItem[] }
-  | { key: string; label: string; type: 'flow'; steps: FlowStep[]; noteItems?: ContentItem[] }
-  | { key: string; label: string; type: 'badcase'; items: BadcaseItem[]; noteItems?: ContentItem[] }
-
-/** 将 desc 中命中的 highlights 词用高亮样式包裹 */
-function renderHighlighted(text: string, words?: string[]) {
-  if (!words || words.length === 0) return text
-  const escaped = words.map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
-  const re = new RegExp(`(${escaped.join('|')})`, 'g')
-  const parts = text.split(re)
-  return parts.map((part, i) =>
-    words.includes(part) ? (
-      <span key={i} className="font-semibold text-text-primary">
-        {part}
-      </span>
-    ) : (
-      part
-    ),
-  )
-}
-
-type App = {
-  id: string
-  title: string
-  tagline: string
-  desc: string
-  tags: string[]
-  sections?: Section[]
-}
-
+type App = CaseProject
 /** 需要在详情区最下方展示数据面板的子页面 */
-const STATS_PAGES = ['visual', 'preset', 'kb']
+const STATS_PAGES = ['visual', 'preset', 'kb', 'motion-templates', 'skill-hub']
 
 const APPS: App[] = [
   {
     id: 'visual',
-    title: '视觉 AI 整合网站',
+    links: { github: 'https://github.com/3289004205/ContentFlow', demo: 'https://contentflow-demo.gzzy666666.chatgpt.site' },
+    title: '视觉 AI 整合系统',
     tagline: '视觉部 AI 集合化系统',
     desc: '从 0 到 1 主导搭建的视觉部 AI 集合化系统，整合六大模块，将分散的 AI 能力统一为可协同的团队生产力平台。',
     tags: ['ComfyUI', '知识库', '资产管理', '工作流'],
@@ -82,6 +48,7 @@ const APPS: App[] = [
   },
   {
     id: 'preset',
+    links: { github: '', demo: '' },
     title: '预设生成网站',
     tagline: '提示词预设生图平台',
     desc: '系统提示词预设生图网站，对接 ComfyUI 后端实现一键生图，大幅降低 AI 生图的使用门槛。',
@@ -122,6 +89,7 @@ const APPS: App[] = [
   },
   {
     id: 'kb',
+    links: { github: null, demo: null },
     title: '知识库',
     tagline: '知识库问答机器人',
     desc: '牵头搭建各部门知识库及对应问答机器人，构建数据 — 知识 — 问答的运营闭环。',
@@ -152,7 +120,117 @@ const APPS: App[] = [
     ],
   },
   {
+    id: 'motion-templates',
+    links: { github: 'https://github.com/3289004205/video-template-studio', demo: 'https://course-carousel-studio-m1971.gzzy666666.chatgpt.site/' },
+    title: '动效批量替换',
+    tagline: '动效模板与效果预览',
+    desc: '集中展示与管理动效模板，按场景查找、预览效果并复用，为页面与视频制作提供统一的动效资源入口。',
+    tags: ['动效模板', '效果预览', '资源复用'],
+    sections: [
+      {
+        key: 'showcase',
+        label: '页面展示',
+        type: 'gallery',
+        images: [
+          { src: '/explorations/motion-templates/01-course-carousel.png', caption: '动效批量替换 · 课程卡片轮播', wide: true },
+          { src: '/explorations/motion-templates/02-dynamic-cards.png', caption: '动效批量替换 · 智能互联动态人物', wide: true },
+        ],
+        noteItems: [
+          { title: '课程卡片轮播：把修改集中在内容层', desc: '课程素材与分类标题放在右侧面板，预览和时间轴放在左侧。替换素材后，可以检查卡片顺序、文字和动态构图，减少内容修改与动效调整之间的反复切换。' },
+          { title: '动态人物：沿用模板的运动关系', desc: '动态卡片支持替换图片或视频，并保留卡片缩放与切换动画。内容更换与动画结构分开组织，让同一种展示方式可以用于不同素材。' },
+        ],
+      },
+      {
+        key: 'case-flow',
+        label: '从素材到成品',
+        type: 'flow',
+        steps: [
+          { title: '选择模板', desc: '按展示内容选择课程卡片轮播或动态人物模板。' },
+          { title: '替换内容', desc: '放入新的图片或视频，调整对应文案与卡片顺序。' },
+          { title: '预览检查', desc: '通过时间轴检查切换效果，确认素材比例与文字展示。' },
+          { title: '保存与导出', desc: '保存模板配置，导出视频用于交付。' },
+        ],
+      },
+      {
+        key: 'case-decisions',
+        label: '问题与设计取舍',
+        type: 'gallery',
+        images: [],
+        noteItems: [
+          { title: '重复制作的问题', desc: '同一类视频更新内容时，素材、标题与顺序都会变化。项目将这些经常修改的内容组织成可替换项，让已有动画结构继续复用。' },
+          { title: '固定动效，开放内容', desc: '模板保留卡片的运动与切换关系，面板集中提供素材和内容修改入口。适合重复制作同类视频；需要改变动画结构时，仍需要调整模板。' },
+          { title: '如何验证价值', desc: '可用同一组素材分别记录手工制作与模板替换的耗时、操作次数和返工次数。下方效果图表目前为示例数据，真实制作记录确认后再替换。' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'skill-hub',
+    links: { github: null, demo: 'https://vibex.runninghub.cn/p/app-6525f3761dba4670a50db49150ca40d7/?inviteCode=ridtgiqo' },
+    title: 'SKILL整合系统',
+    tagline: 'AI 技能与工作流资源整合',
+    desc: '集中整理面向不同任务的 SKILL，统一展示用途、使用说明与相关资源，方便查找、理解和复用 AI 工作流。',
+    tags: ['SKILL', '技能管理', '工作流复用'],
+    sections: [
+      {
+        key: 'showcase',
+        label: '页面展示',
+        type: 'gallery',
+        images: [
+          { src: '/explorations/skill-hub/01.png', caption: 'SKILL整合系统 · 技能分类' },
+          { src: '/explorations/skill-hub/02.png', caption: 'SKILL整合系统 · 场景与产品素材输入' },
+          { src: '/explorations/skill-hub/03.png', caption: 'SKILL整合系统 · 任务生成与进度' },
+          { src: '/explorations/skill-hub/04.png', caption: 'SKILL整合系统 · 生成结果与详情' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'geo-materials',
+    links: { github: 'https://github.com/3289004205/geo-automation-workbench', demo: 'https://geo-workbench-demo.gzzy666666.chatgpt.site/' },
+    title: 'GEO素材自动化',
+    tagline: '素材批量制作与管理',
+    desc: '围绕 GEO 素材制作流程，集中组织产品素材、文案与版式模板，减少重复整理与制作工作，方便批量产出和复用。',
+    tags: ['GEO', '素材自动化', '批量制作', '模板复用'],
+    sections: [
+      {
+        key: 'showcase',
+        label: '页面展示',
+        type: 'gallery',
+        images: [
+          { src: '/explorations/geo-materials/01.webp', caption: 'GEO素材自动化 · 素材、文案与作品设置' },
+          { src: '/explorations/geo-materials/02.webp', caption: 'GEO素材自动化 · 任务进度与执行日志' },
+          { src: '/explorations/geo-materials/03.webp', caption: 'GEO素材自动化 · 成品素材与交付文件' },
+        ],
+        columns: 3,
+      },
+      {
+        key: 'results',
+        label: '效果图展示',
+        type: 'gallery',
+        images: [
+          { src: '/explorations/geo-results/01.webp', caption: '六款跑步机核心对比' },
+          { src: '/explorations/geo-results/02.webp', caption: '新手怎么选爬坡跑步机' },
+          { src: '/explorations/geo-results/03.webp', caption: '四款新手推荐详解' },
+          { src: '/explorations/geo-results/04.webp', caption: '六项之王' },
+        ],
+      },
+      {
+        key: 'flow',
+        label: '素材制作流程',
+        type: 'flow',
+        steps: [
+          { title: '整理素材', desc: '汇集产品图片与制作需求，准备本次任务的素材。' },
+          { title: '配置内容', desc: '整理文案与展示字段，选择对应的版式模板。' },
+          { title: '批量制作', desc: '按素材与模板完成批量制作，统一展示效果。' },
+          { title: '检查与交付', desc: '检查图片和文案，整理成品用于交付与后续复用。' },
+        ],
+      },
+    ],
+  },
+  {
     id: 'others',
+    links: { github: null, demo: null },
     title: '其他应用',
     tagline: '效率工具与插件',
     desc: '围绕 AI 生图与设计工作流打磨的一系列效率插件，覆盖提示词反推、批量出图与缓存治理等高频痛点。',
@@ -193,75 +271,24 @@ const APPS: App[] = [
   },
 ]
 
-/** 项目介绍框：显示当前选中项目的标题 / 简介 / 标签 */
-function ProjectIntro({ app }: { app: App }) {
-  return (
-    <SpotlightCard className="liquid-glass rounded-2xl px-6 py-8 md:px-10 md:py-10">
-      <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-        <div className="max-w-2xl">
-          <h2 className="font-display italic text-3xl leading-[0.9] tracking-tight text-text-primary md:text-5xl">
-            {app.title}
-          </h2>
-          <p className="mt-4 font-body text-sm leading-relaxed text-muted">{app.desc}</p>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          {app.tags.map((tag) => (
-            <span
-              key={tag}
-              className="rounded-full border border-stroke bg-white/[0.06] px-3 py-1 font-body text-xs text-muted"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-      </div>
-    </SpotlightCard>
-  )
-}
-
-/** 与 FeaturesChess 一致的毛玻璃图片占位（视觉 AI 整合网站形式） */
-function FeatureTile({ caption, src, aspect, className }: { caption: string; src?: string; aspect?: string; className?: string }) {
-  return (
-    <SpotlightCard className={`liquid-glass overflow-hidden rounded-2xl ${className || ''}`}>
-      {src ? (
-        aspect ? (
-          <div className={`w-full overflow-hidden ${aspect}`}>
-            <img src={src} alt={caption} className="h-full w-full object-cover" loading="lazy" />
-          </div>
-        ) : (
-          <img src={src} alt={caption} className="h-auto w-full" loading="lazy" />
-        )
-      ) : (
-        <div className="flex aspect-[4/3] w-full items-center justify-center bg-white/[0.06] px-3 text-center text-xs text-muted">
-          待上传截图
-          <span className="mt-1 block text-[10px] opacity-70">{caption}</span>
-        </div>
-      )}
-    </SpotlightCard>
-  )
-}
-
 export default function AiApps() {
   const location = useLocation()
-  const [selected, setSelected] = useState<string>(() => {
-    const app = (location.state as { app?: string } | null)?.app
-    return app && APPS.some((a) => a.id === app) ? app : APPS[0].id
-  })
+  const [searchParams, setSearchParams] = useSearchParams()
+  const requested = searchParams.get('project') ?? (location.state as { app?: string } | null)?.app
+  const selected = requested && APPS.some((app) => app.id === requested) ? requested : APPS[0].id
   const current = APPS.find((a) => a.id === selected) ?? APPS[0]
 
   return (
     <>
-      <Navbar />
-      <RaysBackground />
       <motion.main
-        initial={{ opacity: 0 }}
+        initial={false}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.4 }}
         className="mx-auto min-h-screen max-w-[1100px] bg-transparent px-6 py-24 md:px-10"
       >
       {/* 顶部选择卡片 */}
-      <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4">
+      <div className="mt-4 flex gap-2 overflow-x-auto pb-3" aria-label="选择项目">
         {APPS.map((app) => {
           const active = app.id === selected
           return (
@@ -269,11 +296,11 @@ export default function AiApps() {
               key={app.id}
               as="button"
               type="button"
-              onClick={() => setSelected(app.id)}
+              onClick={() => setSearchParams({ project: app.id }, { replace: true })}
               spotlightColor={
                 active ? 'rgba(255, 255, 255, 0.08)' : 'rgba(255, 255, 255, 0.18)'
               }
-              className={`flex flex-col rounded-2xl border p-5 text-left transition-all ${
+              className={`flex shrink-0 flex-col rounded-xl border px-4 py-3 text-left transition-all ${
                 active
                   ? 'border-stroke shadow-[0_0_28px_-6px_rgba(137,170,204,0.55)]'
                   : 'border-stroke bg-surface/40 hover:bg-surface/70'
@@ -286,14 +313,13 @@ export default function AiApps() {
               >
                 {app.title}
               </span>
-              <span className="mt-1 text-xs text-muted">{app.tagline}</span>
             </SpotlightCard>
           )
         })}
       </div>
 
       {/* 项目介绍框（跟随选中项目切换） */}
-      <AnimatePresence mode="wait">
+      <AnimatePresence initial={false} mode="wait">
         <motion.div
           key={current.id}
           initial={{ opacity: 0, y: 8 }}
@@ -302,208 +328,25 @@ export default function AiApps() {
           transition={{ duration: 0.3 }}
           className="mt-9"
         >
-          <ProjectIntro app={current} />
+          {current.id === 'motion-templates' ? <MotionTemplateHero /> : <AppProjectHero app={current} />}
         </motion.div>
       </AnimatePresence>
 
       {/* 选中模块详情 */}
-      <AnimatePresence mode="wait">
-        {current.id === 'visual' ? (
-          <motion.div
-            key="visual"
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.3 }}
-          >
-            {current.sections && (
-              <div className="mt-16 flex flex-col">
-                {current.sections.map((sec, si) => (
-                  <div
-                    key={sec.key}
-                    className={si < current.sections!.length - 1 ? 'mb-24' : ''}
-                  >
-                    <div className="mb-10 max-w-2xl space-y-5">
-                      <h3 className="text-3xl font-display italic leading-[0.9] tracking-tight text-text-primary md:text-4xl">
-                        {sec.label}
-                      </h3>
-                    </div>
-
-                    {sec.type === 'gallery' && (
-                      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                        {sec.images.map((img) => (
-                          <FeatureTile
-                            key={img.caption}
-                            caption={img.caption}
-                            src={img.src}
-                            aspect={img.aspect}
-                            className={img.wide ? 'md:col-span-2' : ''}
-                          />
-                        ))}
-                      </div>
-                    )}
-
-                    {sec.noteItems && sec.noteItems.length > 0 && (
-                      <div className="mt-6 flex flex-col gap-4">
-                        {sec.noteItems.map((item, i) => (
-                          <SpotlightCard
-                            key={i}
-                            className="liquid-glass rounded-2xl p-6"
-                          >
-                            <div className="font-body text-base font-medium text-text-primary">
-                              {item.title}
-                            </div>
-                            <p className="mt-2 font-body text-sm leading-relaxed text-muted">
-                              {renderHighlighted(item.desc, item.highlights)}
-                            </p>
-                          </SpotlightCard>
-                        ))}
-                      </div>
-                    )}
-
-                    {sec.type === 'flow' && (
-                      <div className="flex flex-col gap-5 md:flex-row md:items-stretch md:gap-5">
-                        {sec.steps.map((step, i) => (
-                          <Fragment key={step.title}>
-                            <SpotlightCard className="flex-1 liquid-glass rounded-2xl p-6">
-                              <div className="font-body text-xs text-muted">步骤 {i + 1}</div>
-                              <div className="mt-1 font-body text-sm font-medium text-text-primary">
-                                {step.title}
-                              </div>
-                              <p className="mt-1 font-body text-xs leading-relaxed text-muted">
-                                {step.desc}
-                              </p>
-                            </SpotlightCard>
-                            {i < sec.steps.length - 1 && (
-                              <div className="hidden items-center justify-center text-muted md:flex">
-                                →
-                              </div>
-                            )}
-                          </Fragment>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
+      <AnimatePresence initial={false} mode="wait">
+        {current.id === 'motion-templates' ? (
+          <section key={current.id} className="mt-16">
+            <MotionTemplateDetails />
             <StatsPanel appTitle={current.title} />
             <BackToTop />
-          </motion.div>
+          </section>
         ) : (
-          <motion.section
-            key={current.id}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.3 }}
-            className="mt-8 py-16"
-          >
-            {current.sections && (
-              <div className="flex flex-col">
-                {current.sections.map((sec, si) => (
-                  <div
-                    key={sec.key}
-                    className={si < current.sections!.length - 1 ? 'mb-24' : ''}
-                  >
-                    <div className="mb-10 max-w-2xl space-y-5">
-                      <h3 className="text-3xl font-display italic leading-[0.9] tracking-tight text-text-primary md:text-4xl">
-                        {sec.label}
-                      </h3>
-                    </div>
-
-                    {sec.type === 'gallery' && (
-                      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                        {sec.images.map((img) => (
-                          <FeatureTile
-                            key={img.caption}
-                            caption={img.caption}
-                            src={img.src}
-                            aspect={img.aspect}
-                            className={img.wide ? 'md:col-span-2' : ''}
-                          />
-                        ))}
-                      </div>
-                    )}
-
-                    {sec.noteItems && sec.noteItems.length > 0 && (
-                      <div className="mt-6 flex flex-col gap-4">
-                        {sec.noteItems.map((item, i) => (
-                          <SpotlightCard
-                            key={i}
-                            className="liquid-glass rounded-2xl p-6"
-                          >
-                            <div className="font-body text-base font-medium text-text-primary">
-                              {item.title}
-                            </div>
-                            <p className="mt-2 font-body text-sm leading-relaxed text-muted">
-                              {renderHighlighted(item.desc, item.highlights)}
-                            </p>
-                          </SpotlightCard>
-                        ))}
-                      </div>
-                    )}
-
-                    {sec.type === 'flow' && (
-                      <div className="flex flex-col gap-5 md:flex-row md:items-stretch md:gap-5">
-                        {sec.steps.map((step, i) => (
-                          <Fragment key={step.title}>
-                            <SpotlightCard className="flex-1 liquid-glass rounded-2xl p-6">
-                              <div className="font-body text-xs text-muted">步骤 {i + 1}</div>
-                              <div className="mt-1 font-body text-sm font-medium text-text-primary">
-                                {step.title}
-                              </div>
-                              <p className="mt-1 font-body text-xs leading-relaxed text-muted">
-                                {step.desc}
-                              </p>
-                            </SpotlightCard>
-                            {i < sec.steps.length - 1 && (
-                              <div className="hidden items-center justify-center text-muted md:flex">
-                                →
-                              </div>
-                            )}
-                          </Fragment>
-                        ))}
-                      </div>
-                    )}
-
-                    {sec.type === 'badcase' && (
-                      <div className="flex flex-col gap-4">
-                        {sec.items.map((item, i) => (
-                          <SpotlightCard
-                            key={i}
-                            className="liquid-glass rounded-2xl p-5"
-                          >
-                            <div className="flex items-start gap-3">
-                              <span className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-surface text-xs text-text-primary">
-                                !
-                              </span>
-                              <div>
-                                <div className="font-body text-sm font-medium text-text-primary">
-                                  {item.problem}
-                                </div>
-                                <div className="mt-1 font-body text-xs leading-relaxed text-muted">
-                                  <span className="text-text-primary/80">优化：</span>
-                                  {item.fix}
-                                </div>
-                              </div>
-                            </div>
-                          </SpotlightCard>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {/* 数据面板（仅视觉 AI 整合网站 / 预设生成网站 / 知识库） */}
-            {STATS_PAGES.includes(current.id) && (
-              <StatsPanel appTitle={current.title} />
-            )}
+          <section key={current.id} className="mt-16">
+            <AppProjectDetails app={current} />
+            {STATS_PAGES.includes(current.id) && <StatsPanel appTitle={current.title} />}
             <BackToTop />
-          </motion.section>
-          )}
+          </section>
+        )}
         </AnimatePresence>
       </motion.main>
     </>

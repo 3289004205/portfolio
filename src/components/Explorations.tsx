@@ -1,3 +1,4 @@
+import OptimizedImage from './OptimizedImage'
 import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { gsap } from 'gsap'
@@ -98,7 +99,7 @@ export default function Explorations() {
                 className="pointer-events-auto mx-auto aspect-video w-full max-w-[360px] overflow-hidden rounded-3xl border border-stroke bg-surface"
                 style={{ transform: `rotate(${item.rotate}deg)` }}
               >
-                <img
+                <OptimizedImage
                   src={item.image}
                   alt="Exploration"
                   data-no-zoom
@@ -116,7 +117,7 @@ export default function Explorations() {
                 className="pointer-events-auto mx-auto aspect-video w-full max-w-[360px] overflow-hidden rounded-3xl border border-stroke bg-surface"
                 style={{ transform: `rotate(${item.rotate}deg)` }}
               >
-                <img
+                <OptimizedImage
                   src={item.image}
                   alt="Exploration"
                   data-no-zoom

@@ -1,7 +1,6 @@
+import OptimizedImage from '../components/OptimizedImage'
 import { useState, Fragment } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import RaysBackground from '../components/SideRays/RaysBackground'
-import Navbar from '../components/Navbar'
 import SpotlightCard from '../components/SpotlightCard/SpotlightCard'
 import StackingCards, { type StackingProject } from '../components/StackingCards/StackingCards'
 import BackToTop from '../components/BackToTop'
@@ -13,7 +12,7 @@ function FeatureTile({ caption, src }: { caption: string; src?: string }) {
   return (
     <SpotlightCard className="liquid-glass overflow-hidden rounded-2xl">
       {src ? (
-        <img src={src} alt={caption} className="h-auto w-full" loading="lazy" />
+        <OptimizedImage src={src} alt={caption} className="h-auto w-full" loading="lazy" />
       ) : (
         <div className="flex aspect-[4/3] w-full items-center justify-center bg-white/[0.06] px-3 text-center text-xs text-muted">
           待上传截图
@@ -205,10 +204,8 @@ export default function AiVideos() {
 
   return (
     <>
-      <Navbar />
-      <RaysBackground />
       <motion.main
-        initial={{ opacity: 0 }}
+        initial={false}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.4 }}
@@ -247,7 +244,7 @@ export default function AiVideos() {
       </div>
 
       {/* 选中模块详情 */}
-      <AnimatePresence mode="wait">
+      <AnimatePresence initial={false} mode="wait">
         {current.id === 'overview' ? (
           <motion.div
             key="overview"
@@ -313,7 +310,7 @@ export default function AiVideos() {
                           {item.videoRow ? (
                             <div className="grid grid-cols-1 gap-3 p-3 sm:grid-cols-2">
                               {item.src && (
-                                <img
+                                <OptimizedImage
                                   src={item.src}
                                   alt={item.title}
                                   className="h-auto w-full rounded-xl border border-stroke"
@@ -336,7 +333,7 @@ export default function AiVideos() {
                           ) : (
                             <>
                               {item.src ? (
-                                <img src={item.src} alt={item.title} className="h-auto w-full" loading="lazy" />
+                                <OptimizedImage src={item.src} alt={item.title} className="h-auto w-full" loading="lazy" />
                               ) : (
                                 <div className="flex aspect-[4/3] w-full items-center justify-center bg-white/[0.06] px-3 text-center text-xs text-muted">
                                   待上传截图
@@ -421,7 +418,7 @@ export default function AiVideos() {
                       {/* 流程图片卡片 */}
                       <figure className="relative liquid-glass overflow-hidden rounded-2xl">
                         {sec.image ? (
-                          <img
+                          <OptimizedImage
                             src={sec.image}
                             alt={sec.caption}
                             className="aspect-[16/9] w-full object-cover"

@@ -54,6 +54,7 @@ const VIDEO_DIMS: Dim[] = [
 ]
 
 function getDims(appTitle: string): Dim[] {
+  if (appTitle === '动效批量替换' || appTitle === 'SKILL整合系统') return DEF_DIMS.filter((dim) => dim.key !== 'satisfaction')
   if (appTitle === '知识库') return KB_DIMS
   if (appTitle === '预设生成网站') return PRESET_DIMS
   if (appTitle === '详情页场景图') return DETAIL_DIMS
@@ -73,12 +74,12 @@ type Row = {
 /** 按 appTitle 返回当前模块的维度数据 */
 function getModuleData(appTitle: string): Row[] {
   const map: Record<string, Record<string, Row>> = {
-    '视觉 AI 整合网站': {
+    '视觉 AI 整合系统': {
       efficiency: { label: '视觉素材产出', sub: '设计', value: 26, range: [18, 33], delta: 5.6, trace: [0.28, 0.36, 0.44, 0.52, 0.6, 0.68, 0.78, 0.9] },
       bugs:        { label: 'v2.5 当前版本', sub: '当前', value: 0.6, range: [0.4, 0.9], delta: -45.5, trace: [0.3, 0.27, 0.24, 0.21, 0.18, 0.16, 0.14, 0.12] },
-      satisfaction:{ label: '视觉 AI 整合网站', value: 4.6, range: [4.2, 4.8], delta: 6.5, trace: [0.62, 0.66, 0.7, 0.72, 0.78, 0.82, 0.86, 0.92] },
+      satisfaction:{ label: '视觉 AI 整合系统', value: 4.6, range: [4.2, 4.8], delta: 6.5, trace: [0.62, 0.66, 0.7, 0.72, 0.78, 0.82, 0.86, 0.92] },
       completion:  { label: '生图参数配置', value: 94, range: [88, 97], delta: 5.6, trace: [0.66, 0.7, 0.74, 0.78, 0.82, 0.86, 0.9, 0.94] },
-      usage:       { label: '视觉 AI 整合网站', sub: '整合', value: 6.4, range: [5.2, 7.3], delta: 12.3, trace: [0.2, 0.24, 0.28, 0.34, 0.4, 0.48, 0.6, 0.74] },
+      usage:       { label: '视觉 AI 整合系统', sub: '整合', value: 6.4, range: [5.2, 7.3], delta: 12.3, trace: [0.2, 0.24, 0.28, 0.34, 0.4, 0.48, 0.6, 0.74] },
     },
     '预设生成网站': {
       efficiency:  { label: '预设配置流程', sub: '配置', value: 68, range: [55, 74], delta: 14.2, trace: [0.26, 0.32, 0.4, 0.46, 0.54, 0.62, 0.7, 0.82] },
@@ -90,6 +91,19 @@ function getModuleData(appTitle: string): Row[] {
       efficiency: { label: '文档与知识检索', sub: '知识库', value: 44, range: [36, 44], delta: 21.6, trace: [0.18, 0.24, 0.3, 0.4, 0.48, 0.56, 0.66, 0.78] },
       accuracy:   { label: '知识库问答', sub: '问答', value: 92, range: [88, 94], delta: 12.3, trace: [0.5, 0.56, 0.62, 0.68, 0.74, 0.8, 0.86, 0.92] },
       coverage:   { label: '问题覆盖范围', sub: '覆盖', value: 97, range: [93, 99], delta: 8.5, trace: [0.6, 0.66, 0.72, 0.78, 0.83, 0.88, 0.93, 0.97] },
+    },
+    // 以下两个模块为占位示例，待真实统计数据替换。
+    '动效批量替换': {
+      efficiency: { label: '批量替换与视频导出', sub: '制作', value: 72, range: [64, 80], delta: 12.5, trace: [0.28, 0.36, 0.45, 0.53, 0.62, 0.68, 0.75, 0.82] },
+      bugs: { label: '模板预览与素材替换', sub: '稳定性', value: 0.4, range: [0.2, 0.7], delta: -33.3, trace: [0.3, 0.27, 0.23, 0.2, 0.17, 0.14, 0.11, 0.08] },
+      completion: { label: '素材替换与导出', value: 96, range: [92, 98], delta: 4.3, trace: [0.7, 0.74, 0.79, 0.83, 0.87, 0.9, 0.93, 0.96] },
+      usage: { label: '模板预览与批量制作', sub: '制作', value: 1.8, range: [1.3, 2.4], delta: 20, trace: [0.1, 0.11, 0.12, 0.14, 0.15, 0.16, 0.17, 0.18] },
+    },
+    'SKILL整合系统': {
+      efficiency: { label: '技能查找与任务执行', sub: '工作流', value: 58, range: [49, 66], delta: 11.5, trace: [0.24, 0.3, 0.38, 0.45, 0.52, 0.58, 0.65, 0.72] },
+      bugs: { label: '技能切换与任务队列', sub: '稳定性', value: 0.7, range: [0.4, 1], delta: -30, trace: [0.32, 0.29, 0.26, 0.23, 0.2, 0.18, 0.16, 0.14] },
+      completion: { label: '批量生图与结果下载', value: 93, range: [88, 96], delta: 5.7, trace: [0.63, 0.69, 0.75, 0.81, 0.85, 0.88, 0.91, 0.93] },
+      usage: { label: '技能复用与资产管理', sub: '整合', value: 2.6, range: [2, 3.2], delta: 18.2, trace: [0.13, 0.15, 0.17, 0.19, 0.21, 0.23, 0.25, 0.26] },
     },
     '其他应用': {
       efficiency: { label: '方案与文案撰写', sub: '内容', value: 38, range: [28, 47], delta: 7.5, trace: [0.18, 0.22, 0.26, 0.3, 0.34, 0.38, 0.43, 0.5] },
@@ -141,9 +155,11 @@ function axisFmt(v: number) {
 /** 按 appTitle 返回统计元信息 */
 function getMeta(appTitle: string) {
   const map: Record<string, { period: string; sample: string; updated: string }> = {
-    '视觉 AI 整合网站': { period: '2025 Q3 – 2026 Q2', sample: '25 人', updated: '2026 Q2 · rev 4' },
+    '视觉 AI 整合系统': { period: '2025 Q3 – 2026 Q2', sample: '25 人', updated: '2026 Q2 · rev 4' },
     '预设生成网站':     { period: '2025 Q3 – 2026 Q2', sample: '56 人', updated: '2026 Q2 · rev 3' },
     '知识库':       { period: '2025 Q3 – 2026 Q2', sample: '128 人', updated: '2026 Q2 · rev 2' },
+    '动效批量替换': { period: '示例数据 · 近八期', sample: '24 人（模拟）', updated: '2026 Q4 · 示例' },
+    'SKILL整合系统': { period: '示例数据 · 近八期', sample: '32 人（模拟）', updated: '2026 Q4 · 示例' },
     '详情页场景图':     { period: '2025 Q3 – 2026 Q2', sample: '视觉部', updated: '2026 Q2 · rev 1' },
     '视频流程':       { period: '2025 Q3 – 2026 Q2', sample: '视觉部', updated: '2026 Q2 · rev 1' },
   }
@@ -157,6 +173,7 @@ export default function StatsPanel({ appTitle }: { appTitle?: string }) {
   const dims = getDims(appLabel)
   const rows = getModuleData(appLabel)
   const meta = getMeta(appLabel)
+  const isExample = appLabel === '动效批量替换' || appLabel === 'SKILL整合系统'
 
   useEffect(() => {
     const el = rootRef.current
@@ -190,6 +207,7 @@ export default function StatsPanel({ appTitle }: { appTitle?: string }) {
         </div>
         <div>
           <p className="stats__lede">
+            {isExample && <><strong>示例数据 · 待真实统计替换。</strong><br /></>}
             覆盖{dims.map((d) => d.label).join('、')}维度。
             区间指示器表示同口径下的波动范围，虚线为近八期趋势轨迹。
           </p>

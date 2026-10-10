@@ -1,3 +1,4 @@
+import OptimizedImage from './OptimizedImage'
 import { useEffect, useRef } from 'react'
 
 type MarqueeImage = { src: string; w: number; h: number }
@@ -159,7 +160,7 @@ export default function ImageMarqueeSection() {
                 className="h-[300px] flex-shrink-0 overflow-hidden rounded-2xl"
                 style={{ width: `${cardWidth(img)}px` }}
               >
-                <img
+                <OptimizedImage
                   src={img.src}
                   alt=""
                   loading="lazy"
@@ -182,7 +183,7 @@ export default function ImageMarqueeSection() {
                 className="h-[300px] flex-shrink-0 overflow-hidden rounded-2xl"
                 style={{ width: `${cardWidth(img)}px` }}
               >
-                <img
+                <OptimizedImage
                   src={img.src}
                   alt=""
                   loading="lazy"
@@ -205,7 +206,7 @@ export default function ImageMarqueeSection() {
                 className="h-[300px] flex-shrink-0 overflow-hidden rounded-2xl"
                 style={{ width: `${cardWidth(img)}px` }}
               >
-                <img
+                <OptimizedImage
                   src={img.src}
                   alt=""
                   loading="lazy"

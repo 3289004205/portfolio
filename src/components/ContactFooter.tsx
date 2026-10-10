@@ -155,6 +155,14 @@ export default function ContactFooter() {
         <p className="mt-8 text-xs text-muted">
           © {new Date().getFullYear()} Xiulong Yang. All rights reserved.
         </p>
+        <a
+          href="https://beian.miit.gov.cn/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-3 inline-block text-xs text-muted transition-colors hover:text-text-primary"
+        >
+          浙ICP备2026064118号
+        </a>
       </div>
 
       {/* 联系信息弹窗 */}

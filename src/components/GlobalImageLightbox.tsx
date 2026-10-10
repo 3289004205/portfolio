@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { getFullImage } from '../lib/images'
 
 /**
  * 全局图片放大（lightbox）。
@@ -12,7 +13,7 @@ const LIGHTBOX_EVENT = 'open-lightbox'
 
 /** 主动打开放大（供非 <img> 元素调用，例如 background-image 卡片）。 */
 export function openLightbox(src: string) {
-  window.dispatchEvent(new CustomEvent(LIGHTBOX_EVENT, { detail: src }))
+  window.dispatchEvent(new CustomEvent(LIGHTBOX_EVENT, { detail: getFullImage(src) }))
 }
 
 export default function GlobalImageLightbox() {
@@ -37,7 +38,7 @@ export default function GlobalImageLightbox() {
       if (target.closest('nav')) return
       e.preventDefault()
       e.stopPropagation()
-      setSrc(target.currentSrc || target.src)
+      setSrc(target.dataset.fullSrc || target.currentSrc || target.src)
     }
     document.addEventListener('click', handler, true)
     return () => document.removeEventListener('click', handler, true)

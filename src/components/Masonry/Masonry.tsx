@@ -1,6 +1,8 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, type MouseEvent } from 'react';
 import { gsap } from 'gsap';
 import { openLightbox } from '../GlobalImageLightbox';
+import { getImageAsset } from '../../lib/images';
+import OptimizedImage from '../OptimizedImage';
 import './Masonry.css';
 
 export interface MasonryItem {
@@ -57,27 +59,6 @@ const useMeasure = () => {
   return [ref, size] as const;
 };
 
-const preloadImages = async (
-  items: { id: string; img: string }[]
-): Promise<Record<string, { w: number; h: number }>> => {
-  const dims: Record<string, { w: number; h: number }> = {};
-  await Promise.all(
-    items.map(
-      it =>
-        new Promise<void>(resolve => {
-          const img = new Image();
-          img.src = it.img;
-          img.onload = () => {
-            dims[it.id] = { w: img.naturalWidth, h: img.naturalHeight };
-            resolve();
-          };
-          img.onerror = () => resolve();
-        })
-    )
-  );
-  return dims;
-};
-
 const Masonry = ({
   items,
   ease = 'power3.out',
@@ -96,8 +77,14 @@ const Masonry = ({
   );
 
   const [containerRef, { width }] = useMeasure();
-  const [imagesReady, setImagesReady] = useState(false);
-  const [dims, setDims] = useState<Record<string, { w: number; h: number }>>({});
+  const dims = useMemo(() => {
+    const result: Record<string, { w: number; h: number }> = {};
+    items.forEach(item => {
+      const asset = getImageAsset(item.img);
+      if (asset) result[item.id] = { w: asset.width, h: asset.height };
+    });
+    return result;
+  }, [items]);
 
   const getInitialPosition = (item: any) => {
     const containerRect = containerRef.current?.getBoundingClientRect();
@@ -129,13 +116,6 @@ const Masonry = ({
     }
   };
 
-  useEffect(() => {
-    preloadImages(items.map(i => ({ id: i.id, img: i.img }))).then(m => {
-      setDims(m);
-      setImagesReady(true);
-    });
-  }, [items]);
-
   const grid = useMemo(() => {
     if (!width) return { items: [], totalHeight: 0 };
 
@@ -162,8 +142,6 @@ const Masonry = ({
   const hasMounted = useRef(false);
 
   useLayoutEffect(() => {
-    if (!imagesReady) return;
-
     if (containerRef.current) {
       containerRef.current.style.height = `${grid.totalHeight}px`;
     }
@@ -208,7 +186,7 @@ const Masonry = ({
 
     hasMounted.current = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [grid, imagesReady, stagger, animateFrom, blurToFocus, duration, ease]);
+  }, [grid, stagger, animateFrom, blurToFocus, duration, ease]);
 
   const handleMouseEnter = (e: MouseEvent<HTMLDivElement>, item: any) => {
     const element = e.currentTarget;
@@ -274,7 +252,8 @@ const Masonry = ({
               el.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`)
             }}
           >
-            <div className="item-img" style={{ backgroundImage: `url(${item.img})` }}>
+            <div className="item-img">
+              <OptimizedImage src={item.img} alt="作品图片" sizes={`${Math.ceil(item.w)}px`} className="absolute inset-0 h-full w-full rounded-[inherit] object-cover" />
               {colorShiftOnHover && (
                 <div
                   className="color-overlay"
