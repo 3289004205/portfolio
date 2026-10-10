@@ -48,7 +48,7 @@ const APPS: App[] = [
   },
   {
     id: 'preset',
-    links: { github: '', demo: '' },
+    links: { github: 'https://github.com/3289004205/Poster-Workflow', demo: '' },
     title: '预设生成网站',
     tagline: '提示词预设生图平台',
     desc: '系统提示词预设生图网站，对接 ComfyUI 后端实现一键生图，大幅降低 AI 生图的使用门槛。',
