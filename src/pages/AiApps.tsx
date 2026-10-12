@@ -208,6 +208,7 @@ const APPS: App[] = [
         key: 'results',
         label: '效果图展示',
         type: 'gallery',
+        columns: 4,
         images: [
           { src: '/explorations/geo-results/01.webp', caption: '六款跑步机核心对比' },
           { src: '/explorations/geo-results/02.webp', caption: '新手怎么选爬坡跑步机' },
