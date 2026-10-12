@@ -40,8 +40,7 @@ export function AppProjectHero({ app }: { app: CaseProject }) {
       <div>
         <Eyebrow>{`CASE STUDY / ${app.tagline}`}</Eyebrow>
         <h2 className="mt-5 text-4xl font-medium leading-tight tracking-tight text-text-primary md:text-5xl">{app.title}</h2>
-        <p className="mt-5 text-xl leading-relaxed text-text-primary/90">{story.summary}</p>
-        <p className="mt-4 max-w-md text-sm leading-7 text-[#aeb0bd]">{app.desc}</p>
+        <p className="mt-5 max-w-md text-sm leading-7 text-[#aeb0bd]">{app.desc}</p>
         <div className="mt-7 flex flex-wrap gap-3">
           {app.links.demo && <a href={app.links.demo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[#b8c9e8] px-5 py-3 text-sm font-medium text-[#141822] transition-colors hover:bg-[#d3dff3] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"><Play size={15} />在线体验<ArrowUpRight size={16} /></a>}
           {app.links.github && <a href={app.links.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-3 text-sm text-text-primary transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"><GitBranch size={16} />GitHub 仓库</a>}
