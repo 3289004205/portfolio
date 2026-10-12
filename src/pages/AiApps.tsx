@@ -8,7 +8,7 @@ import BackToTop from '../components/BackToTop'
 
 type App = CaseProject
 /** 需要在详情区最下方展示数据面板的子页面 */
-const STATS_PAGES = ['visual', 'preset', 'kb', 'motion-templates', 'skill-hub']
+const STATS_PAGES = ['visual', 'preset', 'kb', 'motion-templates', 'skill-hub', 'geo-materials']
 
 const APPS: App[] = [
   {

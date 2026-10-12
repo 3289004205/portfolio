@@ -54,7 +54,7 @@ const VIDEO_DIMS: Dim[] = [
 ]
 
 function getDims(appTitle: string): Dim[] {
-  if (appTitle === '动效批量替换' || appTitle === 'SKILL整合系统') return DEF_DIMS.filter((dim) => dim.key === 'efficiency' || dim.key === 'completion')
+  if (['动效批量替换', 'SKILL整合系统', 'GEO素材自动化'].includes(appTitle)) return DEF_DIMS.filter((dim) => dim.key === 'efficiency' || dim.key === 'completion')
   if (appTitle === '知识库') return KB_DIMS
   if (appTitle === '预设生成网站') return PRESET_DIMS
   if (appTitle === '详情页场景图') return DETAIL_DIMS
@@ -92,7 +92,11 @@ function getModuleData(appTitle: string): Row[] {
       accuracy:   { label: '知识库问答', sub: '问答', value: 92, range: [88, 94], delta: 12.3, trace: [0.5, 0.56, 0.62, 0.68, 0.74, 0.8, 0.86, 0.92] },
       coverage:   { label: '问题覆盖范围', sub: '覆盖', value: 97, range: [93, 99], delta: 8.5, trace: [0.6, 0.66, 0.72, 0.78, 0.83, 0.88, 0.93, 0.97] },
     },
-    // 以下两个模块为占位示例，待真实统计数据替换。
+    // 以下三个模块为占位示例，待真实统计数据替换。
+    'GEO素材自动化': {
+      efficiency: { label: '素材匹配与批量排版', sub: '制作', value: 65, range: [57, 73], delta: 10.2, trace: [0.22, 0.28, 0.35, 0.42, 0.49, 0.55, 0.6, 0.65] },
+      completion: { label: '批量素材制作与交付', value: 95, range: [90, 98], delta: 4.4, trace: [0.68, 0.73, 0.78, 0.83, 0.87, 0.9, 0.93, 0.95] },
+    },
     '动效批量替换': {
       efficiency: { label: '批量替换与视频导出', sub: '制作', value: 72, range: [64, 80], delta: 12.5, trace: [0.28, 0.36, 0.45, 0.53, 0.62, 0.68, 0.75, 0.82] },
       bugs: { label: '模板预览与素材替换', sub: '稳定性', value: 0.4, range: [0.2, 0.7], delta: -33.3, trace: [0.3, 0.27, 0.23, 0.2, 0.17, 0.14, 0.11, 0.08] },
@@ -160,6 +164,7 @@ function getMeta(appTitle: string) {
     '知识库':       { period: '2025 Q3 – 2026 Q2', sample: '128 人', updated: '2026 Q2 · rev 2' },
     '动效批量替换': { period: '示例数据 · 近八期', sample: '24 人（模拟）', updated: '2026 Q4 · 示例' },
     'SKILL整合系统': { period: '示例数据 · 近八期', sample: '32 人（模拟）', updated: '2026 Q4 · 示例' },
+    'GEO素材自动化': { period: '示例数据 · 近八期', sample: '28 人（模拟）', updated: '2026 Q4 · 示例' },
     '详情页场景图':     { period: '2025 Q3 – 2026 Q2', sample: '视觉部', updated: '2026 Q2 · rev 1' },
     '视频流程':       { period: '2025 Q3 – 2026 Q2', sample: '视觉部', updated: '2026 Q2 · rev 1' },
   }
@@ -173,7 +178,7 @@ export default function StatsPanel({ appTitle }: { appTitle?: string }) {
   const dims = getDims(appLabel)
   const rows = getModuleData(appLabel)
   const meta = getMeta(appLabel)
-  const isExample = appLabel === '动效批量替换' || appLabel === 'SKILL整合系统'
+  const isExample = ['动效批量替换', 'SKILL整合系统', 'GEO素材自动化'].includes(appLabel)
 
   useEffect(() => {
     const el = rootRef.current
