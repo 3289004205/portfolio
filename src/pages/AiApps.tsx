@@ -27,7 +27,7 @@ const APPS: App[] = [
           { src: '/explorations/visual-showcase/03-homepage.jpg', caption: '首页 · Visual Department Platform' },
           { src: '/explorations/visual-showcase/01-test-cases.jpg', caption: '无限画布 · 工作流画板' },
           { src: '/explorations/visual-showcase/02-resource-nav.jpg', caption: '资源导航 · 按需直达' },
-          { src: '/explorations/visual-showcase/04-ai-news.jpg', caption: 'AI 新闻 · 设计趋势' },
+          { src: '/explorations/visual-showcase/04-ai-news.jpg', caption: '行业前沿 · 设计趋势' },
           { src: '/explorations/visual-showcase/05-material-library.jpg', caption: '素材库 · Pinterest 图像资源' },
           { src: '/explorations/visual-showcase/06-smart-workflow.jpg', caption: '智能图像工作流 · 一键出图' },
         ],
