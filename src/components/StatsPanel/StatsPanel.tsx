@@ -162,9 +162,9 @@ function getMeta(appTitle: string) {
     '视觉 AI 整合系统': { period: '2025 Q3 – 2026 Q2', sample: '25 人', updated: '2026 Q2 · rev 4' },
     '预设生成网站':     { period: '2025 Q3 – 2026 Q2', sample: '56 人', updated: '2026 Q2 · rev 3' },
     '知识库':       { period: '2025 Q3 – 2026 Q2', sample: '128 人', updated: '2026 Q2 · rev 2' },
-    '动效批量替换': { period: '示例数据 · 近八期', sample: '24 人（模拟）', updated: '2026 Q4 · 示例' },
-    'SKILL整合系统': { period: '示例数据 · 近八期', sample: '32 人（模拟）', updated: '2026 Q4 · 示例' },
-    'GEO素材自动化': { period: '示例数据 · 近八期', sample: '28 人（模拟）', updated: '2026 Q4 · 示例' },
+    '动效批量替换': { period: '示例数据 · 近八期', sample: '24 人', updated: '2026 Q4 · 示例' },
+    'SKILL整合系统': { period: '示例数据 · 近八期', sample: '32 人', updated: '2026 Q4 · 示例' },
+    'GEO素材自动化': { period: '示例数据 · 近八期', sample: '28 人', updated: '2026 Q4 · 示例' },
     '详情页场景图':     { period: '2025 Q3 – 2026 Q2', sample: '视觉部', updated: '2026 Q2 · rev 1' },
     '视频流程':       { period: '2025 Q3 – 2026 Q2', sample: '视觉部', updated: '2026 Q2 · rev 1' },
   }
