@@ -31,6 +31,10 @@ function CaseImage({ src, caption, priority = false, sizes }: { src?: string; ca
   return <figure className="min-w-0 overflow-hidden rounded-xl border border-white/15 bg-white/[0.025]">{src && <OptimizedImage src={src} alt={caption} sizes={sizes} loading={priority ? 'eager' : 'lazy'} fetchPriority={priority ? 'high' : 'auto'} className="h-auto w-full cursor-zoom-in" />}</figure>
 }
 
+export function ProjectRole() {
+  return <div className="mt-6 flex items-baseline gap-4 text-sm" aria-label="项目担任角色"><span className="text-xs text-[#aeb0bd]">项目角色</span><span className="font-medium text-text-primary">主导并开发</span></div>
+}
+
 export function AppProjectHero({ app }: { app: CaseProject }) {
   const story = PROJECT_STORIES[app.id]
   const firstGallery = app.sections?.find(s => s.type === 'gallery')
@@ -48,8 +52,9 @@ export function AppProjectHero({ app }: { app: CaseProject }) {
           {app.links.github === '' && <span className="rounded-full border border-white/10 px-4 py-2 text-xs text-[#aeb0bd]">GitHub · 链接待添加</span>}
         </div>
       </div>
-      {image && <div className="min-w-0 rounded-2xl border border-white/15 bg-gradient-to-br from-[#a5b8de]/15 to-white/[0.02] p-3 md:p-5"><div className="mb-3 flex items-center justify-between gap-3 text-[10px] tracking-widest text-[#becbe1]"><span>PROJECT PREVIEW</span><span>{app.tags[0]}</span></div><CaseImage {...image} priority sizes="(max-width: 1023px) calc(100vw - 72px), 540px" /><p className="mt-3 text-xs leading-5 text-[#aeb0bd]">{image.caption}</p></div>}
+      {image && <div className="min-w-0 rounded-2xl border border-white/15 bg-gradient-to-br from-[#a5b8de]/15 to-white/[0.02] p-3 md:p-5"><div className="mb-3 text-[10px] tracking-widest text-[#becbe1]"><span>PROJECT PREVIEW</span></div><CaseImage {...image} priority sizes="(max-width: 1023px) calc(100vw - 72px), 540px" /><p className="mt-3 text-xs leading-5 text-[#aeb0bd]">{image.caption}</p></div>}
     </div>
+    <ProjectRole />
     <div className="mt-10 grid gap-6 border-y border-white/10 py-7 md:grid-cols-3 md:gap-8" aria-label="核心亮点">{story.highlights.map((item, i) => <div key={item.title} className="flex items-start gap-4"><span className="mt-1 text-xs text-[#91a9d0]">0{i + 1}</span><div><h3 className="text-base font-medium text-text-primary">{item.title}</h3><p className="mt-2 text-sm leading-6 text-[#aeb0bd]">{item.description}</p></div></div>)}</div>
   </section>
 }
