@@ -28,11 +28,10 @@ export function MotionTemplateHero() {
           <Eyebrow>CASE STUDY / 模板化视频制作</Eyebrow>
           <h2 className="mt-5 text-4xl font-medium leading-tight tracking-tight text-text-primary md:text-5xl">动效批量替换</h2>
           <p className="mt-5 max-w-md text-sm leading-7 text-[#aeb0bd]">把反复修改的素材、文案与顺序变成可替换项，将课程卡片与动态人物的制作集中到一个工作台。</p>
-          <div className="mt-7 flex flex-wrap gap-3">
+          <div className="mt-16 flex flex-wrap gap-3">
             <a href="https://course-carousel-studio-m1971.gzzy666666.chatgpt.site/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[#b8c9e8] px-5 py-3 text-sm font-medium text-[#141822] transition-colors hover:bg-[#d3dff3] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"><Play size={15} />在线体验<ArrowUpRight size={16} /></a>
             <a href="https://github.com/3289004205/video-template-studio" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-3 text-sm text-text-primary transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"><GitBranch size={16} />GitHub 仓库</a>
           </div>
-          <p className="mt-7 text-xs leading-6 text-[#aeb0bd]">项目方向 / 模板复用 · 素材替换 · 动效预览</p>
         </div>
         <figure className="relative min-w-0 rounded-2xl border border-white/15 bg-gradient-to-br from-[#a5b8de]/15 to-white/[0.02] p-3 md:p-5">
           <div className="mb-3 flex items-center justify-between text-[10px] tracking-widest text-[#becbe1]"><span>MOTION TEMPLATE STUDIO</span><span>课程卡片轮播</span></div>

@@ -41,13 +41,12 @@ export function AppProjectHero({ app }: { app: CaseProject }) {
         <Eyebrow>{`CASE STUDY / ${app.tagline}`}</Eyebrow>
         <h2 className="mt-5 text-4xl font-medium leading-tight tracking-tight text-text-primary md:text-5xl">{app.title}</h2>
         <p className="mt-5 max-w-md text-sm leading-7 text-[#aeb0bd]">{app.desc}</p>
-        <div className="mt-7 flex flex-wrap gap-3">
+        <div className="mt-16 flex flex-wrap gap-3">
           {app.links.demo && <a href={app.links.demo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[#b8c9e8] px-5 py-3 text-sm font-medium text-[#141822] transition-colors hover:bg-[#d3dff3] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"><Play size={15} />在线体验<ArrowUpRight size={16} /></a>}
           {app.links.github && <a href={app.links.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-3 text-sm text-text-primary transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"><GitBranch size={16} />GitHub 仓库</a>}
           {app.links.demo === '' && <span className="rounded-full border border-white/10 px-4 py-2 text-xs text-[#aeb0bd]">Demo · 链接待添加</span>}
           {app.links.github === '' && <span className="rounded-full border border-white/10 px-4 py-2 text-xs text-[#aeb0bd]">GitHub · 链接待添加</span>}
         </div>
-        <p className="mt-6 text-xs leading-6 text-[#aeb0bd]">项目方向 / {story.focus}</p>
       </div>
       {image && <div className="min-w-0 rounded-2xl border border-white/15 bg-gradient-to-br from-[#a5b8de]/15 to-white/[0.02] p-3 md:p-5"><div className="mb-3 flex items-center justify-between gap-3 text-[10px] tracking-widest text-[#becbe1]"><span>PROJECT PREVIEW</span><span>{app.tags[0]}</span></div><CaseImage {...image} priority sizes="(max-width: 1023px) calc(100vw - 72px), 540px" /><p className="mt-3 text-xs leading-5 text-[#aeb0bd]">{image.caption}</p></div>}
     </div>
