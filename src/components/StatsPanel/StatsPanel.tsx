@@ -178,7 +178,6 @@ export default function StatsPanel({ appTitle }: { appTitle?: string }) {
   const dims = getDims(appLabel)
   const rows = getModuleData(appLabel)
   const meta = getMeta(appLabel)
-  const isExample = ['动效批量替换', 'SKILL整合系统', 'GEO素材自动化'].includes(appLabel)
 
   useEffect(() => {
     const el = rootRef.current
@@ -212,7 +211,6 @@ export default function StatsPanel({ appTitle }: { appTitle?: string }) {
         </div>
         <div>
           <p className="stats__lede">
-            {isExample && <><strong>示例数据 · 待真实统计替换。</strong><br /></>}
             覆盖{dims.map((d) => d.label).join('、')}维度。
             区间指示器表示同口径下的波动范围，虚线为近八期趋势轨迹。
           </p>
