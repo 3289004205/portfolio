@@ -1,6 +1,5 @@
 import { ArrowUpRight, GitBranch, Play } from 'lucide-react'
 import OptimizedImage from './OptimizedImage'
-import { ProjectRole } from './AppProjectCase'
 
 const courseImage = '/explorations/motion-templates/01-course-carousel.png'
 const dynamicImage = '/explorations/motion-templates/02-dynamic-cards.png'
@@ -40,7 +39,6 @@ export function MotionTemplateHero() {
           <figcaption className="mt-3 text-xs leading-5 text-[#aeb0bd]">左侧预览与时间轴，右侧素材编辑。</figcaption>
         </figure>
       </div>
-      <ProjectRole />
       <div className="mt-10 grid gap-6 border-y border-white/10 py-7 md:grid-cols-3 md:gap-8" aria-label="核心亮点">
         {highlights.map((item, i) => <div key={item.title} className="flex items-start gap-4"><span className="mt-1 text-xs text-[#91a9d0]">0{i + 1}</span><div><h3 className="text-base font-medium text-text-primary">{item.title}</h3><p className="mt-2 text-sm leading-6 text-[#aeb0bd]">{item.desc}</p></div></div>)}
       </div>
