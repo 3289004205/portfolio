@@ -2,7 +2,6 @@ import { MotionTemplateHero, MotionTemplateDetails } from '../components/MotionT
 import { AppProjectHero, AppProjectDetails, type CaseProject } from '../components/AppProjectCase'
 import { useLocation, useSearchParams } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import SpotlightCard from '../components/SpotlightCard/SpotlightCard'
 import StatsPanel from '../components/StatsPanel/StatsPanel'
 import BackToTop from '../components/BackToTop'
 
@@ -285,39 +284,17 @@ export default function AiApps() {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.4 }}
-        className="mx-auto min-h-screen max-w-[1100px] bg-transparent px-6 py-24 md:px-10"
+        className="mx-auto min-h-screen max-w-[1100px] bg-transparent px-6 pb-24 pt-28 md:px-10 md:pt-32"
       >
-      {/* 顶部选择卡片 */}
-      <div className="mt-4 flex gap-2 overflow-x-auto pb-3" aria-label="选择项目">
-        {APPS.map((app) => {
-          const active = app.id === selected
-          return (
-            <SpotlightCard
-              key={app.id}
-              as="button"
-              type="button"
-              onClick={() => setSearchParams({ project: app.id }, { replace: true })}
-              spotlightColor={
-                active ? 'rgba(255, 255, 255, 0.08)' : 'rgba(255, 255, 255, 0.18)'
-              }
-              className={`flex shrink-0 flex-col rounded-xl border px-4 py-3 text-left transition-all ${
-                active
-                  ? 'border-stroke shadow-[0_0_28px_-6px_rgba(137,170,204,0.55)]'
-                  : 'border-stroke bg-surface/40 hover:bg-surface/70'
-              }`}
-            >
-              <span
-                className={`text-base font-medium ${
-                  active ? 'text-text-primary' : 'text-text-primary/80'
-                }`}
-              >
-                {app.title}
-              </span>
-            </SpotlightCard>
-          )
-        })}
+      <div className="flex gap-7 overflow-x-auto pb-3 no-scrollbar md:gap-8" aria-label="选择项目">
+        {APPS.map((app) => (
+          <button key={app.id} type="button" aria-current={app.id === selected ? 'page' : undefined}
+            onClick={() => setSearchParams({ project: app.id }, { replace: true })}
+            className={`shrink-0 border-b py-3 text-xs transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 ${app.id === selected ? 'border-white/70 text-white' : 'border-transparent text-[#9999a6] hover:text-white'}`}>
+            {app.title}
+          </button>
+        ))}
       </div>
-
       {/* 项目介绍框（跟随选中项目切换） */}
       <AnimatePresence initial={false} mode="wait">
         <motion.div
@@ -326,7 +303,7 @@ export default function AiApps() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -8 }}
           transition={{ duration: 0.3 }}
-          className="mt-9"
+          className="mt-14 md:mt-20"
         >
           {current.id === 'motion-templates' ? <MotionTemplateHero /> : <AppProjectHero app={current} />}
         </motion.div>
@@ -335,15 +312,15 @@ export default function AiApps() {
       {/* 选中模块详情 */}
       <AnimatePresence initial={false} mode="wait">
         {current.id === 'motion-templates' ? (
-          <section key={current.id} className="mt-16">
+          <section key={current.id} className="mt-24 md:mt-36">
             <MotionTemplateDetails />
-            <StatsPanel appTitle={current.title} />
+            <div className="mt-24 md:mt-36"><StatsPanel appTitle={current.title} /></div>
             <BackToTop />
           </section>
         ) : (
-          <section key={current.id} className="mt-16">
+          <section key={current.id} className="mt-24 md:mt-36">
             <AppProjectDetails app={current} />
-            {STATS_PAGES.includes(current.id) && <StatsPanel appTitle={current.title} />}
+            {STATS_PAGES.includes(current.id) && <div className="mt-24 md:mt-36"><StatsPanel appTitle={current.title} /></div>}
             <BackToTop />
           </section>
         )}
