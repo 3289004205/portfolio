@@ -54,7 +54,7 @@ const VIDEO_DIMS: Dim[] = [
 ]
 
 function getDims(appTitle: string): Dim[] {
-  if (appTitle === '动效批量替换' || appTitle === 'SKILL整合系统') return DEF_DIMS.filter((dim) => dim.key !== 'satisfaction')
+  if (appTitle === '动效批量替换' || appTitle === 'SKILL整合系统') return DEF_DIMS.filter((dim) => dim.key === 'efficiency' || dim.key === 'completion')
   if (appTitle === '知识库') return KB_DIMS
   if (appTitle === '预设生成网站') return PRESET_DIMS
   if (appTitle === '详情页场景图') return DETAIL_DIMS
