@@ -11,7 +11,7 @@ export const PROJECT_STORIES: Record<string, ProjectStory> = {
     highlights: [
       { title: '六大模块统一入口', description: '将画布、知识、资产与学习资源等能力组织在同一个系统中。' },
       { title: '从操作到资源沉淀', description: '围绕任务组织工具与素材，让创作流程和已有资源更容易衔接。' },
-      { title: '原版 UI 在线展示', description: '可以查看系统界面与 Define 画布；演示中的 AI 生成和服务器存储暂未接入。' },
+      { title: '无限画布编排素材', description: '在自由画布中组织图片、参考内容与工作流，直观梳理创作思路。' },
     ],
   },
   'motion-templates': {
