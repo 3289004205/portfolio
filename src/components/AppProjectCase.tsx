@@ -28,7 +28,7 @@ function Eyebrow({ children }: { children: string }) {
 }
 
 function CaseImage({ src, caption, priority = false, sizes }: { src?: string; caption: string; priority?: boolean; sizes?: string }) {
-  return <figure className="min-w-0 overflow-hidden rounded-xl border border-white/15 bg-white/[0.025]">{src && <OptimizedImage src={src} alt={caption} sizes={sizes} loading={priority ? 'eager' : 'lazy'} fetchPriority={priority ? 'high' : 'auto'} className="h-auto w-full cursor-zoom-in" />}</figure>
+  return <figure className="project-screenshot">{src && <OptimizedImage src={src} alt={caption} sizes={sizes} loading={priority ? 'eager' : 'lazy'} fetchPriority={priority ? 'high' : 'auto'} className="h-auto w-full cursor-zoom-in" />}</figure>
 }
 
 
@@ -37,38 +37,38 @@ export function AppProjectHero({ app }: { app: CaseProject }) {
   const firstGallery = app.sections?.find(s => s.type === 'gallery')
   const image = firstGallery?.type === 'gallery' ? firstGallery.images[0] : undefined
   return <section aria-label={`${app.title}项目概览`}>
-    <div className="grid items-center gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-10">
+    <div className="grid items-center gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
       <div>
         <Eyebrow>{`CASE STUDY / ${app.tagline}`}</Eyebrow>
         <h2 className="mt-5 text-4xl font-medium leading-tight tracking-tight text-text-primary md:text-5xl">{app.title}</h2>
-        <p className="mt-5 max-w-md text-sm leading-7 text-[#aeb0bd]">{app.desc}</p>
+        <p className="mt-5 max-w-md text-sm leading-7 text-[#b5b5bf]">{app.desc}</p>
         <div className="mt-16 flex flex-wrap gap-3">
-          {app.links.demo && <a href={app.links.demo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[#b8c9e8] px-5 py-3 text-sm font-medium text-[#141822] transition-colors hover:bg-[#d3dff3] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"><Play size={15} />在线体验<ArrowUpRight size={16} /></a>}
-          {app.links.github && <a href={app.links.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-3 text-sm text-text-primary transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"><GitBranch size={16} />GitHub 仓库</a>}
-          {app.links.demo === '' && <span className="rounded-full border border-white/10 px-4 py-2 text-xs text-[#aeb0bd]">Demo · 链接待添加</span>}
-          {app.links.github === '' && <span className="rounded-full border border-white/10 px-4 py-2 text-xs text-[#aeb0bd]">GitHub · 链接待添加</span>}
+          {app.links.demo && <a href={app.links.demo} target="_blank" rel="noopener noreferrer" className="project-action project-action--primary"><Play size={15} />在线体验<ArrowUpRight size={16} /></a>}
+          {app.links.github && <a href={app.links.github} target="_blank" rel="noopener noreferrer" className="project-action"><GitBranch size={16} />GitHub 仓库</a>}
+          {app.links.demo === '' && <span className="rounded-full border border-white/10 px-4 py-2 text-xs text-[#b5b5bf]">Demo · 链接待添加</span>}
+          {app.links.github === '' && <span className="rounded-full border border-white/10 px-4 py-2 text-xs text-[#b5b5bf]">GitHub · 链接待添加</span>}
         </div>
       </div>
-      {image && <div className="min-w-0 rounded-2xl border border-white/15 bg-gradient-to-br from-[#a5b8de]/15 to-white/[0.02] p-3 md:p-5"><div className="mb-3 text-[10px] tracking-widest text-[#becbe1]"><span>PROJECT PREVIEW</span></div><CaseImage {...image} priority sizes="(max-width: 1023px) calc(100vw - 72px), 540px" /><p className="mt-3 text-xs leading-5 text-[#aeb0bd]">{image.caption}</p></div>}
+      {image && <div className="project-preview"><div className="mb-3 text-[10px] tracking-widest text-[#becbe1]"><span>PROJECT PREVIEW</span></div><CaseImage {...image} priority sizes="(max-width: 1023px) calc(100vw - 72px), 540px" /><p className="mt-3 text-xs leading-5 text-[#b5b5bf]">{image.caption}</p></div>}
     </div>
-    <div className="mt-10 grid gap-6 border-y border-white/10 py-7 md:grid-cols-3 md:gap-8" aria-label="核心亮点">{story.highlights.map((item, i) => <div key={item.title} className="flex items-start gap-4"><span className="mt-1 text-xs text-[#91a9d0]">0{i + 1}</span><div><h3 className="text-base font-medium text-text-primary">{item.title}</h3><p className="mt-2 text-sm leading-6 text-[#aeb0bd]">{item.description}</p></div></div>)}</div>
+    <div className="mt-10 grid gap-6 border-y border-white/10 py-7 md:grid-cols-3 md:gap-8" aria-label="核心亮点">{story.highlights.map((item, i) => <div key={item.title} className="flex items-start gap-4"><span className="mt-1 text-xs text-[#91a9d0]">0{i + 1}</span><div><h3 className="text-base font-medium text-text-primary">{item.title}</h3><p className="mt-2 text-sm leading-6 text-[#b5b5bf]">{item.description}</p></div></div>)}</div>
   </section>
 }
 
 export function AppProjectDetails({ app }: { app: CaseProject }) {
   const context = contexts[app.id]
-  return <div className="space-y-20 md:space-y-24">
+  return <div className="space-y-20 md:space-y-28">
     <section className="grid gap-6 md:grid-cols-[0.65fr_1.35fr] md:gap-12"><div><Eyebrow>01 / 项目出发点</Eyebrow><h3 className="mt-4 text-2xl font-medium leading-snug text-text-primary md:text-3xl">{context.title}</h3></div><div className="border-l border-[#91a9d0]/40 pl-6"><p className="text-base leading-8 text-[#c3c4ce]">{context.description}</p><div className="mt-5 flex flex-wrap gap-2">{app.tags.map(tag => <span key={tag} className="rounded-full bg-white/5 px-3 py-1.5 text-xs text-[#becbe1]">{tag}</span>)}</div></div></section>
     {app.sections?.map((section, sectionIndex) => <section key={section.key} aria-label={section.label}>
       <Eyebrow>{`${String(sectionIndex + 2).padStart(2, '0')} / ${section.type === 'flow' ? '制作路径' : '项目实践'}`}</Eyebrow>
       <h3 className="mt-4 text-3xl font-medium tracking-tight text-text-primary">{section.label}</h3>
       {section.type === 'gallery' && (app.id === 'visual' ?
-        <div className="mt-9 space-y-12">{section.images.map((image, i) => <div key={image.caption} className={`grid items-center gap-7 lg:gap-10 ${i % 2 ? 'lg:grid-cols-[1fr_1.65fr]' : 'lg:grid-cols-[1.65fr_1fr]'}`}><div className={i % 2 ? 'lg:order-2' : ''}><CaseImage {...image} sizes="(max-width: 1023px) calc(100vw - 48px), 630px" /></div><div className={i % 2 ? 'lg:order-1' : ''}><p className="text-xs tracking-widest text-[#91a9d0]">MODULE / {String(i + 1).padStart(2, '0')}</p><h4 className="mt-3 text-xl font-medium text-text-primary">{image.caption.split(' · ')[0]}</h4><p className="mt-4 text-sm leading-7 text-[#b9bac6]">{imageNotes.visual[i]}</p></div></div>)}</div>
-        : <div className={`mt-9 grid grid-cols-1 gap-x-5 gap-y-9 ${section.columns === 4 ? 'sm:grid-cols-2 lg:grid-cols-4' : section.columns === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2'}`}>{section.images.map((image, i) => <div key={image.caption} className={image.wide ? 'md:col-span-2' : ''}><CaseImage {...image} sizes={image.wide ? '(max-width: 767px) calc(100vw - 48px), 1020px' : section.columns === 4 ? '(max-width: 639px) calc(100vw - 48px), (max-width: 1023px) 50vw, 250px' : section.columns === 3 ? '(max-width: 767px) calc(100vw - 48px), 330px' : undefined} /><h4 className="mt-4 text-sm font-medium text-text-primary">{image.caption}</h4>{section.key === 'showcase' && imageNotes[app.id]?.[i] && <p className="mt-2 text-sm leading-6 text-[#b9bac6]">{imageNotes[app.id][i]}</p>}</div>)}</div>)}
-      {section.type === 'flow' && <ol className={`mt-9 grid gap-x-7 gap-y-9 md:grid-cols-2 ${section.steps.length > 4 ? 'lg:grid-cols-3' : 'lg:grid-cols-4'}`}>{section.steps.map((step, i) => <li key={step.title} className="relative border-t border-white/20 pt-6"><span className="absolute -top-1 left-0 h-2 w-2 rounded-full bg-[#a7bbde]" /><span className="text-xs tracking-widest text-[#91a9d0]">{String(i + 1).padStart(2, '0')}</span><h4 className="mt-3 text-base font-medium text-text-primary">{step.title}</h4><p className="mt-2 text-sm leading-6 text-[#b9bac6]">{step.desc}</p></li>)}</ol>}
-      {section.type === 'badcase' && <div className="mt-8 space-y-6">{section.items.map(item => <div key={item.problem} className="border-l border-white/20 pl-6"><h4 className="font-medium text-text-primary">{item.problem}</h4><p className="mt-3 text-sm leading-7 text-[#b9bac6]">{item.fix}</p></div>)}</div>}
-      {section.noteItems && <div className="mt-8 grid gap-7 border-y border-white/10 py-7 md:grid-cols-2">{section.noteItems.map(item => <div key={item.title}><h4 className="text-lg font-medium text-text-primary">{item.title}</h4><p className="mt-3 text-sm leading-7 text-[#b9bac6]">{item.desc}</p></div>)}</div>}
-      {section.type === 'gallery' && section.images.length > 0 && <p className="mt-5 text-xs text-[#aeb0bd]">点击图片，可查看完整大图。</p>}
+        <div className="mt-9 space-y-12">{section.images.map((image, i) => <div key={image.caption} className={`grid items-center gap-7 lg:gap-14 ${i % 2 ? 'lg:grid-cols-[1fr_1.65fr]' : 'lg:grid-cols-[1.65fr_1fr]'}`}><div className={i % 2 ? 'lg:order-2' : ''}><CaseImage {...image} sizes="(max-width: 1023px) calc(100vw - 48px), 630px" /></div><div className={i % 2 ? 'lg:order-1' : ''}><p className="text-xs tracking-widest text-[#91a9d0]">MODULE / {String(i + 1).padStart(2, '0')}</p><h4 className="mt-3 text-xl font-medium text-text-primary">{image.caption.split(' · ')[0]}</h4><p className="mt-4 text-sm leading-7 text-[#b5b5bf]">{imageNotes.visual[i]}</p></div></div>)}</div>
+        : <div className={`mt-9 grid grid-cols-1 gap-x-5 gap-y-9 ${section.columns === 4 ? 'sm:grid-cols-2 lg:grid-cols-4' : section.columns === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2'}`}>{section.images.map((image, i) => <div key={image.caption} className={image.wide ? 'md:col-span-2' : ''}><CaseImage {...image} sizes={image.wide ? '(max-width: 767px) calc(100vw - 48px), 1020px' : section.columns === 4 ? '(max-width: 639px) calc(100vw - 48px), (max-width: 1023px) 50vw, 250px' : section.columns === 3 ? '(max-width: 767px) calc(100vw - 48px), 330px' : undefined} /><h4 className="mt-4 text-sm font-medium text-text-primary">{image.caption}</h4>{section.key === 'showcase' && imageNotes[app.id]?.[i] && <p className="mt-2 text-sm leading-6 text-[#b5b5bf]">{imageNotes[app.id][i]}</p>}</div>)}</div>)}
+      {section.type === 'flow' && <ol className={`mt-9 grid gap-x-7 gap-y-9 md:grid-cols-2 ${section.steps.length > 4 ? 'lg:grid-cols-3' : 'lg:grid-cols-4'}`}>{section.steps.map((step, i) => <li key={step.title} className="relative border-t border-white/20 pt-6"><span className="absolute -top-1 left-0 h-2 w-2 rounded-full bg-[#a7bbde]" /><span className="text-xs tracking-widest text-[#91a9d0]">{String(i + 1).padStart(2, '0')}</span><h4 className="mt-3 text-base font-medium text-text-primary">{step.title}</h4><p className="mt-2 text-sm leading-6 text-[#b5b5bf]">{step.desc}</p></li>)}</ol>}
+      {section.type === 'badcase' && <div className="mt-8 space-y-6">{section.items.map(item => <div key={item.problem} className="border-l border-white/20 pl-6"><h4 className="font-medium text-text-primary">{item.problem}</h4><p className="mt-3 text-sm leading-7 text-[#b5b5bf]">{item.fix}</p></div>)}</div>}
+      {section.noteItems && <div className="mt-8 grid gap-7 border-y border-white/10 py-7 md:grid-cols-2">{section.noteItems.map(item => <div key={item.title}><h4 className="text-lg font-medium text-text-primary">{item.title}</h4><p className="mt-3 text-sm leading-7 text-[#b5b5bf]">{item.desc}</p></div>)}</div>}
+      {section.type === 'gallery' && section.images.length > 0 && <p className="mt-5 text-xs text-[#b5b5bf]">点击图片，可查看完整大图。</p>}
     </section>)}
   </div>
 }

@@ -301,10 +301,10 @@ export default function AiApps() {
               spotlightColor={
                 active ? 'rgba(255, 255, 255, 0.08)' : 'rgba(255, 255, 255, 0.18)'
               }
-              className={`flex shrink-0 flex-col rounded-xl border px-4 py-3 text-left transition-all ${
+              className={`flex shrink-0 flex-col rounded-xl border px-4 py-3 text-left transition-colors ${
                 active
-                  ? 'border-stroke shadow-[0_0_28px_-6px_rgba(137,170,204,0.55)]'
-                  : 'border-stroke bg-surface/40 hover:bg-surface/70'
+                  ? 'border-white/25 bg-white/[0.07]'
+                  : 'border-white/10 bg-[#151517] hover:border-white/20 hover:bg-white/[0.04]'
               }`}
             >
               <span

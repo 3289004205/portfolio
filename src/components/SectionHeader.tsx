@@ -40,14 +40,14 @@ export default function SectionHeader({
           {titleTail}
         </h2>
         {subtext && (
-          <p className="mt-4 max-w-md text-sm text-muted md:text-base">{subtext}</p>
+          <p className="mt-5 max-w-md text-sm leading-7 text-[#aaaab4] md:text-base md:leading-8">{subtext}</p>
         )}
       </div>
 
       {cta && (
         <button
           onClick={onCta}
-          className="hidden md:inline-flex gradient-ring rounded-full bg-surface px-5 py-3 text-sm text-text-primary transition-transform hover:scale-105"
+          className="project-action hidden md:inline-flex"
         >
           {cta} <span className="ml-2">↗</span>
         </button>
