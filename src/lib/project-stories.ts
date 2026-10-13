@@ -11,7 +11,7 @@ export const PROJECT_STORIES: Record<string, ProjectStory> = {
     highlights: [
       { title: '六大模块统一入口', description: '将画布、知识、资产与学习资源等能力组织在同一个系统中。' },
       { title: '从操作到资源沉淀', description: '围绕任务组织工具与素材，让创作流程和已有资源更容易衔接。' },
-      { title: '无限画布编排素材', description: '在自由画布中组织图片、参考内容与工作流，直观梳理创作思路。' },
+      { title: '无限画布与素材联通', description: '在自由画布中编排创作内容，联通 Photoshop、Figma、图像库与提示词库，串联素材和工作流。' },
     ],
   },
   'motion-templates': {
