@@ -4,11 +4,6 @@ import OptimizedImage from './OptimizedImage'
 const courseImage = '/explorations/motion-templates/01-course-carousel.png'
 const dynamicImage = '/explorations/motion-templates/02-dynamic-cards.png'
 
-const highlights = [
-  { title: '内容可替换', desc: '图片、视频、标题与顺序，集中在同一个操作面板。' },
-  { title: '动效可复用', desc: '沿用卡片缩放与切换关系，让已有模板持续使用。' },
-  { title: '结果可预览', desc: '通过画面与时间轴检查效果，再保存配置与导出。' },
-]
 const steps = [
   { title: '选择模板', desc: '按内容选择课程轮播或动态人物。' },
   { title: '替换内容', desc: '上传素材，调整文案和卡片顺序。' },
@@ -22,8 +17,8 @@ function Eyebrow({ children }: { children: string }) {
 
 export function MotionTemplateHero() {
   return (
-    <section aria-label="动效批量替换项目概览">
-      <div className="grid items-center gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
+    <section className="app-project-hero" aria-label="动效批量替换项目概览">
+      <div className="grid w-full items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         <div>
           <Eyebrow>CASE STUDY / 模板化视频制作</Eyebrow>
           <h2 className="mt-5 text-4xl font-medium leading-tight tracking-tight text-text-primary md:text-5xl">动效批量替换</h2>
@@ -38,9 +33,6 @@ export function MotionTemplateHero() {
           <OptimizedImage src={courseImage} alt="动效批量替换工作台全貌" loading="eager" fetchPriority="high" sizes="(max-width: 1023px) calc(100vw - 72px), 540px" className="h-auto w-full cursor-zoom-in rounded-lg" />
           <figcaption className="mt-3 text-xs leading-5 text-[#b5b5bf]">左侧预览与时间轴，右侧素材编辑。</figcaption>
         </figure>
-      </div>
-      <div className="mt-10 grid gap-6 border-y border-white/10 py-7 md:grid-cols-3 md:gap-8" aria-label="核心亮点">
-        {highlights.map((item, i) => <div key={item.title} className="flex items-start gap-4"><span className="mt-1 text-xs text-[#91a9d0]">0{i + 1}</span><div><h3 className="text-base font-medium text-text-primary">{item.title}</h3><p className="mt-2 text-sm leading-6 text-[#b5b5bf]">{item.desc}</p></div></div>)}
       </div>
     </section>
   )

@@ -1,6 +1,5 @@
 import { ArrowUpRight, GitBranch, Play } from 'lucide-react'
 import OptimizedImage from './OptimizedImage'
-import { PROJECT_STORIES } from '../lib/project-stories'
 
 export type CaseSection =
   | { key: string; label: string; type: 'gallery'; images: { src?: string; caption: string; aspect?: string; wide?: boolean }[]; columns?: 2 | 3 | 4; noteItems?: { title: string; desc: string; highlights?: string[] }[] }
@@ -33,11 +32,10 @@ function CaseImage({ src, caption, priority = false, sizes }: { src?: string; ca
 
 
 export function AppProjectHero({ app }: { app: CaseProject }) {
-  const story = PROJECT_STORIES[app.id]
   const firstGallery = app.sections?.find(s => s.type === 'gallery')
   const image = firstGallery?.type === 'gallery' ? firstGallery.images[0] : undefined
-  return <section aria-label={`${app.title}项目概览`}>
-    <div className="grid items-center gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
+  return <section className="app-project-hero" aria-label={`${app.title}项目概览`}>
+    <div className="grid w-full items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
       <div>
         <Eyebrow>{`CASE STUDY / ${app.tagline}`}</Eyebrow>
         <h2 className="mt-5 text-4xl font-medium leading-tight tracking-tight text-text-primary md:text-5xl">{app.title}</h2>
@@ -51,7 +49,6 @@ export function AppProjectHero({ app }: { app: CaseProject }) {
       </div>
       {image && <div className="project-preview"><div className="mb-3 text-[10px] tracking-widest text-[#becbe1]"><span>PROJECT PREVIEW</span></div><CaseImage {...image} priority sizes="(max-width: 1023px) calc(100vw - 72px), 540px" /><p className="mt-3 text-xs leading-5 text-[#b5b5bf]">{image.caption}</p></div>}
     </div>
-    <div className="mt-10 grid gap-6 border-y border-white/10 py-7 md:grid-cols-3 md:gap-8" aria-label="核心亮点">{story.highlights.map((item, i) => <div key={item.title} className="flex items-start gap-4"><span className="mt-1 text-xs text-[#91a9d0]">0{i + 1}</span><div><h3 className="text-base font-medium text-text-primary">{item.title}</h3><p className="mt-2 text-sm leading-6 text-[#b5b5bf]">{item.description}</p></div></div>)}</div>
   </section>
 }
 

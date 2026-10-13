@@ -286,7 +286,7 @@ export default function AiApps() {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.4 }}
-        className="mx-auto min-h-screen max-w-[1100px] bg-transparent px-6 py-24 md:px-10"
+        className="mx-auto min-h-screen max-w-[1200px] bg-transparent px-6 py-24 md:px-10"
       >
       {/* 顶部选择卡片 */}
       <div className="mt-4 flex gap-2 overflow-x-auto pb-3" aria-label="选择项目">
