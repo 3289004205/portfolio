@@ -4,7 +4,6 @@ import { motion } from 'framer-motion'
 import SpotlightCard from '../components/SpotlightCard/SpotlightCard'
 import VideoProjectArc, { type VideoProject } from '../components/VideoProjectArc'
 import BackToTop from '../components/BackToTop'
-import MiroBoard from '../components/MiroBoard/MiroBoard'
 import StatsPanel from '../components/StatsPanel/StatsPanel'
 import WorkflowVideo from '../components/WorkflowVideo'
 import websiteVideoClips from '../lib/website-video-clips.json'
@@ -219,8 +218,21 @@ export default function AiVideos() {
               </li>
             ))}
           </ol>
-          <div className="mt-6">
-            <MiroBoard src="/explorations/tvc/01.jpg" title="品宣 TVC 制作流程图" />
+          <div className="mt-6 grid gap-5">
+            <OptimizedImage
+              src="/explorations/long-video-flow/pre-production.webp"
+              alt="前期制作流程：收集参考、规划镜头、整理脚本与创意样片"
+              width={1195}
+              height={695}
+              className="block h-auto w-full rounded-2xl border border-stroke"
+            />
+            <OptimizedImage
+              src="/explorations/long-video-flow/production-and-refinement.webp"
+              alt="中期与深化制作流程：生成样片、调整镜头衔接、粗剪与高清精修"
+              width={1200}
+              height={956}
+              className="block h-auto w-full rounded-2xl border border-stroke"
+            />
           </div>
         </section>
             <div className="flex flex-col">
