@@ -27,6 +27,37 @@ function FeatureTile({ caption, src }: { caption: string; src?: string }) {
 const PROJECTS: StackingProject[] = [
   {
     number: '01',
+    category: 'Institutional',
+    name: '体育训练局合作视频',
+    href: 'https://www.bilibili.com/video/BV1touw6LEQ3',
+    bilibili: 'BV1touw6LEQ3',
+    images: {
+      top: 'https://picsum.photos/seed/v-sport-top/600/400',
+      bottom: 'https://picsum.photos/seed/v-sport-bot/600/400',
+      right: 'https://picsum.photos/seed/v-sport-right/600/800',
+    },
+    intro:
+      '与体育训练局的机构合作项目，面向训练纪实与成果展示，以 AI 素材补充实拍缺口并完成成片剪辑。',
+    roles: ['剪辑', 'AI素材产出'],
+  },
+  {
+    number: '02',
+    category: 'E-commerce',
+    name: '淘宝首页开屏动画',
+    href: '#',
+    images: {
+      top: 'https://picsum.photos/seed/v-taobao-top/600/400',
+      bottom: 'https://picsum.photos/seed/v-taobao-bot/600/400',
+      right: 'https://picsum.photos/seed/v-taobao-right/600/800',
+    },
+    heroVideo: '/videos/previews/taobao-opening-01.mp4',
+    heroImage: '/explorations/videos/taobao-opening-side.jpg',
+    intro:
+      '淘宝首页开屏级电商动画，服务大促节点曝光，从创意、剧本到成片全流程把控。',
+    roles: ['导演', '编剧', '生图', '生视频', '剪辑'],
+  },
+  {
+    number: '03',
     category: 'Brand Film',
     name: '官网品牌视频',
     href: 'https://www.bilibili.com/video/BV1Uouw65E44',
@@ -49,37 +80,6 @@ const PROJECTS: StackingProject[] = [
     intro:
       '为品牌官网打造的主形象宣传片，以 AI 生图与视频能力重塑视觉语言，统一官网首屏的叙事调性与质感。',
     roles: ['设计', '生图', '生视频'],
-  },
-  {
-    number: '02',
-    category: 'Institutional',
-    name: '体育训练局合作视频',
-    href: 'https://www.bilibili.com/video/BV1touw6LEQ3',
-    bilibili: 'BV1touw6LEQ3',
-    images: {
-      top: 'https://picsum.photos/seed/v-sport-top/600/400',
-      bottom: 'https://picsum.photos/seed/v-sport-bot/600/400',
-      right: 'https://picsum.photos/seed/v-sport-right/600/800',
-    },
-    intro:
-      '与体育训练局的机构合作项目，面向训练纪实与成果展示，以 AI 素材补充实拍缺口并完成成片剪辑。',
-    roles: ['剪辑', 'AI素材产出'],
-  },
-  {
-    number: '03',
-    category: 'E-commerce',
-    name: '淘宝首页开屏动画',
-    href: '#',
-    images: {
-      top: 'https://picsum.photos/seed/v-taobao-top/600/400',
-      bottom: 'https://picsum.photos/seed/v-taobao-bot/600/400',
-      right: 'https://picsum.photos/seed/v-taobao-right/600/800',
-    },
-    heroVideo: '/videos/previews/taobao-opening-01.mp4',
-    heroImage: '/explorations/videos/taobao-opening-side.jpg',
-    intro:
-      '淘宝首页开屏级电商动画，服务大促节点曝光，从创意、剧本到成片全流程把控。',
-    roles: ['导演', '编剧', '生图', '生视频', '剪辑'],
   },
   {
     number: '04',
