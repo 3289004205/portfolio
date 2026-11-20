@@ -2,8 +2,7 @@ import OptimizedImage from '../components/OptimizedImage'
 import { useState, Fragment } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import SpotlightCard from '../components/SpotlightCard/SpotlightCard'
-import type { StackingProject } from '../components/StackingCards/StackingCards'
-import VideoProjectSpiral from '../components/VideoProjectSpiral'
+import VideoProjectSpiral, { type VideoProject } from '../components/VideoProjectSpiral'
 import BackToTop from '../components/BackToTop'
 import MiroBoard from '../components/MiroBoard/MiroBoard'
 import StatsPanel from '../components/StatsPanel/StatsPanel'
@@ -24,43 +23,24 @@ function FeatureTile({ caption, src }: { caption: string; src?: string }) {
   )
 }
 
-/** 项目产出概览：四类视频交付成果，套用 sticky 堆叠卡片样式 */
-const PROJECTS: StackingProject[] = [
+/** 项目产出概览：按视频用途分类，使用螺旋画廊展示。 */
+const PROJECTS: VideoProject[] = [
   {
     number: '01',
-    category: 'Institutional',
-    name: '体育训练局合作视频',
-    href: 'https://www.bilibili.com/video/BV1touw6LEQ3',
-    bilibili: 'BV1touw6LEQ3',
-    images: {
-      top: 'https://picsum.photos/seed/v-sport-top/600/400',
-      bottom: 'https://picsum.photos/seed/v-sport-bot/600/400',
-      right: 'https://picsum.photos/seed/v-sport-right/600/800',
-    },
-    intro:
-      '与体育训练局的机构合作项目，面向训练纪实与成果展示，以 AI 素材补充实拍缺口并完成成片剪辑。',
-    roles: ['剪辑', 'AI素材产出'],
+    category: 'TVC',
+    name: 'TVC视频',
+    images: { top: '', bottom: '', right: '' },
+    intro: '汇集体育训练局合作视频与淘宝首页开屏动画，展示机构合作与品牌传播场景中的视频创作。',
+    roles: ['导演', '编剧', '生图', '生视频', '剪辑'],
+    clips: [
+      { src: '/videos/spiral-covers/sports.jpg', title: '体育训练局合作视频', bvid: 'BV1touw6LEQ3' },
+      { src: '/videos/spiral-covers/taobao.webp', title: '淘宝首页开屏动画', video: '/videos/previews/taobao-opening-01.mp4' },
+    ],
   },
   {
     number: '02',
-    category: 'E-commerce',
-    name: '淘宝首页开屏动画',
-    href: '#',
-    images: {
-      top: 'https://picsum.photos/seed/v-taobao-top/600/400',
-      bottom: 'https://picsum.photos/seed/v-taobao-bot/600/400',
-      right: 'https://picsum.photos/seed/v-taobao-right/600/800',
-    },
-    heroVideo: '/videos/previews/taobao-opening-01.mp4',
-    heroImage: '/explorations/videos/taobao-opening-side.jpg',
-    intro:
-      '淘宝首页开屏级电商动画，服务大促节点曝光，从创意、剧本到成片全流程把控。',
-    roles: ['导演', '编剧', '生图', '生视频', '剪辑'],
-  },
-  {
-    number: '03',
-    category: 'Brand Film',
-    name: '官网品牌视频',
+    category: 'Website AI Clips',
+    name: '官网AI视频片段',
     href: 'https://www.bilibili.com/video/BV1Uouw65E44',
     previews: [
       { bvid: 'BV1Uouw65E44', type: 'mp4', src: '/videos/gifs/brand-01.mp4', orientation: 'landscape' },
@@ -83,9 +63,9 @@ const PROJECTS: StackingProject[] = [
     roles: ['设计', '生图', '生视频'],
   },
   {
-    number: '04',
+    number: '03',
     category: 'Feed Ads',
-    name: '抖音信息流素材',
+    name: '信息流视频',
     href: 'https://www.bilibili.com/video/BV1TZuw6yEQ2',
     images: {
       top: 'https://picsum.photos/seed/v-douyin-top/600/400',
@@ -106,7 +86,15 @@ const PROJECTS: StackingProject[] = [
       { bvid: 'BV1X8uA6QEAU', type: 'mp4', src: '/videos/previews/douyin-08.mp4' },
       { bvid: 'BV1URuw61EmM', type: 'mp4', src: '/videos/previews/douyin-09.mp4' },
     ],
+  },  {
+    number: '04',
+    category: 'AI Product Video',
+    name: 'AI主图视频',
+    images: { top: '', bottom: '', right: '' },
+    intro: 'AI主图视频作品即将补充。',
+    pending: true,
   },
+
 ]
 
 type GalleryImage = { src?: string; caption: string }
@@ -143,8 +131,8 @@ const MODULES: Module[] = [
     id: 'overview',
     title: '项目产出概览',
     tagline: '四类视频交付成果',
-    desc: '汇总各渠道的 AI 视频产出，覆盖品牌官网、机构合作、电商大促与信息流投放四类典型场景，呈现从长视频到短素材的完整交付能力。',
-    tags: ['官网', '机构合作', '电商大促', '信息流'],
+    desc: '汇总各渠道的 AI 视频产出，覆盖 TVC、官网 AI 视频片段、信息流视频与 AI 主图视频四类场景，呈现从长视频到短素材的完整交付能力。',
+    tags: ['TVC', '官网AI视频片段', '信息流视频', 'AI主图视频'],
     sections: [],
   },
   {

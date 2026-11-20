@@ -4,21 +4,25 @@ import InfiniteSpiral from './InfiniteSpiral/InfiniteSpiral'
 import type { StackingProject } from './StackingCards/StackingCards'
 import './VideoProjectSpiral.css'
 
+export type VideoProject = StackingProject & { clips?: { src: string; title: string; bvid?: string; video?: string }[]; pending?: boolean }
+
 type Clip = { src: string; alt: string; label: string; group: number; bvid?: string; video?: string }
-export default function VideoProjectSpiral({ projects }: { projects: StackingProject[] }) {
+export default function VideoProjectSpiral({ projects }: { projects: VideoProject[] }) {
+  const [emptyGroup, setEmptyGroup] = useState<number | null>(null)
   const [focusWithin, setFocusWithin] = useState(false)
   const [focusIndex, setFocusIndex] = useState(0)
   const [activeIndex, setActiveIndex] = useState(0)
   const [selected, setSelected] = useState<number | null>(null)
   const closeRef = useRef<HTMLButtonElement>(null)
-  const clips = useMemo<Clip[]>(() => projects.flatMap((project, group) => {
+  const clips = useMemo<Clip[]>(() => projects.flatMap<Clip>((project, group) => {
+    if (project.clips?.length) return project.clips.map(item => ({ ...item, alt: item.title, label: item.title, group }))
     if (project.previews?.length) return project.previews.map((preview, index) => ({
       src: `/videos/spiral-covers/${preview.src.split('/').pop()?.replace(/\.(mp4|gif)$/, '.webp')}`,
       alt: `${project.name} · ${String(index + 1).padStart(2, '0')}`, label: `${project.name} / ${String(index + 1).padStart(2, '0')}`, group, bvid: preview.bvid, video: preview.src,
     }))
-    return [{ src: `/videos/spiral-covers/${group === 0 ? 'sports.jpg' : 'taobao.webp'}`, alt: project.name, label: project.name, group, bvid: project.bilibili, video: project.heroVideo }]
+    return []
   }), [projects])
-  const activeGroup = clips[activeIndex]?.group ?? 0
+  const activeGroup = emptyGroup ?? clips[activeIndex]?.group ?? 0
   const project = projects[activeGroup]
   const clip = selected === null ? null : clips[selected]
   useEffect(() => {
@@ -45,14 +49,14 @@ export default function VideoProjectSpiral({ projects }: { projects: StackingPro
         <p className="video-project-spiral__eyebrow">SELECTED MOTION / {String(activeGroup + 1).padStart(2, '0')}</p>
         <h2>让创意<br /><em>流动起来。</em></h2>
         <nav aria-label="视频项目分类" className="video-project-spiral__nav">
-          {projects.map((item, index) => <button key={item.name} type="button" aria-pressed={activeGroup === index} onClick={() => { const first = clips.findIndex(c => c.group === index); setFocusIndex(previous => first + (Math.floor(previous / clips.length) + 1) * clips.length); setActiveIndex(first) }}><span>{item.number}</span>{item.name}<span aria-hidden="true">↗</span></button>)}
+          {projects.map((item, index) => <button key={item.name} type="button" aria-pressed={activeGroup === index} onClick={() => { const first = clips.findIndex(c => c.group === index); if (first < 0) { setEmptyGroup(index); return } setEmptyGroup(null); setFocusIndex(previous => first + (Math.floor(previous / clips.length) + 1) * clips.length); setActiveIndex(first) }}><span>{item.number}</span>{item.name}<span aria-hidden="true">↗</span></button>)}
         </nav>
         <div className="video-project-spiral__detail"><p>{project.intro}</p><p className="video-project-spiral__roles">{project.roles?.join(' · ')}</p></div>
-        <p className="video-project-spiral__hint">上下拖动探索 · 悬停暂停 · 点击播放</p>
+        <p className="video-project-spiral__hint">{emptyGroup === null ? '上下拖动探索 · 悬停暂停 · 点击播放' : '更多作品即将展示'}</p>
       </div>
       <div className="video-project-spiral__gallery">
-        <InfiniteSpiral items={clips} focusIndex={focusIndex} onActiveChange={setActiveIndex} onSelect={setSelected} animationMode={selected === null && !focusWithin ? 'all' : 'drag'} speed={0.3} radius={210} cardWidth={260} cardHeight={165} verticalSpacing={92} cardsPerTurn={7} centerScale={1.16} edgeBlur={2} edgeFade={0.35} pauseOnHover />
-        <div className="video-project-spiral__counter">{String(activeIndex + 1).padStart(2, '0')} <span>/ {clips.length} FILMS</span></div>
+        {emptyGroup !== null ? <div className="video-project-spiral__empty"><span>COMING SOON / 04</span><h3>AI主图视频</h3><p>视频待上传</p></div> : <><InfiniteSpiral items={clips} focusIndex={focusIndex} onActiveChange={setActiveIndex} onSelect={setSelected} animationMode={selected === null && !focusWithin ? 'all' : 'drag'} speed={0.3} radius={210} cardWidth={260} cardHeight={165} verticalSpacing={92} cardsPerTurn={7} centerScale={1.16} edgeBlur={2} edgeFade={0.35} pauseOnHover />
+        <div className="video-project-spiral__counter">{String(activeIndex + 1).padStart(2, '0')} <span>/ {clips.length} FILMS</span></div></>}
       </div>
     </section>
     {clip && createPortal(<div className="video-spiral-modal" onClick={event => { if (event.target === event.currentTarget) setSelected(null) }}>
