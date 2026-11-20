@@ -1,11 +1,12 @@
 import OptimizedImage from '../components/OptimizedImage'
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { motion } from 'framer-motion'
 import SpotlightCard from '../components/SpotlightCard/SpotlightCard'
 import VideoProjectArc, { type VideoProject } from '../components/VideoProjectArc'
 import BackToTop from '../components/BackToTop'
 import MiroBoard from '../components/MiroBoard/MiroBoard'
 import StatsPanel from '../components/StatsPanel/StatsPanel'
+import WorkflowVideo from '../components/WorkflowVideo'
 
 /** 与 FeaturesChess 一致的毛玻璃图片占位（视觉 AI 整合网站形式） */
 function FeatureTile({ caption, src }: { caption: string; src?: string }) {
@@ -180,6 +181,8 @@ function jumpToVideoSection(id: string) {
 }
 
 export default function AiVideos() {
+  const [activeWorkflowVideo, setActiveWorkflowVideo] = useState<string | null>(null)
+
   return (
     <motion.main
       initial={false}
@@ -285,15 +288,13 @@ export default function AiVideos() {
                                 />
                               )}
                               <div className="flex flex-col gap-3">
-                                {item.videos?.map((v) => (
-                                  <video
+                                {item.videos?.map((v, index) => (
+                                  <WorkflowVideo
                                     key={v}
                                     src={v}
-                                    controls
-                                    muted
-                                    playsInline
-                                    preload="none"
-                                    className="h-auto w-full rounded-xl border border-stroke bg-black/20"
+                                    title={item.videos?.length === 1 ? item.title : item.title + " " + (index + 1)}
+                                    active={activeWorkflowVideo === v}
+                                    onSelect={() => setActiveWorkflowVideo(v)}
                                   />
                                 ))}
                               </div>
@@ -321,15 +322,13 @@ export default function AiVideos() {
                                       : undefined
                                   }
                                 >
-                                  {item.videos.map((v) => (
-                                    <video
+                                  {item.videos.map((v, index) => (
+                                    <WorkflowVideo
                                       key={v}
                                       src={v}
-                                      controls
-                                      muted
-                                      playsInline
-                                    preload="none"
-                                      className="h-auto w-full rounded-xl border border-stroke bg-black/20"
+                                      title={item.videos?.length === 1 ? item.title : item.title + " " + (index + 1)}
+                                      active={activeWorkflowVideo === v}
+                                      onSelect={() => setActiveWorkflowVideo(v)}
                                     />
                                   ))}
                                 </div>

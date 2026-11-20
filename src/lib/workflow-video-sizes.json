@@ -1,0 +1,50 @@
+{
+  "bg-change-01.mp4": {
+    "width": 1280,
+    "height": 720
+  },
+  "bg-change-02.mp4": {
+    "width": 1280,
+    "height": 720
+  },
+  "change-clothes-01.mp4": {
+    "width": 1280,
+    "height": 720
+  },
+  "change-clothes-02.mp4": {
+    "width": 1024,
+    "height": 576
+  },
+  "change-face-01.mp4": {
+    "width": 718,
+    "height": 960
+  },
+  "change-face-02.mp4": {
+    "width": 720,
+    "height": 960
+  },
+  "change-face-03.mp4": {
+    "width": 720,
+    "height": 960
+  },
+  "grid-01.mp4": {
+    "width": 1280,
+    "height": 720
+  },
+  "real-person-01.mp4": {
+    "width": 540,
+    "height": 960
+  },
+  "real-shot-01.mp4": {
+    "width": 720,
+    "height": 960
+  },
+  "real-shot-02.mp4": {
+    "width": 720,
+    "height": 960
+  },
+  "viral-01.mp4": {
+    "width": 540,
+    "height": 960
+  }
+}
