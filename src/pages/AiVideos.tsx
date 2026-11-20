@@ -38,7 +38,7 @@ const PROJECTS: VideoProject[] = [
   {
     number: '02',
     category: 'TVC',
-    name: 'TVC视频',
+    name: '品宣TVC视频',
     workflowTarget: 'workflow-tvc',
     images: { top: '', bottom: '', right: '' },
     intro: '汇集体育训练局合作视频与淘宝首页开屏动画，展示机构合作与品牌传播场景中的视频创作。',
