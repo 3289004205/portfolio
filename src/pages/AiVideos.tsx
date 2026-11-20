@@ -27,6 +27,14 @@ function FeatureTile({ caption, src }: { caption: string; src?: string }) {
 const PROJECTS: VideoProject[] = [
   {
     number: '01',
+    category: 'AI Product Video',
+    name: 'AI主图视频',
+    images: { top: '', bottom: '', right: '' },
+    intro: 'AI主图视频作品即将补充。',
+    pending: true,
+  },
+  {
+    number: '02',
     category: 'TVC',
     name: 'TVC视频',
     images: { top: '', bottom: '', right: '' },
@@ -38,7 +46,7 @@ const PROJECTS: VideoProject[] = [
     ],
   },
   {
-    number: '02',
+    number: '03',
     category: 'Website AI Clips',
     name: '官网AI视频片段',
     href: 'https://www.bilibili.com/video/BV1Uouw65E44',
@@ -63,7 +71,7 @@ const PROJECTS: VideoProject[] = [
     roles: ['设计', '生图', '生视频'],
   },
   {
-    number: '03',
+    number: '04',
     category: 'Feed Ads',
     name: '信息流视频',
     href: 'https://www.bilibili.com/video/BV1TZuw6yEQ2',
@@ -87,15 +95,6 @@ const PROJECTS: VideoProject[] = [
       { bvid: 'BV1URuw61EmM', type: 'mp4', src: '/videos/previews/douyin-09.mp4' },
     ],
   },
-  {
-    number: '04',
-    category: 'AI Product Video',
-    name: 'AI主图视频',
-    images: { top: '', bottom: '', right: '' },
-    intro: 'AI主图视频作品即将补充。',
-    pending: true,
-  },
-
 ]
 
 type GalleryImage = { src?: string; caption: string }
@@ -132,8 +131,8 @@ const MODULES: Module[] = [
     id: 'overview',
     title: '项目产出概览',
     tagline: '四类视频交付成果',
-    desc: '汇总各渠道的 AI 视频产出，覆盖 TVC、官网 AI 视频片段、信息流视频与 AI 主图视频四类场景，呈现从长视频到短素材的完整交付能力。',
-    tags: ['TVC', '官网AI视频片段', '信息流视频', 'AI主图视频'],
+    desc: '汇总各渠道的 AI 视频产出，覆盖 AI 主图视频、TVC、官网 AI 视频片段与信息流视频四类场景，呈现从长视频到短素材的完整交付能力。',
+    tags: ['AI主图视频', 'TVC', '官网AI视频片段', '信息流视频'],
     sections: [],
   },
   {

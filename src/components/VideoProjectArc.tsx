@@ -60,8 +60,17 @@ export default function VideoProjectArc({ projects }: { projects: VideoProject[]
         <div className="video-project-arc__navigation">
           <div className="video-project-arc__list" role="tablist" aria-label="视频项目分类" aria-orientation="vertical">
             {projects.map((item, index) => {
-              const offset = index - activeGroup
-              return <button key={item.name} ref={node => { categoryRefs.current[index] = node }} id={`video-category-${index}`} type="button" role="tab" aria-selected={activeGroup === index} aria-controls="video-project-panel" tabIndex={activeGroup === index ? 0 : -1} onClick={() => selectGroup(index)} onKeyDown={event => navigate(event, index)} className="video-project-arc__title" style={{ '--offset': offset, '--bend': `${Math.min(offset * offset * 10, 70)}px`, '--turn': `${offset * 2.2}deg`, '--opacity': Math.max(.42, 1 - Math.abs(offset) * .18) } as CSSProperties}>
+              const midpoint = (projects.length - 1) / 2
+              const degrees = (index - midpoint) * (156 / Math.max(projects.length - 1, 1))
+                + (midpoint - activeGroup) * 5
+              const radians = degrees * Math.PI / 180
+              const position = {
+                '--arc-x': 1 - Math.cos(radians),
+                '--arc-y': Math.sin(radians),
+                '--turn': String(degrees * 0.1) + 'deg',
+                '--opacity': Math.max(.62, 1 - Math.abs(index - activeGroup) * .14),
+              } as CSSProperties
+              return <button key={item.name} ref={node => { categoryRefs.current[index] = node }} id={`video-category-${index}`} type="button" role="tab" aria-selected={activeGroup === index} aria-controls="video-project-panel" tabIndex={activeGroup === index ? 0 : -1} onClick={() => selectGroup(index)} onKeyDown={event => navigate(event, index)} className="video-project-arc__title" style={position}>
                 <span className="video-project-arc__number">{item.number}</span><span>{item.name}</span><span className="video-project-arc__arrow" aria-hidden="true">↗</span>
               </button>
             })}
