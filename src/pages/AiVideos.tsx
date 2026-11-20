@@ -2,7 +2,8 @@ import OptimizedImage from '../components/OptimizedImage'
 import { useState, Fragment } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import SpotlightCard from '../components/SpotlightCard/SpotlightCard'
-import StackingCards, { type StackingProject } from '../components/StackingCards/StackingCards'
+import type { StackingProject } from '../components/StackingCards/StackingCards'
+import VideoProjectSpiral from '../components/VideoProjectSpiral'
 import BackToTop from '../components/BackToTop'
 import MiroBoard from '../components/MiroBoard/MiroBoard'
 import StatsPanel from '../components/StatsPanel/StatsPanel'
@@ -254,7 +255,7 @@ export default function AiVideos() {
             transition={{ duration: 0.3 }}
             className="mt-8 py-16"
           >
-            <StackingCards projects={PROJECTS} />
+            <VideoProjectSpiral projects={PROJECTS} />
             <BackToTop />
           </motion.div>
         ) : (
