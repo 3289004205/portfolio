@@ -198,7 +198,7 @@ export default function AiVideos() {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.4 }}
-        className="mx-auto min-h-screen max-w-[1100px] bg-transparent px-6 py-24 md:px-10"
+        className="mx-auto min-h-screen max-w-[1260px] bg-transparent px-6 py-24 md:px-10"
       >
       {/* 顶部选择卡片 */}
       <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
