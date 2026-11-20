@@ -3,11 +3,14 @@ import { createPortal } from 'react-dom'
 import type { StackingProject } from './StackingCards/StackingCards'
 import './VideoProjectArc.css'
 
-export type VideoProject = StackingProject & { clips?: { src: string; title: string; bvid?: string; video?: string }[]; pending?: boolean }
+export type VideoProject = StackingProject & { clips?: { src: string; title: string; bvid?: string; video?: string }[]; pending?: boolean; workflowTarget?: string }
 type Clip = { src: string; alt: string; bvid?: string; video?: string }
 
 /** Independently implemented arc navigation; no React Bits Pro source or package is used. */
-export default function VideoProjectArc({ projects }: { projects: VideoProject[] }) {
+export default function VideoProjectArc({ projects, onViewWorkflow }: {
+  projects: VideoProject[]
+  onViewWorkflow: (id: string) => void
+}) {
   const [activeGroup, setActiveGroup] = useState(0)
   const [activeClip, setActiveClip] = useState(0)
   const [selected, setSelected] = useState<Clip | null>(null)
@@ -21,6 +24,7 @@ export default function VideoProjectArc({ projects }: { projects: VideoProject[]
     })) ?? []
   }), [projects])
   const project = projects[activeGroup]
+  const workflowTarget = project.workflowTarget ?? 'video-workflow'
   const clips = clipsByGroup[activeGroup] ?? []
   const preview = clips[activeClip]
   const clip = selected
@@ -101,7 +105,13 @@ export default function VideoProjectArc({ projects }: { projects: VideoProject[]
               {clips.map((item, index) => <button key={item.src} type="button" aria-label={`预览：${item.alt}`} aria-pressed={index === activeClip} onClick={() => setActiveClip(index)}><img src={item.src} alt="" loading="lazy" draggable={false} /></button>)}
             </div>
           )}
-          <div className="video-project-arc__detail"><p>{project.intro}</p>{project.roles?.length ? <span>{project.roles.join(' · ')}</span> : null}</div>
+          <div className="video-project-arc__detail">
+            <p>{project.intro}</p>
+            {project.roles?.length ? <span>{project.roles.join(' · ')}</span> : null}
+            <button type="button" className="project-action mt-4" onClick={() => onViewWorkflow(workflowTarget)}>
+              查看制作流程 <span aria-hidden="true">↓</span>
+            </button>
+          </div>
         </div>
       </div>
     </section>

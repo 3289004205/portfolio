@@ -1,6 +1,6 @@
 import OptimizedImage from '../components/OptimizedImage'
-import { useState, Fragment } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { Fragment } from 'react'
+import { motion } from 'framer-motion'
 import SpotlightCard from '../components/SpotlightCard/SpotlightCard'
 import VideoProjectArc, { type VideoProject } from '../components/VideoProjectArc'
 import BackToTop from '../components/BackToTop'
@@ -29,6 +29,7 @@ const PROJECTS: VideoProject[] = [
     number: '01',
     category: 'AI Product Video',
     name: 'AI主图视频',
+    workflowTarget: 'workflow-product',
     images: { top: '', bottom: '', right: '' },
     intro: 'AI主图视频作品即将补充。',
     pending: true,
@@ -37,6 +38,7 @@ const PROJECTS: VideoProject[] = [
     number: '02',
     category: 'TVC',
     name: 'TVC视频',
+    workflowTarget: 'workflow-tvc',
     images: { top: '', bottom: '', right: '' },
     intro: '汇集体育训练局合作视频与淘宝首页开屏动画，展示机构合作与品牌传播场景中的视频创作。',
     roles: ['导演', '编剧', '生图', '生视频', '剪辑'],
@@ -74,6 +76,7 @@ const PROJECTS: VideoProject[] = [
     number: '04',
     category: 'Feed Ads',
     name: '信息流视频',
+    workflowTarget: 'workflow-douyin-flow',
     href: 'https://www.bilibili.com/video/BV1TZuw6yEQ2',
     images: {
       top: 'https://picsum.photos/seed/v-douyin-top/600/400',
@@ -117,31 +120,14 @@ type Section =
   | { key: string; label: string; type: 'miro'; src?: string; openUrl?: string }
   | { key: string; label: string; type: 'stats'; appTitle: string; noteItems?: ContentItem[] }
 
-type Module = {
-  id: string
-  title: string
-  tagline: string
-  desc: string
-  tags: string[]
-  sections: Section[]
-}
+const PRODUCTIONS = [
+  { title: '提案与脚本', description: '以产品卖点、品牌调性和视频时长为输入，用 AI 起草脚本，再由人工审核。' },
+  { title: '参考与试剪', description: '人工选取画面参考，按脚本拼接素材，提前检查叙事结构和节奏。' },
+  { title: '拍摄与生成', description: '结合实拍和 AI 生图、生视频，补齐难以拍摄或缺失的镜头。' },
+  { title: '剪辑与交付', description: '剪辑整合实拍与生成素材，复核画面、节奏和产品表达。' },
+]
 
-const MODULES: Module[] = [
-  {
-    id: 'overview',
-    title: '项目产出概览',
-    tagline: '四类视频交付成果',
-    desc: '汇总各渠道的 AI 视频产出，覆盖 AI 主图视频、TVC、官网 AI 视频片段与信息流视频四类场景，呈现从长视频到短素材的完整交付能力。',
-    tags: ['AI主图视频', 'TVC', '官网AI视频片段', '信息流视频'],
-    sections: [],
-  },
-  {
-    id: 'workflow',
-    title: 'AI视频流程制定与优化',
-    tagline: '两类场景的生产链路',
-    desc: '按投放场景拆分生产链路：品牌 TVC 追求质感与叙事完整度，抖音信息流强调批量与迭代速度。',
-    tags: ['品牌 TVC', '抖音信息流'],
-    sections: [
+const WORKFLOW_SECTIONS: Section[] = [
       {
         key: 'tvc',
         label: '品牌 TVC',
@@ -183,87 +169,79 @@ const MODULES: Module[] = [
           },
         ],
       },
-    ],
-  },
 ]
 
+function jumpToVideoSection(id: string) {
+  const destination = document.getElementById(id)
+  if (!destination) return
+  destination.focus({ preventScroll: true })
+  const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'
+  destination.scrollIntoView({ behavior })
+}
+
 export default function AiVideos() {
-  const [selected, setSelected] = useState(MODULES[0].id)
-  const current = MODULES.find((m) => m.id === selected) ?? MODULES[0]
-
   return (
-    <>
-      <motion.main
-        initial={false}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.4 }}
-        className="mx-auto min-h-screen max-w-[1260px] bg-transparent px-6 py-24 md:px-10"
-      >
-      {/* 顶部选择卡片 */}
-      <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {MODULES.map((mod) => {
-          const active = mod.id === selected
-          return (
-            <SpotlightCard
-              key={mod.id}
-              as="button"
-              type="button"
-              onClick={() => setSelected(mod.id)}
-              spotlightColor={
-                active ? 'rgba(255, 255, 255, 0.08)' : 'rgba(255, 255, 255, 0.18)'
-              }
-              className={`flex flex-col rounded-2xl border p-5 text-left transition-all ${
-                active
-                  ? 'border-stroke bg-surface shadow-[0_0_28px_-6px_rgba(137,170,204,0.55)]'
-                  : 'border-stroke bg-surface/40 hover:bg-surface/70'
-              }`}
-            >
-              <span
-                className={`text-base font-medium ${
-                  active ? 'text-text-primary' : 'text-text-primary/80'
-                }`}
-              >
-                {mod.title}
-              </span>
-              <span className="mt-1 text-xs text-muted">{mod.tagline}</span>
-            </SpotlightCard>
-          )
-        })}
-      </div>
+    <motion.main
+      initial={false}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.4 }}
+      className="mx-auto min-h-screen max-w-[1260px] bg-transparent px-6 py-24 md:px-10"
+    >
+      <nav aria-label="AI 视频章节" className="mt-8 grid gap-4 sm:grid-cols-2">
+        {[
+          { id: 'video-works', title: '视频作品', label: '浏览四类视频项目' },
+          { id: 'video-workflow', title: '制作流程', label: '查看制作步骤、案例与提效成果' },
+        ].map(({ id, title, label }) => (
+          <SpotlightCard
+            key={id}
+            as="button"
+            type="button"
+            onClick={() => jumpToVideoSection(id)}
+            className="flex items-center justify-between gap-3 rounded-2xl border border-stroke bg-surface/40 p-5 text-left hover:bg-surface/70"
+          >
+            <span>
+              <span className="block text-base font-medium text-text-primary">{title}</span>
+              <span className="mt-1 block text-xs text-muted">{label}</span>
+            </span>
+            <span aria-hidden="true" className="text-muted">↓</span>
+          </SpotlightCard>
+        ))}
+      </nav>
 
-      {/* 选中模块详情 */}
-      <AnimatePresence initial={false} mode="wait">
-        {current.id === 'overview' ? (
-          <motion.div
-            key="overview"
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.3 }}
-            className="mt-8 py-16"
-          >
-            <VideoProjectArc projects={PROJECTS} />
-            <BackToTop />
-          </motion.div>
-        ) : (
-          <motion.section
-            key={current.id}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.3 }}
-            className="mt-8 py-16"
-          >
+      <section id="video-works" tabIndex={-1} aria-label="视频作品" className="mt-8 scroll-mt-24 pt-8">
+        <VideoProjectArc projects={PROJECTS} onViewWorkflow={jumpToVideoSection} />
+      </section>
+
+      <section aria-labelledby="video-workflow" className="mt-8 border-t border-stroke pt-12 md:pt-16">
+        <h2 id="video-workflow" tabIndex={-1} className="scroll-mt-28 text-3xl font-medium tracking-tight md:text-4xl">
+          制作流程
+        </h2>
+        <p className="mt-4 max-w-2xl text-sm leading-7 text-muted">
+          从脚本和参考镜头出发，用 AI 补齐制作环节，再通过人工审核和剪辑完成交付。
+        </p>
+
+        <div className="mb-20 mt-10">
+          <h3 id="workflow-product" tabIndex={-1} className="scroll-mt-28 text-xl font-medium">AI主图视频</h3>
+          <ol className="mt-5 grid gap-px overflow-hidden rounded-2xl border border-stroke bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
+            {PRODUCTIONS.map((step, index) => (
+              <li key={step.title} className="bg-surface p-5 md:p-6">
+                <span className="text-xs tabular-nums text-muted">{String(index + 1).padStart(2, '0')}</span>
+                <h4 className="mt-3 text-base font-medium">{step.title}</h4>
+                <p className="mt-2 text-sm leading-6 text-muted">{step.description}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
             <div className="flex flex-col">
-              {current.sections.map((sec, si) => (
+              {WORKFLOW_SECTIONS.map((sec, si) => (
                 <div
                   key={sec.key}
-                  className={si < current.sections.length - 1 ? 'mb-24' : ''}
+                  className={si < WORKFLOW_SECTIONS.length - 1 ? 'mb-24' : ''}
                 >
                   {sec.type !== 'stats' && (
                     <div className="mb-10 max-w-2xl space-y-5">
-                      <h3 className="text-3xl font-display italic leading-[0.9] tracking-tight text-text-primary md:text-4xl">
+                      <h3 id={`workflow-${sec.key}`} tabIndex={-1} className="scroll-mt-28 text-xl font-medium text-text-primary">
                         {sec.label}
                       </h3>
                     </div>
@@ -314,6 +292,7 @@ export default function AiVideos() {
                                     controls
                                     muted
                                     playsInline
+                                    preload="none"
                                     className="h-auto w-full rounded-xl border border-stroke bg-black/20"
                                   />
                                 ))}
@@ -349,6 +328,7 @@ export default function AiVideos() {
                                       controls
                                       muted
                                       playsInline
+                                    preload="none"
                                       className="h-auto w-full rounded-xl border border-stroke bg-black/20"
                                     />
                                   ))}
@@ -473,11 +453,8 @@ export default function AiVideos() {
                 </div>
               ))}
             </div>
-            <BackToTop />
-          </motion.section>
-          )}
-      </AnimatePresence>
-      </motion.main>
-    </>
+      </section>
+      <BackToTop />
+    </motion.main>
   )
 }
