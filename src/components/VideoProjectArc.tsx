@@ -78,20 +78,26 @@ export default function VideoProjectArc({ projects }: { projects: VideoProject[]
           <div className="video-project-arc__controls"><button type="button" aria-label="上一个视频类目" onClick={() => selectGroup((activeGroup - 1 + projects.length) % projects.length)}>↑</button><span>{project.number} / {String(projects.length).padStart(2,'0')}</span><button type="button" aria-label="下一个视频类目" onClick={() => selectGroup((activeGroup + 1) % projects.length)}>↓</button></div>
         </div>
         <div id="video-project-panel" role="tabpanel" aria-labelledby={`video-category-${activeGroup}`} className="video-project-arc__panel">
-          {preview ? <>
-            <button key={preview.src} type="button" className="video-project-arc__preview" onClick={() => setSelected(preview)} aria-label={`播放：${preview.alt}`}>
-              <img src={preview.src} alt={preview.alt} draggable={false} />
-              <span className="video-project-arc__play" aria-hidden="true" />
-            </button>
-            <div className="video-project-arc__caption">
-              <h3>{preview.alt}</h3>
-              <span aria-label="当前视频序号">{activeClip + 1} / {clips.length}</span>
-            </div>
-            <div className="video-project-arc__thumbnails" aria-label={`${project.name}视频列表`}>
-              {clips.map((item, index) => <button key={item.src} type="button" aria-label={`预览：${item.alt}`} aria-pressed={index === activeClip} onClick={() => setActiveClip(index)}><img src={item.src} alt="" loading="lazy" draggable={false} /></button>)}
-            </div>
-          </> : <div className="video-project-arc__empty"><span>COMING SOON</span><h3>{project.name}</h3><p>视频待上传</p></div>}
-          <div className="video-project-arc__detail"><p>{project.intro}</p>{project.roles?.length ? <span>{project.roles.join(' · ')}</span> : null}</div>
+          <div className="video-project-arc__frame">
+            {preview ? (
+              <button key={preview.src} type="button" className="video-project-arc__preview" onClick={() => setSelected(preview)} aria-label={`播放：${preview.alt}`}>
+                <img src={preview.src} alt={preview.alt} draggable={false} />
+                <span className="video-project-arc__play" aria-hidden="true" />
+              </button>
+            ) : <div className="video-project-arc__empty"><span>COMING SOON</span><h3>{project.name}</h3><p>视频待上传</p></div>}
+          </div>
+          <div>
+            {preview && <>
+              <div className="video-project-arc__caption">
+                <h3>{preview.alt}</h3>
+                <span aria-label="当前视频序号">{activeClip + 1} / {clips.length}</span>
+              </div>
+              <div className="video-project-arc__thumbnails" aria-label={`${project.name}视频列表`}>
+                {clips.map((item, index) => <button key={item.src} type="button" aria-label={`预览：${item.alt}`} aria-pressed={index === activeClip} onClick={() => setActiveClip(index)}><img src={item.src} alt="" loading="lazy" draggable={false} /></button>)}
+              </div>
+            </>}
+            <div className="video-project-arc__detail"><p>{project.intro}</p>{project.roles?.length ? <span>{project.roles.join(' · ')}</span> : null}</div>
+          </div>
         </div>
       </div>
     </section>
