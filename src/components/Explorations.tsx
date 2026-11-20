@@ -1,4 +1,5 @@
 import OptimizedImage from './OptimizedImage'
+import websiteVideoClips from '../lib/website-video-clips.json'
 import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { gsap } from 'gsap'
@@ -6,24 +7,15 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-interface Exploration {
-  image: string
-  rotate: number
-}
+const ITEMS_COL_1 = websiteVideoClips.slice(0, 4).map((clip, i) => ({
+  ...clip,
+  rotate: [-3, 2, -2, 3][i],
+}))
 
-const ITEMS_COL_1: Exploration[] = [
-  { image: '/videos/gifs/brand-01.gif', rotate: -3 },
-  { image: '/videos/gifs/brand-02.gif', rotate: 2 },
-  { image: '/videos/gifs/brand-03.gif', rotate: -2 },
-  { image: '/videos/gifs/brand-04.gif', rotate: 3 },
-]
-
-const ITEMS_COL_2: Exploration[] = [
-  { image: '/videos/gifs/brand-05.gif', rotate: 3 },
-  { image: '/videos/gifs/brand-06.gif', rotate: -2 },
-  { image: '/videos/gifs/brand-07.gif', rotate: 2 },
-  { image: '/videos/gifs/brand-08.gif', rotate: -3 },
-]
+const ITEMS_COL_2 = websiteVideoClips.slice(4, 8).map((clip, i) => ({
+  ...clip,
+  rotate: [3, -2, 2, -3][i],
+}))
 
 export default function Explorations() {
   const navigate = useNavigate()
@@ -100,8 +92,8 @@ export default function Explorations() {
                 style={{ transform: `rotate(${item.rotate}deg)` }}
               >
                 <OptimizedImage
-                  src={item.image}
-                  alt="Exploration"
+                  src={item.src.replace(/\.webp$/, '-loop.webp')}
+                  alt={item.title}
                   data-no-zoom
                   loading="lazy"
                   className="h-full w-full object-cover transition-transform duration-500 hover:scale-110"
@@ -118,8 +110,8 @@ export default function Explorations() {
                 style={{ transform: `rotate(${item.rotate}deg)` }}
               >
                 <OptimizedImage
-                  src={item.image}
-                  alt="Exploration"
+                  src={item.src.replace(/\.webp$/, '-loop.webp')}
+                  alt={item.title}
                   data-no-zoom
                   loading="lazy"
                   className="h-full w-full object-cover transition-transform duration-500 hover:scale-110"

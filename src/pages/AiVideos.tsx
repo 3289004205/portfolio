@@ -7,6 +7,7 @@ import BackToTop from '../components/BackToTop'
 import MiroBoard from '../components/MiroBoard/MiroBoard'
 import StatsPanel from '../components/StatsPanel/StatsPanel'
 import WorkflowVideo from '../components/WorkflowVideo'
+import websiteVideoClips from '../lib/website-video-clips.json'
 
 /** 与 FeaturesChess 一致的毛玻璃图片占位（视觉 AI 整合网站形式） */
 function FeatureTile({ caption, src }: { caption: string; src?: string }) {
@@ -52,25 +53,9 @@ const PROJECTS: VideoProject[] = [
     number: '03',
     category: 'Website AI Clips',
     name: '官网AI视频片段',
-    href: 'https://www.bilibili.com/video/BV1Uouw65E44',
-    previews: [
-      { bvid: 'BV1Uouw65E44', type: 'mp4', src: '/videos/gifs/brand-01.mp4', orientation: 'landscape' },
-      { bvid: 'BV1mouw65ERv', type: 'mp4', src: '/videos/gifs/brand-02.mp4', orientation: 'landscape' },
-      { bvid: 'BV1Uouw65EAa', type: 'mp4', src: '/videos/gifs/brand-03.mp4', orientation: 'landscape' },
-      { bvid: 'BV1Mouw6LEEH', type: 'mp4', src: '/videos/gifs/brand-04.mp4', orientation: 'landscape' },
-      { bvid: 'BV1Uouw65Etu', type: 'mp4', src: '/videos/gifs/brand-05.mp4', orientation: 'landscape' },
-      { bvid: 'BV1uouw6LEP6', type: 'mp4', src: '/videos/gifs/brand-06.mp4', orientation: 'landscape' },
-      { bvid: 'BV1Uouw65E5w', type: 'mp4', src: '/videos/gifs/brand-07.mp4', orientation: 'landscape' },
-      { bvid: 'BV1Uouw65E5J', type: 'mp4', src: '/videos/gifs/brand-08.mp4', orientation: 'landscape' },
-      { bvid: 'BV1Uouw65EpJ', type: 'mp4', src: '/videos/gifs/brand-09.mp4', orientation: 'landscape' },
-    ],
-    images: {
-      top: 'https://picsum.photos/seed/v-office-top/600/400',
-      bottom: 'https://picsum.photos/seed/v-office-bot/600/400',
-      right: 'https://picsum.photos/seed/v-office-right/600/800',
-    },
-    intro:
-      '为品牌官网打造的主形象宣传片，以 AI 生图与视频能力重塑视觉语言，统一官网首屏的叙事调性与质感。',
+    images: { top: '', bottom: '', right: '' },
+    clips: websiteVideoClips,
+    intro: '为品牌官网制作的 AI 视频片段，展示智能运动体验、直播课、MIA 动作库等内容。',
     roles: ['设计', '生图', '生视频'],
   },
   {
