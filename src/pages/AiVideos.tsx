@@ -31,7 +31,7 @@ const PROJECTS: VideoProject[] = [
     number: '01',
     category: 'AI Product Video',
     name: 'AI主图视频',
-    workflowTarget: 'workflow-product',
+    workflowTarget: 'workflow-long',
     images: { top: '', bottom: '', right: '' },
     intro: '展示用 AI 生成、实拍与三维素材制作的产品视频。',
     clips: [
@@ -46,7 +46,7 @@ const PROJECTS: VideoProject[] = [
     number: '02',
     category: 'TVC',
     name: '品宣TVC视频',
-    workflowTarget: 'workflow-tvc',
+    workflowTarget: 'workflow-long',
     images: { top: '', bottom: '', right: '' },
     intro: '汇集体育训练局合作视频与淘宝首页开屏动画，展示机构合作与品牌传播场景中的视频创作。',
     roles: ['导演', '编剧', '生图', '生视频', '剪辑'],
@@ -68,7 +68,7 @@ const PROJECTS: VideoProject[] = [
     number: '04',
     category: 'Feed Ads',
     name: '信息流视频',
-    workflowTarget: 'workflow-douyin-flow',
+    workflowTarget: 'workflow-short',
     href: 'https://www.bilibili.com/video/BV1TZuw6yEQ2',
     images: {
       top: 'https://picsum.photos/seed/v-douyin-top/600/400',
@@ -109,10 +109,9 @@ type Section =
       caption: string
     }
   | { key: string; label: string; type: 'tools'; items: ToolItem[] }
-  | { key: string; label: string; type: 'miro'; src?: string; openUrl?: string }
   | { key: string; label: string; type: 'stats'; appTitle: string; noteItems?: ContentItem[] }
 
-const PRODUCTIONS = [
+const LONG_VIDEO_STEPS = [
   { title: '提案与脚本', description: '以产品卖点、品牌调性和视频时长为输入，用 AI 起草脚本，再由人工审核。' },
   { title: '参考与试剪', description: '人工选取画面参考，按脚本拼接素材，提前检查叙事结构和节奏。' },
   { title: '拍摄与生成', description: '结合实拍和 AI 生图、生视频，补齐难以拍摄或缺失的镜头。' },
@@ -121,15 +120,8 @@ const PRODUCTIONS = [
 
 const WORKFLOW_SECTIONS: Section[] = [
       {
-        key: 'tvc',
-        label: '品牌 TVC',
-        type: 'miro',
-        src: '/explorations/tvc/01.jpg',
-        openUrl: '',
-      },
-      {
-        key: 'douyin-flow',
-        label: '抖音信息流',
+        key: 'short',
+        label: '短视频',
         type: 'cards',
         items: [
           { title: '实拍图转视频', src: '/explorations/dy-flow/01.webp', videos: ['/videos/dy-flow/real-shot-01.mp4', '/videos/dy-flow/real-shot-02.mp4'] },
@@ -212,13 +204,14 @@ export default function AiVideos() {
           制作流程
         </h2>
         <p className="mt-4 max-w-2xl text-sm leading-7 text-muted">
-          从脚本和参考镜头出发，用 AI 补齐制作环节，再通过人工审核和剪辑完成交付。
+          长视频覆盖 AI 主图视频和品宣 TVC 视频，短视频集中展示抖音信息流的制作案例。
         </p>
 
-        <div className="mb-20 mt-10">
-          <h3 id="workflow-product" tabIndex={-1} className="scroll-mt-28 text-xl font-medium">AI主图视频</h3>
+        <section aria-labelledby="workflow-long" className="mb-20 mt-10">
+          <h3 id="workflow-long" tabIndex={-1} className="scroll-mt-28 text-xl font-medium">长视频</h3>
+          <p className="mt-2 text-sm leading-6 text-muted">AI 主图视频与品宣 TVC 视频共用以下制作流程。</p>
           <ol className="mt-5 grid gap-px overflow-hidden rounded-2xl border border-stroke bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
-            {PRODUCTIONS.map((step, index) => (
+            {LONG_VIDEO_STEPS.map((step, index) => (
               <li key={step.title} className="bg-surface p-5 md:p-6">
                 <span className="text-xs tabular-nums text-muted">{String(index + 1).padStart(2, '0')}</span>
                 <h4 className="mt-3 text-base font-medium">{step.title}</h4>
@@ -226,7 +219,10 @@ export default function AiVideos() {
               </li>
             ))}
           </ol>
-        </div>
+          <div className="mt-6">
+            <MiroBoard src="/explorations/tvc/01.jpg" title="品宣 TVC 制作流程图" />
+          </div>
+        </section>
             <div className="flex flex-col">
               {WORKFLOW_SECTIONS.map((sec, si) => (
                 <div
@@ -238,12 +234,11 @@ export default function AiVideos() {
                       <h3 id={`workflow-${sec.key}`} tabIndex={-1} className="scroll-mt-28 text-xl font-medium text-text-primary">
                         {sec.label}
                       </h3>
+                      {sec.key === 'short' && (
+                        <p className="text-sm leading-6 text-muted">抖音信息流案例，包含实拍素材转视频、脚本反推、换背景、换装和换人等做法。</p>
+                      )}
                     </div>
                   )}
-
-                  {sec.type === 'miro' && (
-                  <MiroBoard src={sec.src} title={sec.label} openUrl={sec.openUrl} />
-                )}
 
                 {sec.type === 'gallery' && (
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
