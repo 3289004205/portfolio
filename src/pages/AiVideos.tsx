@@ -2,7 +2,7 @@ import OptimizedImage from '../components/OptimizedImage'
 import { useState, Fragment } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import SpotlightCard from '../components/SpotlightCard/SpotlightCard'
-import VideoProjectSpiral, { type VideoProject } from '../components/VideoProjectSpiral'
+import VideoProjectArc, { type VideoProject } from '../components/VideoProjectArc'
 import BackToTop from '../components/BackToTop'
 import MiroBoard from '../components/MiroBoard/MiroBoard'
 import StatsPanel from '../components/StatsPanel/StatsPanel'
@@ -23,7 +23,7 @@ function FeatureTile({ caption, src }: { caption: string; src?: string }) {
   )
 }
 
-/** 项目产出概览：按视频用途分类，使用螺旋画廊展示。 */
+/** 项目产出概览：按视频用途分类，使用弧形目录与视频预览展示。 */
 const PROJECTS: VideoProject[] = [
   {
     number: '01',
@@ -86,7 +86,8 @@ const PROJECTS: VideoProject[] = [
       { bvid: 'BV1X8uA6QEAU', type: 'mp4', src: '/videos/previews/douyin-08.mp4' },
       { bvid: 'BV1URuw61EmM', type: 'mp4', src: '/videos/previews/douyin-09.mp4' },
     ],
-  },  {
+  },
+  {
     number: '04',
     category: 'AI Product Video',
     name: 'AI主图视频',
@@ -243,7 +244,7 @@ export default function AiVideos() {
             transition={{ duration: 0.3 }}
             className="mt-8 py-16"
           >
-            <VideoProjectSpiral projects={PROJECTS} />
+            <VideoProjectArc projects={PROJECTS} />
             <BackToTop />
           </motion.div>
         ) : (
