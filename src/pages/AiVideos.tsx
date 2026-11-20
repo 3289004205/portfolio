@@ -33,8 +33,14 @@ const PROJECTS: VideoProject[] = [
     name: 'AI主图视频',
     workflowTarget: 'workflow-product',
     images: { top: '', bottom: '', right: '' },
-    intro: 'AI主图视频作品即将补充。',
-    pending: true,
+    intro: '展示用 AI 生成、实拍与三维素材制作的产品视频。',
+    clips: [
+      { title: '主图视频 01', src: '/videos/product-clips/01.webp', video: '/videos/product-clips/01.mp4' },
+      { title: '主图视频 02', src: '/videos/product-clips/02.webp', video: '/videos/product-clips/02.mp4' },
+      { title: '主图视频 03', src: '/videos/product-clips/03.webp', video: '/videos/product-clips/03.mp4' },
+      { title: '三维＋AI', src: '/videos/product-clips/04.webp', video: '/videos/product-clips/04.mp4' },
+      { title: 'R28 社媒AI视频', src: '/videos/product-clips/05.webp', video: '/videos/product-clips/05.mp4' },
+    ],
   },
   {
     number: '02',
