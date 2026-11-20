@@ -139,22 +139,25 @@
 
 @media (min-width: 901px) {
   .video-project-arc__navigation {
-    position: relative;
     grid-column: 1;
     grid-row: 1;
   }
   .video-project-arc__controls {
-    position: absolute;
-    top: 100%;
+    grid-column: 1;
+    grid-row: 3;
+    margin-top: 0;
   }
   .video-project-arc__panel {
     grid-column: 2;
-    grid-row: 1 / span 2;
+    grid-row: 1 / span 4;
     display: grid;
     grid-template-rows: subgrid;
     align-self: stretch;
   }
-  .video-project-arc__frame {align-self: center}
+  .video-project-arc__frame {grid-row: 1;align-self: center}
+  .video-project-arc__caption {grid-row: 2}
+  .video-project-arc__thumbnails {grid-row: 3}
+  .video-project-arc__detail {grid-row: 4}
 }
 
 @media(max-width:900px) {
@@ -164,7 +167,7 @@
 .video-project-arc__layout {grid-template-columns:1fr;gap:24px}
 .video-project-arc__list {--arc-width: 58px; --arc-height: 100px; height: 260px}
 .video-project-arc__title {font-size: 17px}
-.video-project-arc__controls {justify-content:flex-end;margin:6px 0 0}
+.video-project-arc__controls {justify-content:flex-end;margin:-18px 0 0}
 .video-project-arc__thumbnails {gap:5px}
 .video-project-arc__thumbnails {grid-template-columns:repeat(auto-fill,minmax(62px,1fr))}
 .video-gallery-modal {padding:12px}
